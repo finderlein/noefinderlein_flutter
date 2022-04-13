@@ -1,0 +1,193 @@
+import 'dart:async';
+
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../model/model_noec_location.dart';
+
+import './tables/locations.dart';
+import 'tables/change_val.dart';
+import 'tables/open_days.dart';
+import 'tables/visited_locations.dart';
+
+class DatabaseHelper {
+  static const _databaseName = "noeFinderlein2.db";
+  static const _databaseVersion = 1;
+
+  static final tableLocations = TableLocations.instance;
+  static final tableChangeVal = TableChangeVal.instance;
+  static final tableOpenDays = TableOpenDays.instance;
+  static final tablevisitedLocations = TableVisitedLocations.instance;
+
+  // make this a singleton class
+  // DatabaseHelper._privateConstructor();
+  // static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+
+  static Future<Database> db() async {
+
+    // var databasesPath = await getDatabasesPath();
+    // String path = join(databasesPath, );
+    return openDatabase(
+      // Set the path to the database. Note: Using the `join` function from the
+      // `path` package is best practice to ensure the path is correctly
+      // constructed for each platform.
+      _databaseName,
+      // When the database is first created, create a table to store dogs.
+      onCreate: (db, version) {
+        TableLocations.onCreate(db, version);
+        TableChangeVal.onCreate(db, version);
+        TableOpenDays.onCreate(db, version);
+        TableVisitedLocations.onCreate(db, version);
+        return;
+      },
+      onUpgrade: (db, oldVersion, newVersion) {
+        TableLocations.onUpgrade(db, oldVersion, newVersion);
+        TableChangeVal.onUpgrade(db, oldVersion, newVersion);
+        TableOpenDays.onUpgrade(db, oldVersion, newVersion);
+        TableVisitedLocations.onUpgrade(db, oldVersion, newVersion);
+        return;
+      },
+      onDowngrade: onDatabaseDowngradeDelete,
+      // Set the version. This executes the onCreate function and provides a
+      // path to perform database upgrades and downgrades.
+      version: _databaseVersion,
+    );
+  }
+
+  static Future<List<NoecLocation>> getAllMenuLocations(int year,
+      {int? regionId, String? query}) async {
+    Database db = await DatabaseHelper.db();
+    String regionquery = '';
+    String searchquery = '';
+    regionquery = ' AND region = ${regionId.toString()} ';
+
+    if (query != '') {
+      searchquery =
+          " AND (name LIKE '%$query%' OR description LIKE '%$query%' OR openText LIKE '%$query%' OR entryText LIKE '%$query%' OR addressCity LIKE '%$query%') ";
+    }
+    String selectQuery =
+        "select ${tableLocations.tableName}.* from ${tableLocations.tableName} where ${tableLocations.keyYear} = ${year.toString()}$regionquery$searchquery order by ${tableLocations.keybookletNumber} asc,name asc";
+    /*+ dbl + ".*, case when exists (select * from " + dbd + " where " + dbl + "." + DB_Location_NoeC.KEY_ID + " = " + dbd + "." + DB_Days.KEY_LOCKEY + " and " + DB_Days.KEY_DAY + " = ? and " + dbd + "." + DB_Days.KEY_ACTIVE + " = 1) then 1 else 0 end AS " + DB_Location_NoeC.KEY_GEOEFFNET + ","
+    + " case when exists (select * from " + dbv + " where " + dbl + "." + DB_Location_NoeC.KEY_ID + " = " + dbv + "." + DB_Visited_Locations.KEY_LOC_ID + " and " + DB_Visited_Locations.KEY_YEAR + "=?) then 1 else 0 end AS " + DB_Location_NoeC.KEY_VISITED
+    + " from " + dbl
+    + " where " + DB_Location_NoeC.KEY_JAHR + " = ?"
+    + " order by " + DB_Location_NoeC.KEY_NUMMER + " asc"*/
+    print(selectQuery);
+    final List<Map<String, dynamic>> maps = await db.rawQuery(selectQuery);
+    return List.generate(maps.length, (i) {
+      return NoecLocation.fromDBMap(maps[i]);
+    });
+  }
+
+  static Future<int?> getLocationsCountToYear(int year) async {
+    Database db = await DatabaseHelper.db();
+    String countQuery =
+        "SELECT COUNT(*) FROM ${tableLocations.tableName} WHERE ${tableLocations.keyYear} = ${year.toString()}";
+
+    int? count = Sqflite.firstIntValue(await db.rawQuery(countQuery));
+    return count;
+  }
+
+  static Future<bool> updateForYearNeeded(int year, int changedcount) async {
+    Database db = await DatabaseHelper.db();
+    String countQuery =
+        "SELECT COUNT(*) FROM ${tableChangeVal.tableName} WHERE ${tableChangeVal.keyChangeYear} = ${year.toString()} AND ${tableChangeVal.keyChangeCount} >= ${changedcount.toString()}";
+    int? count = Sqflite.firstIntValue(await db.rawQuery(countQuery));
+
+    return count == 0;
+  }
+
+  static Future<int> getCurrentLastChangeId(int year) async {
+    Database db = await DatabaseHelper.db();
+    String changeQuery =
+        "SELECT ${tableOpenDays.keyChangeIndex} FROM ${tableOpenDays.tableName} WHERE ${tableOpenDays.keyYear} = ${year.toString()} ORDER BY ${tableOpenDays.keyChangeIndex} DESC LIMIT 1";
+
+    List<Map> result = await db.rawQuery(changeQuery);
+    int returnVar = 0;
+    if (result.isNotEmpty) {
+      returnVar = result[0][tableOpenDays.keyChangeIndex];
+    }
+    return returnVar;
+  }
+
+  static Future<String> getStringAktDates(int year) async {
+    Database db = await DatabaseHelper.db();
+    String fetchQuery =
+        "SELECT ${tableLocations.keyId},${tableLocations.keyChangeIndex} FROM ${tableLocations.tableName} WHERE ${tableLocations.keyYear} = ${year.toString()} ORDER BY ${tableLocations.keyId} ASC";
+    List<Map> result = await db.rawQuery(fetchQuery);
+
+    //TODO: clean up json generation
+    String returnJson = '{"year":${year.toString()}';
+    if (result.isNotEmpty) {
+      List<String> stringArray = result
+          .map((row) =>
+              '{"id":${row[tableLocations.keyId]},"cId":${row[tableLocations.keyChangeIndex]}}')
+          .toList();
+      returnJson += ',"el":[${stringArray.join(',')}]';
+    }
+    return '$returnJson}';
+  }
+
+  static Future<bool> _updateornewForItemNeeded(int id) async {
+    Database db = await DatabaseHelper.db();
+    String countQuery =
+        "SELECT COUNT(*) FROM ${tableLocations.tableName} WHERE ${tableLocations.keyId} = ${id.toString()}";
+    int? count = Sqflite.firstIntValue(await db.rawQuery(countQuery));
+    return count != 0;
+  }
+
+  static Future<NoecLocation?> _getLocationToId(int id) async {
+    Database db = await DatabaseHelper.db();
+    String fetchQuery =
+        "SELECT * FROM ${tableLocations.tableName} WHERE ${tableLocations.keyId} = ${id.toString()}";
+    final List<Map<String, dynamic>> maps = await db.rawQuery(fetchQuery);
+    NoecLocation location;
+    if (maps.length == 1) {
+      location = NoecLocation.fromDBMap(maps.first);
+      return location;
+    }
+    return null;
+  }
+
+  static Future<void> insertOrReplaceLocations(NoecLocationList locations) async {
+    NoecLocationList updateList = NoecLocationList();
+    NoecLocationList insertList = NoecLocationList();
+    for (int i = 0; i < locations.length; i++) {
+      try {
+        NoecLocation location = locations.get(i);
+
+        int id = location.id;
+        bool update = await _updateornewForItemNeeded(id);
+        if (update) {
+          /*NoecLocation existingLocation = await _getLocationToId(id);
+          existingLocation.update(location);
+          updateList.locations.add(existingLocation);*/
+          updateList.add(location);
+        } else {
+          // insert
+          print('insertLocation: $location');
+          print('locationsList: $insertList');
+          insertList.add(location);
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+    await _insOrRepl(updateList, insertList);
+  }
+
+  static Future<void> _insOrRepl(
+      NoecLocationList updateList, NoecLocationList insertList) async {
+    Database db = await DatabaseHelper.db();
+    Batch batch = db.batch();
+    for (int i = 0; i < updateList.length; i++) {
+      batch.update(tableLocations.tableName, updateList.get(i).toDBMap(),
+          where: "${tableLocations.keyId} = ?",
+          whereArgs: [updateList.get(i).id]);
+    }
+    for (int i = 0; i < insertList.length; i++) {
+      batch.insert(tableLocations.tableName, insertList.get(i).toDBMap());
+    }
+    await batch.commit(noResult: true);
+  }
+}
