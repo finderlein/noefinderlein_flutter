@@ -1,23 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
+import 'database/tables/location.dart';
+import 'pages/locations_list_page.dart';
+import 'pages/location_detail_page/main.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 import './widgets/downloader_modal.dart';
-
+import 'themes/noefinderlein.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
-  const MyApp({
+  MyApp({
     Key? key,
     required this.settingsController,
   }) : super(key: key);
 
   final SettingsController settingsController;
+  final NoeFinderleinTheme noefTheme = NoeFinderleinTheme();
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +61,8 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
+          theme: noefTheme.get(isDark: false),
+          darkTheme: noefTheme.get(isDark: true),
           themeMode: settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
@@ -70,16 +71,29 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
+                final String name = routeSettings.name as String;
+
+                if (name.startsWith(LocationDetailsPage.routeName)) {
+                  final id = routeSettings.arguments as int;
+                  return LocationDetailsPage(id: id);
+                }
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
                   case Downloader.routeName:
-                    return Downloader(year: 2022);
-                  case SampleItemListView.routeName:
+                    return Scaffold(
+                        body: Column(children: const [
+                      SimpleDialog(
+                          title: Text('Downloading Data...'),
+                          children: [Downloader(year: 2022)])
+                    ]));
+
+                  case LocationListView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return const LocationListView(
+                      year: 2022,
+                      regionId: 1,
+                    );
                 }
               },
             );
