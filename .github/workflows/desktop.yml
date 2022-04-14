@@ -30,6 +30,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "2.13.0"
+          channel: "beta"
       - run: flutter upgrade
       - run: flutter pub get
       - run: flutter test
@@ -55,6 +56,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "2.13.0"
+          channel: "beta"
       - run: flutter upgrade
       - run: flutter pub get
       - run: flutter test
