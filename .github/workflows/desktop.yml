@@ -129,6 +129,6 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/bundle/release/app-release.aab
+            app-release.apk
+            app-release.aab
             *.AppImage
