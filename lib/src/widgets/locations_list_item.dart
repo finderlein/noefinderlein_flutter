@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../database/tables/location.dart';
 
@@ -10,7 +13,8 @@ class LocationsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Card(
+        child: SizedBox(
       height: 60,
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -47,7 +51,7 @@ class LocationsListItem extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -69,7 +73,8 @@ class _NameBlock extends StatelessWidget {
               Text(
                 location.name,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiaryContainer,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -82,7 +87,6 @@ class _NameBlock extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 12.0,
-                      color: Colors.black54,
                     ),
                   ),
                   const Spacer(),
@@ -131,58 +135,44 @@ class _CategoryIcon extends StatelessWidget {
     switch (category) {
       case 1:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_stifte);
+          return Image.asset('assets/images/stifte.png', height: 24, width: 24);
         }
       case 2:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_burgen_schloesser);
-
+          return Image.asset('assets/images/burgen_schloesser.png',
+              height: 24, width: 24);
         }
       case 3:
         {
-          return Icon(MdiIcons.bank,
-              color: Theme.of(context).colorScheme.secondary);
-          // holder.burgstiftusw
-          // .setImageResource(R.mipmap.ic_museen_ausstellungen);
-
+          return Image.asset('assets/images/museen_ausstellungen.png',
+              height: 24, width: 24);
         }
       case 4:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_erlebnis_natur);
-
+          return Image.asset('assets/images/erlebnis_natur.png',
+              height: 24, width: 24);
         }
       case 5:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_sport_und_freizeit);
-
+          return Image.asset('assets/images/sport_und_freizeit.png',
+              height: 24, width: 24);
         }
       case 6:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_bergbahnen);
-
+          return Image.asset('assets/images/bergbahnen.png',
+              height: 24, width: 24);
         }
       case 7:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_schifffahrt);
-
+          return Image.asset('assets/images/schifffahrt.png',
+              height: 24, width: 24);
         }
       case 8:
         {
-          return const Icon(MdiIcons.accountGroup);
-          // holder.burgstiftusw.setImageResource(R.mipmap.ic_lokalbahn);
-
+          return Image.asset('assets/images/lokalbahn.png',
+              height: 24, width: 24);
         }
     }
-    return Row(
-      children: [
-        category == 0 ? const Icon(MdiIcons.accountGroup) : const Center(),
-      ],
-    );
+    return const Center();
   }
 }

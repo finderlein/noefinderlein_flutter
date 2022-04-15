@@ -21,7 +21,7 @@ class MitDerCardSection extends StatelessWidget {
               child: Icon(
                 MdiIcons.smartCardOutline,
                 size: 40.0,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.onTertiary,
               )),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Text('Mit der Card'),

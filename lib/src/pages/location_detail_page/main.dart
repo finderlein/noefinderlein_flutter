@@ -69,6 +69,8 @@ class LocationDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         title: Text(location.name),
       ),
       body: SingleChildScrollView(
@@ -76,11 +78,11 @@ class LocationDetailView extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
-                  MitDerCardSection(location: location),
-                  const SizedBox(height: 10),
                   TitleSection(location: location),
                   const SizedBox(height: 10),
                   DescriptionSection(location: location),
+                  const SizedBox(height: 10),
+                  MitDerCardSection(location: location),
                   const SizedBox(height: 15),
                   ButtonSection(location: location),
                   const Divider(),
@@ -264,6 +266,7 @@ class _ExpandableFabState extends State<ExpandableFab>
       child: Center(
         child: Material(
           shape: const CircleBorder(),
+          color: Theme.of(context).colorScheme.onSecondary,
           clipBehavior: Clip.antiAlias,
           elevation: 4.0,
           child: InkWell(
@@ -272,7 +275,7 @@ class _ExpandableFabState extends State<ExpandableFab>
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ),
@@ -384,12 +387,12 @@ class ActionButton extends StatelessWidget {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.colorScheme.primary,
+      color: theme.colorScheme.secondary,
       elevation: 4.0,
       child: IconButton(
         onPressed: onPressed,
         icon: icon,
-        color: theme.colorScheme.onPrimary,
+        color: theme.colorScheme.onSecondary,
       ),
     );
   }
