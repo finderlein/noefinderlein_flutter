@@ -84,7 +84,8 @@ class _NameBlock extends StatelessWidget {
                     location.addressCity,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 12.0,
                     ),
                   ),
@@ -109,16 +110,25 @@ class _MiniItems extends StatelessWidget {
     return Row(
       children: <Widget>[
         location.groupsAllowed
-            ? const Icon(MdiIcons.accountGroup)
+            ? Icon(MdiIcons.accountGroup,
+                color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
-        location.dogAllowed ? const Icon(MdiIcons.dogSide) : const Center(),
+        location.dogAllowed
+            ? Icon(MdiIcons.dogSide,
+                color: Theme.of(context).colorScheme.onSurface)
+            : const Center(),
         location.stollerAllowed
-            ? const Icon(MdiIcons.babyCarriage)
+            ? Icon(MdiIcons.babyCarriage,
+                color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
         location.wheelchairAllowed
-            ? const Icon(MdiIcons.wheelchairAccessibility)
+            ? Icon(MdiIcons.wheelchairAccessibility,
+                color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
-        location.topLocation ? const Icon(MdiIcons.tooltip) : const Center(),
+        location.topLocation
+            ? Image.asset('assets/images/top_ausflugsziel.png',
+                height: 24, width: 24)
+            : const Center(),
         _CategoryIcon(category: location.category)
       ],
     );
