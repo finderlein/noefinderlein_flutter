@@ -2,9 +2,9 @@
 version: 1
 script:
   - rm -rf AppDir | true
-  - cp -r build/linux/x64/release/bundle $APPDIR
-  - mkdir -p $APPDIR/usr/share/icons/hicolor/svg/apps/
-  - cp assets/images/finderlein_logo_bunt.svg $APPDIR/usr/share/icons/hicolor/svg/apps/
+  - cp -r build/linux/x64/release/bundle AppDir
+  - mkdir -p AppDir/usr/share/icons/hicolor/svg/apps/
+  - cp assets/images/finderlein_logo_bunt.svg AppDir/usr/share/icons/hicolor/svg/apps/
 AppDir:
   path: ./AppDir
   app_info:
