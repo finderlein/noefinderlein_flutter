@@ -119,9 +119,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: android
+          path: ~/android
       - uses: actions/download-artifact@v3
         with:
           name: appimage
+          path: ~/appimage
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -129,6 +131,6 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            app-release.apk
-            app-release.aab
-            *.AppImage
+            ~/android/app-release.apk
+            ~/android/app-release.aab
+            ~/appimage/*.AppImage
