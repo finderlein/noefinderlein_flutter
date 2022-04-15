@@ -116,11 +116,11 @@ jobs:
     needs: [android, appimage]
     steps:
       - uses: actions/download-artifact@v3
-      with:
-        name: android
+        with:
+          name: android
       - uses: actions/download-artifact@v3
-      with:
-        name: appimage
+        with:
+          name: appimage
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
