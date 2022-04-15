@@ -11,21 +11,21 @@ class NoeFinderleinTheme {
       txtTheme = ThemeData.light().textTheme;
       // Color txtColor = txtTheme.bodyText1.color;
 
-      colorScheme = ColorScheme(
+      colorScheme = const ColorScheme(
           brightness: Brightness.light,
-          primary: const Color(0xffFF9800),
+          primary: Color(0xffFF9800),
           onPrimary: Colors.black,
-          secondary: const Color(0xff003672),
+          secondary: Color(0xff003672),
           onSecondary: Colors.white,
-          error: Colors.red.shade400,
+          error: Color.fromARGB(255, 235, 80, 78),
           onError: Colors.white,
-          background: Colors.grey.shade100,
+          background: Color.fromARGB(255, 238, 238, 238),
           onBackground: Colors.black,
-          surface: const Color(0xFF005ebe),
-          onSurface: Colors.white,
-          tertiary: const Color(0xFFFFDE10),
-          onTertiary: const Color(0xff003672),
-          tertiaryContainer: const Color(0xffff7802));
+          surface: Color.fromARGB(255, 228, 228, 228),
+          onSurface: Color.fromARGB(255, 51, 51, 51),
+          tertiary: Color(0xFFFFDE10),
+          onTertiary: Color(0xff003672),
+          tertiaryContainer: Color(0xffff7802));
 
       // noecard yellow Color(0xFFFFDE10)
       // noecard orange Color(0xffFF9800)
