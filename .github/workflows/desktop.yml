@@ -96,9 +96,11 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: flutter build linux
       - name: Build AppImage
-        uses: AppImageCrafters/build-appimage-action@master
+        uses: AppImageCrafters/build-appimage@master
         with:
           recipe: AppImageBuilder.yml
+        env:
+          UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
