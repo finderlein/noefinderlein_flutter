@@ -9,7 +9,7 @@ AppDir:
   path: ./AppDir
   app_info:
     id: at.reitschmied.noefinderlein-flutter
-    name: Noe Finderlein
+    name: noe_finderlein
     icon: finderlein_logo_bunt
     version: latest
     exec: noefinderlein_flutter
