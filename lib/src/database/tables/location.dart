@@ -5,15 +5,18 @@ part 'location.g.dart';
 @Collection()
 @Name("Location")
 class Location {
-  
   @Id()
   late int id;
 
   @Index()
   late int year;
 
+  int apiId = 0;
+  int websiteId = 0;
+
   int category = 0;
   int region = 0;
+  int province = 0;
   late String name;
   int bookletNumber = 0;
 
@@ -33,20 +36,23 @@ class Location {
   late String openText;
   late String hint;
   late String description;
-  late String noSpecial;
+  // late String noSpecial;
   late String entryText;
-  late String savings;
+  late String savingsAdult;
+  late String savingsChild;
 
-  bool wheelchairAllowed = false;
-  bool stollerAllowed = false;
+  bool badWeather = false;
+  bool childFriendly = false;
+  bool strollerFriendly = false;
   bool dogAllowed = false;
-  bool groupsAllowed = false;
+  bool tavernNear = false;
+  bool wheelchairFriendly = false;
+  bool groupsAccepted = false;
   bool topLocation = false;
-
+  bool openInWinter = false;
 
   late String changedDate;
 
   int changeIndex = 0;
   bool favorit = false;
 }
-

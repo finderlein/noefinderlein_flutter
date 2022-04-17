@@ -10,7 +10,7 @@ import './tables/visited_location.dart';
 // import '../model/model_noec_location.dart';
 
 class DatabaseHelper {
-  static const _databaseName = "noeFinderlein2.db";
+  static const _databaseName = "noeFinderlein2.3.db";
   static const _databaseVersion = 1;
 
   // static final tableLocations = Location.instance;

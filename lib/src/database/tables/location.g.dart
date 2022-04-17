@@ -17,7 +17,7 @@ extension GetLocationCollection on Isar {
 final LocationSchema = CollectionSchema(
   name: 'Location',
   schema:
-      '{"name":"Location","idName":"id","properties":[{"name":"addressCity","type":"String"},{"name":"addressStreet","type":"String"},{"name":"addressZip","type":"String"},{"name":"bookletNumber","type":"Long"},{"name":"category","type":"Long"},{"name":"changeIndex","type":"Long"},{"name":"changedDate","type":"String"},{"name":"description","type":"String"},{"name":"dogAllowed","type":"Bool"},{"name":"email","type":"String"},{"name":"entryText","type":"String"},{"name":"favorit","type":"Bool"},{"name":"fax","type":"String"},{"name":"groupsAllowed","type":"Bool"},{"name":"hint","type":"String"},{"name":"latitude","type":"Double"},{"name":"longitude","type":"Double"},{"name":"name","type":"String"},{"name":"noSpecial","type":"String"},{"name":"openText","type":"String"},{"name":"region","type":"Long"},{"name":"savings","type":"String"},{"name":"stollerAllowed","type":"Bool"},{"name":"telephone","type":"String"},{"name":"topLocation","type":"Bool"},{"name":"travelDirections","type":"String"},{"name":"website","type":"String"},{"name":"wheelchairAllowed","type":"Bool"},{"name":"year","type":"Long"}],"indexes":[{"name":"year","unique":false,"properties":[{"name":"year","type":"Value","caseSensitive":false}]}],"links":[]}',
+      '{"name":"Location","idName":"id","properties":[{"name":"addressCity","type":"String"},{"name":"addressStreet","type":"String"},{"name":"addressZip","type":"String"},{"name":"apiId","type":"Long"},{"name":"badWeather","type":"Bool"},{"name":"bookletNumber","type":"Long"},{"name":"category","type":"Long"},{"name":"changeIndex","type":"Long"},{"name":"changedDate","type":"String"},{"name":"childFriendly","type":"Bool"},{"name":"description","type":"String"},{"name":"dogAllowed","type":"Bool"},{"name":"email","type":"String"},{"name":"entryText","type":"String"},{"name":"favorit","type":"Bool"},{"name":"fax","type":"String"},{"name":"groupsAccepted","type":"Bool"},{"name":"hint","type":"String"},{"name":"latitude","type":"Double"},{"name":"longitude","type":"Double"},{"name":"name","type":"String"},{"name":"openInWinter","type":"Bool"},{"name":"openText","type":"String"},{"name":"province","type":"Long"},{"name":"region","type":"Long"},{"name":"savingsAdult","type":"String"},{"name":"savingsChild","type":"String"},{"name":"strollerFriendly","type":"Bool"},{"name":"tavernNear","type":"Bool"},{"name":"telephone","type":"String"},{"name":"topLocation","type":"Bool"},{"name":"travelDirections","type":"String"},{"name":"website","type":"String"},{"name":"websiteId","type":"Long"},{"name":"wheelchairFriendly","type":"Bool"},{"name":"year","type":"Long"}],"indexes":[{"name":"year","unique":false,"properties":[{"name":"year","type":"Value","caseSensitive":false}]}],"links":[]}',
   nativeAdapter: const _LocationNativeAdapter(),
   webAdapter: const _LocationWebAdapter(),
   idName: 'id',
@@ -25,32 +25,39 @@ final LocationSchema = CollectionSchema(
     'addressCity': 0,
     'addressStreet': 1,
     'addressZip': 2,
-    'bookletNumber': 3,
-    'category': 4,
-    'changeIndex': 5,
-    'changedDate': 6,
-    'description': 7,
-    'dogAllowed': 8,
-    'email': 9,
-    'entryText': 10,
-    'favorit': 11,
-    'fax': 12,
-    'groupsAllowed': 13,
-    'hint': 14,
-    'latitude': 15,
-    'longitude': 16,
-    'name': 17,
-    'noSpecial': 18,
-    'openText': 19,
-    'region': 20,
-    'savings': 21,
-    'stollerAllowed': 22,
-    'telephone': 23,
-    'topLocation': 24,
-    'travelDirections': 25,
-    'website': 26,
-    'wheelchairAllowed': 27,
-    'year': 28
+    'apiId': 3,
+    'badWeather': 4,
+    'bookletNumber': 5,
+    'category': 6,
+    'changeIndex': 7,
+    'changedDate': 8,
+    'childFriendly': 9,
+    'description': 10,
+    'dogAllowed': 11,
+    'email': 12,
+    'entryText': 13,
+    'favorit': 14,
+    'fax': 15,
+    'groupsAccepted': 16,
+    'hint': 17,
+    'latitude': 18,
+    'longitude': 19,
+    'name': 20,
+    'openInWinter': 21,
+    'openText': 22,
+    'province': 23,
+    'region': 24,
+    'savingsAdult': 25,
+    'savingsChild': 26,
+    'strollerFriendly': 27,
+    'tavernNear': 28,
+    'telephone': 29,
+    'topLocation': 30,
+    'travelDirections': 31,
+    'website': 32,
+    'websiteId': 33,
+    'wheelchairFriendly': 34,
+    'year': 35
   },
   listProperties: {},
   indexIds: {'year': 0},
@@ -83,33 +90,40 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
     IsarNative.jsObjectSet(jsObj, 'addressCity', object.addressCity);
     IsarNative.jsObjectSet(jsObj, 'addressStreet', object.addressStreet);
     IsarNative.jsObjectSet(jsObj, 'addressZip', object.addressZip);
+    IsarNative.jsObjectSet(jsObj, 'apiId', object.apiId);
+    IsarNative.jsObjectSet(jsObj, 'badWeather', object.badWeather);
     IsarNative.jsObjectSet(jsObj, 'bookletNumber', object.bookletNumber);
     IsarNative.jsObjectSet(jsObj, 'category', object.category);
     IsarNative.jsObjectSet(jsObj, 'changeIndex', object.changeIndex);
     IsarNative.jsObjectSet(jsObj, 'changedDate', object.changedDate);
+    IsarNative.jsObjectSet(jsObj, 'childFriendly', object.childFriendly);
     IsarNative.jsObjectSet(jsObj, 'description', object.description);
     IsarNative.jsObjectSet(jsObj, 'dogAllowed', object.dogAllowed);
     IsarNative.jsObjectSet(jsObj, 'email', object.email);
     IsarNative.jsObjectSet(jsObj, 'entryText', object.entryText);
     IsarNative.jsObjectSet(jsObj, 'favorit', object.favorit);
     IsarNative.jsObjectSet(jsObj, 'fax', object.fax);
-    IsarNative.jsObjectSet(jsObj, 'groupsAllowed', object.groupsAllowed);
+    IsarNative.jsObjectSet(jsObj, 'groupsAccepted', object.groupsAccepted);
     IsarNative.jsObjectSet(jsObj, 'hint', object.hint);
     IsarNative.jsObjectSet(jsObj, 'id', object.id);
     IsarNative.jsObjectSet(jsObj, 'latitude', object.latitude);
     IsarNative.jsObjectSet(jsObj, 'longitude', object.longitude);
     IsarNative.jsObjectSet(jsObj, 'name', object.name);
-    IsarNative.jsObjectSet(jsObj, 'noSpecial', object.noSpecial);
+    IsarNative.jsObjectSet(jsObj, 'openInWinter', object.openInWinter);
     IsarNative.jsObjectSet(jsObj, 'openText', object.openText);
+    IsarNative.jsObjectSet(jsObj, 'province', object.province);
     IsarNative.jsObjectSet(jsObj, 'region', object.region);
-    IsarNative.jsObjectSet(jsObj, 'savings', object.savings);
-    IsarNative.jsObjectSet(jsObj, 'stollerAllowed', object.stollerAllowed);
+    IsarNative.jsObjectSet(jsObj, 'savingsAdult', object.savingsAdult);
+    IsarNative.jsObjectSet(jsObj, 'savingsChild', object.savingsChild);
+    IsarNative.jsObjectSet(jsObj, 'strollerFriendly', object.strollerFriendly);
+    IsarNative.jsObjectSet(jsObj, 'tavernNear', object.tavernNear);
     IsarNative.jsObjectSet(jsObj, 'telephone', object.telephone);
     IsarNative.jsObjectSet(jsObj, 'topLocation', object.topLocation);
     IsarNative.jsObjectSet(jsObj, 'travelDirections', object.travelDirections);
     IsarNative.jsObjectSet(jsObj, 'website', object.website);
+    IsarNative.jsObjectSet(jsObj, 'websiteId', object.websiteId);
     IsarNative.jsObjectSet(
-        jsObj, 'wheelchairAllowed', object.wheelchairAllowed);
+        jsObj, 'wheelchairFriendly', object.wheelchairFriendly);
     IsarNative.jsObjectSet(jsObj, 'year', object.year);
     return jsObj;
   }
@@ -120,6 +134,9 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
     object.addressCity = IsarNative.jsObjectGet(jsObj, 'addressCity') ?? '';
     object.addressStreet = IsarNative.jsObjectGet(jsObj, 'addressStreet') ?? '';
     object.addressZip = IsarNative.jsObjectGet(jsObj, 'addressZip') ?? '';
+    object.apiId =
+        IsarNative.jsObjectGet(jsObj, 'apiId') ?? double.negativeInfinity;
+    object.badWeather = IsarNative.jsObjectGet(jsObj, 'badWeather') ?? false;
     object.bookletNumber = IsarNative.jsObjectGet(jsObj, 'bookletNumber') ??
         double.negativeInfinity;
     object.category =
@@ -127,14 +144,16 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
     object.changeIndex =
         IsarNative.jsObjectGet(jsObj, 'changeIndex') ?? double.negativeInfinity;
     object.changedDate = IsarNative.jsObjectGet(jsObj, 'changedDate') ?? '';
+    object.childFriendly =
+        IsarNative.jsObjectGet(jsObj, 'childFriendly') ?? false;
     object.description = IsarNative.jsObjectGet(jsObj, 'description') ?? '';
     object.dogAllowed = IsarNative.jsObjectGet(jsObj, 'dogAllowed') ?? false;
     object.email = IsarNative.jsObjectGet(jsObj, 'email') ?? '';
     object.entryText = IsarNative.jsObjectGet(jsObj, 'entryText') ?? '';
     object.favorit = IsarNative.jsObjectGet(jsObj, 'favorit') ?? false;
     object.fax = IsarNative.jsObjectGet(jsObj, 'fax') ?? '';
-    object.groupsAllowed =
-        IsarNative.jsObjectGet(jsObj, 'groupsAllowed') ?? false;
+    object.groupsAccepted =
+        IsarNative.jsObjectGet(jsObj, 'groupsAccepted') ?? false;
     object.hint = IsarNative.jsObjectGet(jsObj, 'hint') ?? '';
     object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
     object.latitude =
@@ -142,20 +161,27 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
     object.longitude =
         IsarNative.jsObjectGet(jsObj, 'longitude') ?? double.negativeInfinity;
     object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
-    object.noSpecial = IsarNative.jsObjectGet(jsObj, 'noSpecial') ?? '';
+    object.openInWinter =
+        IsarNative.jsObjectGet(jsObj, 'openInWinter') ?? false;
     object.openText = IsarNative.jsObjectGet(jsObj, 'openText') ?? '';
+    object.province =
+        IsarNative.jsObjectGet(jsObj, 'province') ?? double.negativeInfinity;
     object.region =
         IsarNative.jsObjectGet(jsObj, 'region') ?? double.negativeInfinity;
-    object.savings = IsarNative.jsObjectGet(jsObj, 'savings') ?? '';
-    object.stollerAllowed =
-        IsarNative.jsObjectGet(jsObj, 'stollerAllowed') ?? false;
+    object.savingsAdult = IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '';
+    object.savingsChild = IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '';
+    object.strollerFriendly =
+        IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false;
+    object.tavernNear = IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false;
     object.telephone = IsarNative.jsObjectGet(jsObj, 'telephone') ?? '';
     object.topLocation = IsarNative.jsObjectGet(jsObj, 'topLocation') ?? false;
     object.travelDirections =
         IsarNative.jsObjectGet(jsObj, 'travelDirections') ?? '';
     object.website = IsarNative.jsObjectGet(jsObj, 'website') ?? '';
-    object.wheelchairAllowed =
-        IsarNative.jsObjectGet(jsObj, 'wheelchairAllowed') ?? false;
+    object.websiteId =
+        IsarNative.jsObjectGet(jsObj, 'websiteId') ?? double.negativeInfinity;
+    object.wheelchairFriendly =
+        IsarNative.jsObjectGet(jsObj, 'wheelchairFriendly') ?? false;
     object.year =
         IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity;
     return object;
@@ -170,6 +196,11 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
         return (IsarNative.jsObjectGet(jsObj, 'addressStreet') ?? '') as P;
       case 'addressZip':
         return (IsarNative.jsObjectGet(jsObj, 'addressZip') ?? '') as P;
+      case 'apiId':
+        return (IsarNative.jsObjectGet(jsObj, 'apiId') ??
+            double.negativeInfinity) as P;
+      case 'badWeather':
+        return (IsarNative.jsObjectGet(jsObj, 'badWeather') ?? false) as P;
       case 'bookletNumber':
         return (IsarNative.jsObjectGet(jsObj, 'bookletNumber') ??
             double.negativeInfinity) as P;
@@ -181,6 +212,8 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
             double.negativeInfinity) as P;
       case 'changedDate':
         return (IsarNative.jsObjectGet(jsObj, 'changedDate') ?? '') as P;
+      case 'childFriendly':
+        return (IsarNative.jsObjectGet(jsObj, 'childFriendly') ?? false) as P;
       case 'description':
         return (IsarNative.jsObjectGet(jsObj, 'description') ?? '') as P;
       case 'dogAllowed':
@@ -193,8 +226,8 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
         return (IsarNative.jsObjectGet(jsObj, 'favorit') ?? false) as P;
       case 'fax':
         return (IsarNative.jsObjectGet(jsObj, 'fax') ?? '') as P;
-      case 'groupsAllowed':
-        return (IsarNative.jsObjectGet(jsObj, 'groupsAllowed') ?? false) as P;
+      case 'groupsAccepted':
+        return (IsarNative.jsObjectGet(jsObj, 'groupsAccepted') ?? false) as P;
       case 'hint':
         return (IsarNative.jsObjectGet(jsObj, 'hint') ?? '') as P;
       case 'id':
@@ -208,17 +241,25 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
             double.negativeInfinity) as P;
       case 'name':
         return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
-      case 'noSpecial':
-        return (IsarNative.jsObjectGet(jsObj, 'noSpecial') ?? '') as P;
+      case 'openInWinter':
+        return (IsarNative.jsObjectGet(jsObj, 'openInWinter') ?? false) as P;
       case 'openText':
         return (IsarNative.jsObjectGet(jsObj, 'openText') ?? '') as P;
+      case 'province':
+        return (IsarNative.jsObjectGet(jsObj, 'province') ??
+            double.negativeInfinity) as P;
       case 'region':
         return (IsarNative.jsObjectGet(jsObj, 'region') ??
             double.negativeInfinity) as P;
-      case 'savings':
-        return (IsarNative.jsObjectGet(jsObj, 'savings') ?? '') as P;
-      case 'stollerAllowed':
-        return (IsarNative.jsObjectGet(jsObj, 'stollerAllowed') ?? false) as P;
+      case 'savingsAdult':
+        return (IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '') as P;
+      case 'savingsChild':
+        return (IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '') as P;
+      case 'strollerFriendly':
+        return (IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false)
+            as P;
+      case 'tavernNear':
+        return (IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false) as P;
       case 'telephone':
         return (IsarNative.jsObjectGet(jsObj, 'telephone') ?? '') as P;
       case 'topLocation':
@@ -227,8 +268,11 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
         return (IsarNative.jsObjectGet(jsObj, 'travelDirections') ?? '') as P;
       case 'website':
         return (IsarNative.jsObjectGet(jsObj, 'website') ?? '') as P;
-      case 'wheelchairAllowed':
-        return (IsarNative.jsObjectGet(jsObj, 'wheelchairAllowed') ?? false)
+      case 'websiteId':
+        return (IsarNative.jsObjectGet(jsObj, 'websiteId') ??
+            double.negativeInfinity) as P;
+      case 'wheelchairFriendly':
+        return (IsarNative.jsObjectGet(jsObj, 'wheelchairFriendly') ?? false)
             as P;
       case 'year':
         return (IsarNative.jsObjectGet(jsObj, 'year') ??
@@ -258,71 +302,85 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
     final value2 = object.addressZip;
     final _addressZip = IsarBinaryWriter.utf8Encoder.convert(value2);
     dynamicSize += (_addressZip.length) as int;
-    final value3 = object.bookletNumber;
-    final _bookletNumber = value3;
-    final value4 = object.category;
-    final _category = value4;
-    final value5 = object.changeIndex;
-    final _changeIndex = value5;
-    final value6 = object.changedDate;
-    final _changedDate = IsarBinaryWriter.utf8Encoder.convert(value6);
+    final value3 = object.apiId;
+    final _apiId = value3;
+    final value4 = object.badWeather;
+    final _badWeather = value4;
+    final value5 = object.bookletNumber;
+    final _bookletNumber = value5;
+    final value6 = object.category;
+    final _category = value6;
+    final value7 = object.changeIndex;
+    final _changeIndex = value7;
+    final value8 = object.changedDate;
+    final _changedDate = IsarBinaryWriter.utf8Encoder.convert(value8);
     dynamicSize += (_changedDate.length) as int;
-    final value7 = object.description;
-    final _description = IsarBinaryWriter.utf8Encoder.convert(value7);
+    final value9 = object.childFriendly;
+    final _childFriendly = value9;
+    final value10 = object.description;
+    final _description = IsarBinaryWriter.utf8Encoder.convert(value10);
     dynamicSize += (_description.length) as int;
-    final value8 = object.dogAllowed;
-    final _dogAllowed = value8;
-    final value9 = object.email;
-    final _email = IsarBinaryWriter.utf8Encoder.convert(value9);
+    final value11 = object.dogAllowed;
+    final _dogAllowed = value11;
+    final value12 = object.email;
+    final _email = IsarBinaryWriter.utf8Encoder.convert(value12);
     dynamicSize += (_email.length) as int;
-    final value10 = object.entryText;
-    final _entryText = IsarBinaryWriter.utf8Encoder.convert(value10);
+    final value13 = object.entryText;
+    final _entryText = IsarBinaryWriter.utf8Encoder.convert(value13);
     dynamicSize += (_entryText.length) as int;
-    final value11 = object.favorit;
-    final _favorit = value11;
-    final value12 = object.fax;
-    final _fax = IsarBinaryWriter.utf8Encoder.convert(value12);
+    final value14 = object.favorit;
+    final _favorit = value14;
+    final value15 = object.fax;
+    final _fax = IsarBinaryWriter.utf8Encoder.convert(value15);
     dynamicSize += (_fax.length) as int;
-    final value13 = object.groupsAllowed;
-    final _groupsAllowed = value13;
-    final value14 = object.hint;
-    final _hint = IsarBinaryWriter.utf8Encoder.convert(value14);
+    final value16 = object.groupsAccepted;
+    final _groupsAccepted = value16;
+    final value17 = object.hint;
+    final _hint = IsarBinaryWriter.utf8Encoder.convert(value17);
     dynamicSize += (_hint.length) as int;
-    final value15 = object.latitude;
-    final _latitude = value15;
-    final value16 = object.longitude;
-    final _longitude = value16;
-    final value17 = object.name;
-    final _name = IsarBinaryWriter.utf8Encoder.convert(value17);
+    final value18 = object.latitude;
+    final _latitude = value18;
+    final value19 = object.longitude;
+    final _longitude = value19;
+    final value20 = object.name;
+    final _name = IsarBinaryWriter.utf8Encoder.convert(value20);
     dynamicSize += (_name.length) as int;
-    final value18 = object.noSpecial;
-    final _noSpecial = IsarBinaryWriter.utf8Encoder.convert(value18);
-    dynamicSize += (_noSpecial.length) as int;
-    final value19 = object.openText;
-    final _openText = IsarBinaryWriter.utf8Encoder.convert(value19);
+    final value21 = object.openInWinter;
+    final _openInWinter = value21;
+    final value22 = object.openText;
+    final _openText = IsarBinaryWriter.utf8Encoder.convert(value22);
     dynamicSize += (_openText.length) as int;
-    final value20 = object.region;
-    final _region = value20;
-    final value21 = object.savings;
-    final _savings = IsarBinaryWriter.utf8Encoder.convert(value21);
-    dynamicSize += (_savings.length) as int;
-    final value22 = object.stollerAllowed;
-    final _stollerAllowed = value22;
-    final value23 = object.telephone;
-    final _telephone = IsarBinaryWriter.utf8Encoder.convert(value23);
+    final value23 = object.province;
+    final _province = value23;
+    final value24 = object.region;
+    final _region = value24;
+    final value25 = object.savingsAdult;
+    final _savingsAdult = IsarBinaryWriter.utf8Encoder.convert(value25);
+    dynamicSize += (_savingsAdult.length) as int;
+    final value26 = object.savingsChild;
+    final _savingsChild = IsarBinaryWriter.utf8Encoder.convert(value26);
+    dynamicSize += (_savingsChild.length) as int;
+    final value27 = object.strollerFriendly;
+    final _strollerFriendly = value27;
+    final value28 = object.tavernNear;
+    final _tavernNear = value28;
+    final value29 = object.telephone;
+    final _telephone = IsarBinaryWriter.utf8Encoder.convert(value29);
     dynamicSize += (_telephone.length) as int;
-    final value24 = object.topLocation;
-    final _topLocation = value24;
-    final value25 = object.travelDirections;
-    final _travelDirections = IsarBinaryWriter.utf8Encoder.convert(value25);
+    final value30 = object.topLocation;
+    final _topLocation = value30;
+    final value31 = object.travelDirections;
+    final _travelDirections = IsarBinaryWriter.utf8Encoder.convert(value31);
     dynamicSize += (_travelDirections.length) as int;
-    final value26 = object.website;
-    final _website = IsarBinaryWriter.utf8Encoder.convert(value26);
+    final value32 = object.website;
+    final _website = IsarBinaryWriter.utf8Encoder.convert(value32);
     dynamicSize += (_website.length) as int;
-    final value27 = object.wheelchairAllowed;
-    final _wheelchairAllowed = value27;
-    final value28 = object.year;
-    final _year = value28;
+    final value33 = object.websiteId;
+    final _websiteId = value33;
+    final value34 = object.wheelchairFriendly;
+    final _wheelchairFriendly = value34;
+    final value35 = object.year;
+    final _year = value35;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -332,32 +390,39 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
     writer.writeBytes(offsets[0], _addressCity);
     writer.writeBytes(offsets[1], _addressStreet);
     writer.writeBytes(offsets[2], _addressZip);
-    writer.writeLong(offsets[3], _bookletNumber);
-    writer.writeLong(offsets[4], _category);
-    writer.writeLong(offsets[5], _changeIndex);
-    writer.writeBytes(offsets[6], _changedDate);
-    writer.writeBytes(offsets[7], _description);
-    writer.writeBool(offsets[8], _dogAllowed);
-    writer.writeBytes(offsets[9], _email);
-    writer.writeBytes(offsets[10], _entryText);
-    writer.writeBool(offsets[11], _favorit);
-    writer.writeBytes(offsets[12], _fax);
-    writer.writeBool(offsets[13], _groupsAllowed);
-    writer.writeBytes(offsets[14], _hint);
-    writer.writeDouble(offsets[15], _latitude);
-    writer.writeDouble(offsets[16], _longitude);
-    writer.writeBytes(offsets[17], _name);
-    writer.writeBytes(offsets[18], _noSpecial);
-    writer.writeBytes(offsets[19], _openText);
-    writer.writeLong(offsets[20], _region);
-    writer.writeBytes(offsets[21], _savings);
-    writer.writeBool(offsets[22], _stollerAllowed);
-    writer.writeBytes(offsets[23], _telephone);
-    writer.writeBool(offsets[24], _topLocation);
-    writer.writeBytes(offsets[25], _travelDirections);
-    writer.writeBytes(offsets[26], _website);
-    writer.writeBool(offsets[27], _wheelchairAllowed);
-    writer.writeLong(offsets[28], _year);
+    writer.writeLong(offsets[3], _apiId);
+    writer.writeBool(offsets[4], _badWeather);
+    writer.writeLong(offsets[5], _bookletNumber);
+    writer.writeLong(offsets[6], _category);
+    writer.writeLong(offsets[7], _changeIndex);
+    writer.writeBytes(offsets[8], _changedDate);
+    writer.writeBool(offsets[9], _childFriendly);
+    writer.writeBytes(offsets[10], _description);
+    writer.writeBool(offsets[11], _dogAllowed);
+    writer.writeBytes(offsets[12], _email);
+    writer.writeBytes(offsets[13], _entryText);
+    writer.writeBool(offsets[14], _favorit);
+    writer.writeBytes(offsets[15], _fax);
+    writer.writeBool(offsets[16], _groupsAccepted);
+    writer.writeBytes(offsets[17], _hint);
+    writer.writeDouble(offsets[18], _latitude);
+    writer.writeDouble(offsets[19], _longitude);
+    writer.writeBytes(offsets[20], _name);
+    writer.writeBool(offsets[21], _openInWinter);
+    writer.writeBytes(offsets[22], _openText);
+    writer.writeLong(offsets[23], _province);
+    writer.writeLong(offsets[24], _region);
+    writer.writeBytes(offsets[25], _savingsAdult);
+    writer.writeBytes(offsets[26], _savingsChild);
+    writer.writeBool(offsets[27], _strollerFriendly);
+    writer.writeBool(offsets[28], _tavernNear);
+    writer.writeBytes(offsets[29], _telephone);
+    writer.writeBool(offsets[30], _topLocation);
+    writer.writeBytes(offsets[31], _travelDirections);
+    writer.writeBytes(offsets[32], _website);
+    writer.writeLong(offsets[33], _websiteId);
+    writer.writeBool(offsets[34], _wheelchairFriendly);
+    writer.writeLong(offsets[35], _year);
   }
 
   @override
@@ -367,33 +432,40 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
     object.addressCity = reader.readString(offsets[0]);
     object.addressStreet = reader.readString(offsets[1]);
     object.addressZip = reader.readString(offsets[2]);
-    object.bookletNumber = reader.readLong(offsets[3]);
-    object.category = reader.readLong(offsets[4]);
-    object.changeIndex = reader.readLong(offsets[5]);
-    object.changedDate = reader.readString(offsets[6]);
-    object.description = reader.readString(offsets[7]);
-    object.dogAllowed = reader.readBool(offsets[8]);
-    object.email = reader.readString(offsets[9]);
-    object.entryText = reader.readString(offsets[10]);
-    object.favorit = reader.readBool(offsets[11]);
-    object.fax = reader.readString(offsets[12]);
-    object.groupsAllowed = reader.readBool(offsets[13]);
-    object.hint = reader.readString(offsets[14]);
+    object.apiId = reader.readLong(offsets[3]);
+    object.badWeather = reader.readBool(offsets[4]);
+    object.bookletNumber = reader.readLong(offsets[5]);
+    object.category = reader.readLong(offsets[6]);
+    object.changeIndex = reader.readLong(offsets[7]);
+    object.changedDate = reader.readString(offsets[8]);
+    object.childFriendly = reader.readBool(offsets[9]);
+    object.description = reader.readString(offsets[10]);
+    object.dogAllowed = reader.readBool(offsets[11]);
+    object.email = reader.readString(offsets[12]);
+    object.entryText = reader.readString(offsets[13]);
+    object.favorit = reader.readBool(offsets[14]);
+    object.fax = reader.readString(offsets[15]);
+    object.groupsAccepted = reader.readBool(offsets[16]);
+    object.hint = reader.readString(offsets[17]);
     object.id = id;
-    object.latitude = reader.readDouble(offsets[15]);
-    object.longitude = reader.readDouble(offsets[16]);
-    object.name = reader.readString(offsets[17]);
-    object.noSpecial = reader.readString(offsets[18]);
-    object.openText = reader.readString(offsets[19]);
-    object.region = reader.readLong(offsets[20]);
-    object.savings = reader.readString(offsets[21]);
-    object.stollerAllowed = reader.readBool(offsets[22]);
-    object.telephone = reader.readString(offsets[23]);
-    object.topLocation = reader.readBool(offsets[24]);
-    object.travelDirections = reader.readString(offsets[25]);
-    object.website = reader.readString(offsets[26]);
-    object.wheelchairAllowed = reader.readBool(offsets[27]);
-    object.year = reader.readLong(offsets[28]);
+    object.latitude = reader.readDouble(offsets[18]);
+    object.longitude = reader.readDouble(offsets[19]);
+    object.name = reader.readString(offsets[20]);
+    object.openInWinter = reader.readBool(offsets[21]);
+    object.openText = reader.readString(offsets[22]);
+    object.province = reader.readLong(offsets[23]);
+    object.region = reader.readLong(offsets[24]);
+    object.savingsAdult = reader.readString(offsets[25]);
+    object.savingsChild = reader.readString(offsets[26]);
+    object.strollerFriendly = reader.readBool(offsets[27]);
+    object.tavernNear = reader.readBool(offsets[28]);
+    object.telephone = reader.readString(offsets[29]);
+    object.topLocation = reader.readBool(offsets[30]);
+    object.travelDirections = reader.readString(offsets[31]);
+    object.website = reader.readString(offsets[32]);
+    object.websiteId = reader.readLong(offsets[33]);
+    object.wheelchairFriendly = reader.readBool(offsets[34]);
+    object.year = reader.readLong(offsets[35]);
     return object;
   }
 
@@ -412,17 +484,17 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
       case 3:
         return (reader.readLong(offset)) as P;
       case 4:
-        return (reader.readLong(offset)) as P;
+        return (reader.readBool(offset)) as P;
       case 5:
         return (reader.readLong(offset)) as P;
       case 6:
-        return (reader.readString(offset)) as P;
+        return (reader.readLong(offset)) as P;
       case 7:
-        return (reader.readString(offset)) as P;
+        return (reader.readLong(offset)) as P;
       case 8:
-        return (reader.readBool(offset)) as P;
-      case 9:
         return (reader.readString(offset)) as P;
+      case 9:
+        return (reader.readBool(offset)) as P;
       case 10:
         return (reader.readString(offset)) as P;
       case 11:
@@ -430,29 +502,29 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
       case 12:
         return (reader.readString(offset)) as P;
       case 13:
-        return (reader.readBool(offset)) as P;
-      case 14:
         return (reader.readString(offset)) as P;
+      case 14:
+        return (reader.readBool(offset)) as P;
       case 15:
-        return (reader.readDouble(offset)) as P;
+        return (reader.readString(offset)) as P;
       case 16:
-        return (reader.readDouble(offset)) as P;
+        return (reader.readBool(offset)) as P;
       case 17:
         return (reader.readString(offset)) as P;
       case 18:
-        return (reader.readString(offset)) as P;
+        return (reader.readDouble(offset)) as P;
       case 19:
-        return (reader.readString(offset)) as P;
+        return (reader.readDouble(offset)) as P;
       case 20:
-        return (reader.readLong(offset)) as P;
+        return (reader.readString(offset)) as P;
       case 21:
-        return (reader.readString(offset)) as P;
+        return (reader.readBool(offset)) as P;
       case 22:
-        return (reader.readBool(offset)) as P;
-      case 23:
         return (reader.readString(offset)) as P;
+      case 23:
+        return (reader.readLong(offset)) as P;
       case 24:
-        return (reader.readBool(offset)) as P;
+        return (reader.readLong(offset)) as P;
       case 25:
         return (reader.readString(offset)) as P;
       case 26:
@@ -460,6 +532,20 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
       case 27:
         return (reader.readBool(offset)) as P;
       case 28:
+        return (reader.readBool(offset)) as P;
+      case 29:
+        return (reader.readString(offset)) as P;
+      case 30:
+        return (reader.readBool(offset)) as P;
+      case 31:
+        return (reader.readString(offset)) as P;
+      case 32:
+        return (reader.readString(offset)) as P;
+      case 33:
+        return (reader.readLong(offset)) as P;
+      case 34:
+        return (reader.readBool(offset)) as P;
+      case 35:
         return (reader.readLong(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -938,6 +1024,63 @@ extension LocationQueryFilter
     ));
   }
 
+  QueryBuilder<Location, Location, QAfterFilterCondition> apiIdEqualTo(
+      int value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'apiId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> apiIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'apiId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> apiIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'apiId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> apiIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'apiId',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> badWeatherEqualTo(
+      bool value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'badWeather',
+      value: value,
+    ));
+  }
+
   QueryBuilder<Location, Location, QAfterFilterCondition> bookletNumberEqualTo(
       int value) {
     return addFilterConditionInternal(FilterCondition(
@@ -1185,6 +1328,15 @@ extension LocationQueryFilter
       property: 'changedDate',
       value: pattern,
       caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> childFriendlyEqualTo(
+      bool value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'childFriendly',
+      value: value,
     ));
   }
 
@@ -1619,11 +1771,11 @@ extension LocationQueryFilter
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> groupsAllowedEqualTo(
+  QueryBuilder<Location, Location, QAfterFilterCondition> groupsAcceptedEqualTo(
       bool value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'groupsAllowed',
+      property: 'groupsAccepted',
       value: value,
     ));
   }
@@ -1943,106 +2095,12 @@ extension LocationQueryFilter
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<Location, Location, QAfterFilterCondition> openInWinterEqualTo(
+      bool value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'noSpecial',
+      property: 'openInWinter',
       value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'noSpecial',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'noSpecial',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'noSpecial',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'noSpecial',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'noSpecial',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'noSpecial',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Location, Location, QAfterFilterCondition> noSpecialMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'noSpecial',
-      value: pattern,
-      caseSensitive: caseSensitive,
     ));
   }
 
@@ -2149,6 +2207,54 @@ extension LocationQueryFilter
     ));
   }
 
+  QueryBuilder<Location, Location, QAfterFilterCondition> provinceEqualTo(
+      int value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'province',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> provinceGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'province',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> provinceLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'province',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> provinceBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'province',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
+  }
+
   QueryBuilder<Location, Location, QAfterFilterCondition> regionEqualTo(
       int value) {
     return addFilterConditionInternal(FilterCondition(
@@ -2197,19 +2303,20 @@ extension LocationQueryFilter
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsEqualTo(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsAdultEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'savings',
+      property: 'savingsAdult',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsGreaterThan(
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      savingsAdultGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -2217,13 +2324,13 @@ extension LocationQueryFilter
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: include,
-      property: 'savings',
+      property: 'savingsAdult',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsLessThan(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsAdultLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -2231,13 +2338,13 @@ extension LocationQueryFilter
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.lt,
       include: include,
-      property: 'savings',
+      property: 'savingsAdult',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsBetween(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsAdultBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -2245,7 +2352,7 @@ extension LocationQueryFilter
     bool includeUpper = true,
   }) {
     return addFilterConditionInternal(FilterCondition.between(
-      property: 'savings',
+      property: 'savingsAdult',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -2254,57 +2361,172 @@ extension LocationQueryFilter
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsStartsWith(
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      savingsAdultStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.startsWith,
-      property: 'savings',
+      property: 'savingsAdult',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsEndsWith(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsAdultEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.endsWith,
-      property: 'savings',
+      property: 'savingsAdult',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsContains(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsAdultContains(
       String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
-      property: 'savings',
+      property: 'savingsAdult',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> savingsMatches(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsAdultMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
-      property: 'savings',
+      property: 'savingsAdult',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition> stollerAllowedEqualTo(
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsChildEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'savingsChild',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      savingsChildGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'savingsChild',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsChildLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'savingsChild',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsChildBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'savingsChild',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      savingsChildStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'savingsChild',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsChildEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'savingsChild',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsChildContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'savingsChild',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> savingsChildMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'savingsChild',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      strollerFriendlyEqualTo(bool value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'strollerFriendly',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> tavernNearEqualTo(
       bool value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'stollerAllowed',
+      property: 'tavernNear',
       value: value,
     ));
   }
@@ -2631,11 +2853,59 @@ extension LocationQueryFilter
     ));
   }
 
-  QueryBuilder<Location, Location, QAfterFilterCondition>
-      wheelchairAllowedEqualTo(bool value) {
+  QueryBuilder<Location, Location, QAfterFilterCondition> websiteIdEqualTo(
+      int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'wheelchairAllowed',
+      property: 'websiteId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> websiteIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'websiteId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> websiteIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'websiteId',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> websiteIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'websiteId',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      wheelchairFriendlyEqualTo(bool value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'wheelchairFriendly',
       value: value,
     ));
   }
@@ -2718,6 +2988,22 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('addressZip', Sort.desc);
   }
 
+  QueryBuilder<Location, Location, QAfterSortBy> sortByApiId() {
+    return addSortByInternal('apiId', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByApiIdDesc() {
+    return addSortByInternal('apiId', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByBadWeather() {
+    return addSortByInternal('badWeather', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByBadWeatherDesc() {
+    return addSortByInternal('badWeather', Sort.desc);
+  }
+
   QueryBuilder<Location, Location, QAfterSortBy> sortByBookletNumber() {
     return addSortByInternal('bookletNumber', Sort.asc);
   }
@@ -2748,6 +3034,14 @@ extension LocationQueryWhereSortBy
 
   QueryBuilder<Location, Location, QAfterSortBy> sortByChangedDateDesc() {
     return addSortByInternal('changedDate', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByChildFriendly() {
+    return addSortByInternal('childFriendly', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByChildFriendlyDesc() {
+    return addSortByInternal('childFriendly', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> sortByDescription() {
@@ -2798,12 +3092,12 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('fax', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByGroupsAllowed() {
-    return addSortByInternal('groupsAllowed', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortByGroupsAccepted() {
+    return addSortByInternal('groupsAccepted', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByGroupsAllowedDesc() {
-    return addSortByInternal('groupsAllowed', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortByGroupsAcceptedDesc() {
+    return addSortByInternal('groupsAccepted', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> sortByHint() {
@@ -2846,12 +3140,12 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('name', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByNoSpecial() {
-    return addSortByInternal('noSpecial', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortByOpenInWinter() {
+    return addSortByInternal('openInWinter', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByNoSpecialDesc() {
-    return addSortByInternal('noSpecial', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortByOpenInWinterDesc() {
+    return addSortByInternal('openInWinter', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> sortByOpenText() {
@@ -2862,6 +3156,14 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('openText', Sort.desc);
   }
 
+  QueryBuilder<Location, Location, QAfterSortBy> sortByProvince() {
+    return addSortByInternal('province', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByProvinceDesc() {
+    return addSortByInternal('province', Sort.desc);
+  }
+
   QueryBuilder<Location, Location, QAfterSortBy> sortByRegion() {
     return addSortByInternal('region', Sort.asc);
   }
@@ -2870,20 +3172,36 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('region', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortBySavings() {
-    return addSortByInternal('savings', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortBySavingsAdult() {
+    return addSortByInternal('savingsAdult', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortBySavingsDesc() {
-    return addSortByInternal('savings', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortBySavingsAdultDesc() {
+    return addSortByInternal('savingsAdult', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByStollerAllowed() {
-    return addSortByInternal('stollerAllowed', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortBySavingsChild() {
+    return addSortByInternal('savingsChild', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByStollerAllowedDesc() {
-    return addSortByInternal('stollerAllowed', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortBySavingsChildDesc() {
+    return addSortByInternal('savingsChild', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByStrollerFriendly() {
+    return addSortByInternal('strollerFriendly', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByStrollerFriendlyDesc() {
+    return addSortByInternal('strollerFriendly', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByTavernNear() {
+    return addSortByInternal('tavernNear', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByTavernNearDesc() {
+    return addSortByInternal('tavernNear', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> sortByTelephone() {
@@ -2918,12 +3236,21 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('website', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByWheelchairAllowed() {
-    return addSortByInternal('wheelchairAllowed', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortByWebsiteId() {
+    return addSortByInternal('websiteId', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> sortByWheelchairAllowedDesc() {
-    return addSortByInternal('wheelchairAllowed', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> sortByWebsiteIdDesc() {
+    return addSortByInternal('websiteId', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortByWheelchairFriendly() {
+    return addSortByInternal('wheelchairFriendly', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy>
+      sortByWheelchairFriendlyDesc() {
+    return addSortByInternal('wheelchairFriendly', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> sortByYear() {
@@ -2961,6 +3288,22 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('addressZip', Sort.desc);
   }
 
+  QueryBuilder<Location, Location, QAfterSortBy> thenByApiId() {
+    return addSortByInternal('apiId', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByApiIdDesc() {
+    return addSortByInternal('apiId', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByBadWeather() {
+    return addSortByInternal('badWeather', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByBadWeatherDesc() {
+    return addSortByInternal('badWeather', Sort.desc);
+  }
+
   QueryBuilder<Location, Location, QAfterSortBy> thenByBookletNumber() {
     return addSortByInternal('bookletNumber', Sort.asc);
   }
@@ -2991,6 +3334,14 @@ extension LocationQueryWhereSortThenBy
 
   QueryBuilder<Location, Location, QAfterSortBy> thenByChangedDateDesc() {
     return addSortByInternal('changedDate', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByChildFriendly() {
+    return addSortByInternal('childFriendly', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByChildFriendlyDesc() {
+    return addSortByInternal('childFriendly', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> thenByDescription() {
@@ -3041,12 +3392,12 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('fax', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByGroupsAllowed() {
-    return addSortByInternal('groupsAllowed', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenByGroupsAccepted() {
+    return addSortByInternal('groupsAccepted', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByGroupsAllowedDesc() {
-    return addSortByInternal('groupsAllowed', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenByGroupsAcceptedDesc() {
+    return addSortByInternal('groupsAccepted', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> thenByHint() {
@@ -3089,12 +3440,12 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('name', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByNoSpecial() {
-    return addSortByInternal('noSpecial', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenByOpenInWinter() {
+    return addSortByInternal('openInWinter', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByNoSpecialDesc() {
-    return addSortByInternal('noSpecial', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenByOpenInWinterDesc() {
+    return addSortByInternal('openInWinter', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> thenByOpenText() {
@@ -3105,6 +3456,14 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('openText', Sort.desc);
   }
 
+  QueryBuilder<Location, Location, QAfterSortBy> thenByProvince() {
+    return addSortByInternal('province', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByProvinceDesc() {
+    return addSortByInternal('province', Sort.desc);
+  }
+
   QueryBuilder<Location, Location, QAfterSortBy> thenByRegion() {
     return addSortByInternal('region', Sort.asc);
   }
@@ -3113,20 +3472,36 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('region', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenBySavings() {
-    return addSortByInternal('savings', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenBySavingsAdult() {
+    return addSortByInternal('savingsAdult', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenBySavingsDesc() {
-    return addSortByInternal('savings', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenBySavingsAdultDesc() {
+    return addSortByInternal('savingsAdult', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByStollerAllowed() {
-    return addSortByInternal('stollerAllowed', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenBySavingsChild() {
+    return addSortByInternal('savingsChild', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByStollerAllowedDesc() {
-    return addSortByInternal('stollerAllowed', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenBySavingsChildDesc() {
+    return addSortByInternal('savingsChild', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByStrollerFriendly() {
+    return addSortByInternal('strollerFriendly', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByStrollerFriendlyDesc() {
+    return addSortByInternal('strollerFriendly', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByTavernNear() {
+    return addSortByInternal('tavernNear', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByTavernNearDesc() {
+    return addSortByInternal('tavernNear', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> thenByTelephone() {
@@ -3161,12 +3536,21 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('website', Sort.desc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByWheelchairAllowed() {
-    return addSortByInternal('wheelchairAllowed', Sort.asc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenByWebsiteId() {
+    return addSortByInternal('websiteId', Sort.asc);
   }
 
-  QueryBuilder<Location, Location, QAfterSortBy> thenByWheelchairAllowedDesc() {
-    return addSortByInternal('wheelchairAllowed', Sort.desc);
+  QueryBuilder<Location, Location, QAfterSortBy> thenByWebsiteIdDesc() {
+    return addSortByInternal('websiteId', Sort.desc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenByWheelchairFriendly() {
+    return addSortByInternal('wheelchairFriendly', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy>
+      thenByWheelchairFriendlyDesc() {
+    return addSortByInternal('wheelchairFriendly', Sort.desc);
   }
 
   QueryBuilder<Location, Location, QAfterSortBy> thenByYear() {
@@ -3195,6 +3579,14 @@ extension LocationQueryWhereDistinct
     return addDistinctByInternal('addressZip', caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<Location, Location, QDistinct> distinctByApiId() {
+    return addDistinctByInternal('apiId');
+  }
+
+  QueryBuilder<Location, Location, QDistinct> distinctByBadWeather() {
+    return addDistinctByInternal('badWeather');
+  }
+
   QueryBuilder<Location, Location, QDistinct> distinctByBookletNumber() {
     return addDistinctByInternal('bookletNumber');
   }
@@ -3210,6 +3602,10 @@ extension LocationQueryWhereDistinct
   QueryBuilder<Location, Location, QDistinct> distinctByChangedDate(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('changedDate', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<Location, Location, QDistinct> distinctByChildFriendly() {
+    return addDistinctByInternal('childFriendly');
   }
 
   QueryBuilder<Location, Location, QDistinct> distinctByDescription(
@@ -3240,8 +3636,8 @@ extension LocationQueryWhereDistinct
     return addDistinctByInternal('fax', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<Location, Location, QDistinct> distinctByGroupsAllowed() {
-    return addDistinctByInternal('groupsAllowed');
+  QueryBuilder<Location, Location, QDistinct> distinctByGroupsAccepted() {
+    return addDistinctByInternal('groupsAccepted');
   }
 
   QueryBuilder<Location, Location, QDistinct> distinctByHint(
@@ -3266,9 +3662,8 @@ extension LocationQueryWhereDistinct
     return addDistinctByInternal('name', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<Location, Location, QDistinct> distinctByNoSpecial(
-      {bool caseSensitive = true}) {
-    return addDistinctByInternal('noSpecial', caseSensitive: caseSensitive);
+  QueryBuilder<Location, Location, QDistinct> distinctByOpenInWinter() {
+    return addDistinctByInternal('openInWinter');
   }
 
   QueryBuilder<Location, Location, QDistinct> distinctByOpenText(
@@ -3276,17 +3671,30 @@ extension LocationQueryWhereDistinct
     return addDistinctByInternal('openText', caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<Location, Location, QDistinct> distinctByProvince() {
+    return addDistinctByInternal('province');
+  }
+
   QueryBuilder<Location, Location, QDistinct> distinctByRegion() {
     return addDistinctByInternal('region');
   }
 
-  QueryBuilder<Location, Location, QDistinct> distinctBySavings(
+  QueryBuilder<Location, Location, QDistinct> distinctBySavingsAdult(
       {bool caseSensitive = true}) {
-    return addDistinctByInternal('savings', caseSensitive: caseSensitive);
+    return addDistinctByInternal('savingsAdult', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<Location, Location, QDistinct> distinctByStollerAllowed() {
-    return addDistinctByInternal('stollerAllowed');
+  QueryBuilder<Location, Location, QDistinct> distinctBySavingsChild(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('savingsChild', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<Location, Location, QDistinct> distinctByStrollerFriendly() {
+    return addDistinctByInternal('strollerFriendly');
+  }
+
+  QueryBuilder<Location, Location, QDistinct> distinctByTavernNear() {
+    return addDistinctByInternal('tavernNear');
   }
 
   QueryBuilder<Location, Location, QDistinct> distinctByTelephone(
@@ -3309,8 +3717,12 @@ extension LocationQueryWhereDistinct
     return addDistinctByInternal('website', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<Location, Location, QDistinct> distinctByWheelchairAllowed() {
-    return addDistinctByInternal('wheelchairAllowed');
+  QueryBuilder<Location, Location, QDistinct> distinctByWebsiteId() {
+    return addDistinctByInternal('websiteId');
+  }
+
+  QueryBuilder<Location, Location, QDistinct> distinctByWheelchairFriendly() {
+    return addDistinctByInternal('wheelchairFriendly');
   }
 
   QueryBuilder<Location, Location, QDistinct> distinctByYear() {
@@ -3332,6 +3744,14 @@ extension LocationQueryProperty
     return addPropertyNameInternal('addressZip');
   }
 
+  QueryBuilder<Location, int, QQueryOperations> apiIdProperty() {
+    return addPropertyNameInternal('apiId');
+  }
+
+  QueryBuilder<Location, bool, QQueryOperations> badWeatherProperty() {
+    return addPropertyNameInternal('badWeather');
+  }
+
   QueryBuilder<Location, int, QQueryOperations> bookletNumberProperty() {
     return addPropertyNameInternal('bookletNumber');
   }
@@ -3346,6 +3766,10 @@ extension LocationQueryProperty
 
   QueryBuilder<Location, String, QQueryOperations> changedDateProperty() {
     return addPropertyNameInternal('changedDate');
+  }
+
+  QueryBuilder<Location, bool, QQueryOperations> childFriendlyProperty() {
+    return addPropertyNameInternal('childFriendly');
   }
 
   QueryBuilder<Location, String, QQueryOperations> descriptionProperty() {
@@ -3372,8 +3796,8 @@ extension LocationQueryProperty
     return addPropertyNameInternal('fax');
   }
 
-  QueryBuilder<Location, bool, QQueryOperations> groupsAllowedProperty() {
-    return addPropertyNameInternal('groupsAllowed');
+  QueryBuilder<Location, bool, QQueryOperations> groupsAcceptedProperty() {
+    return addPropertyNameInternal('groupsAccepted');
   }
 
   QueryBuilder<Location, String, QQueryOperations> hintProperty() {
@@ -3396,24 +3820,36 @@ extension LocationQueryProperty
     return addPropertyNameInternal('name');
   }
 
-  QueryBuilder<Location, String, QQueryOperations> noSpecialProperty() {
-    return addPropertyNameInternal('noSpecial');
+  QueryBuilder<Location, bool, QQueryOperations> openInWinterProperty() {
+    return addPropertyNameInternal('openInWinter');
   }
 
   QueryBuilder<Location, String, QQueryOperations> openTextProperty() {
     return addPropertyNameInternal('openText');
   }
 
+  QueryBuilder<Location, int, QQueryOperations> provinceProperty() {
+    return addPropertyNameInternal('province');
+  }
+
   QueryBuilder<Location, int, QQueryOperations> regionProperty() {
     return addPropertyNameInternal('region');
   }
 
-  QueryBuilder<Location, String, QQueryOperations> savingsProperty() {
-    return addPropertyNameInternal('savings');
+  QueryBuilder<Location, String, QQueryOperations> savingsAdultProperty() {
+    return addPropertyNameInternal('savingsAdult');
   }
 
-  QueryBuilder<Location, bool, QQueryOperations> stollerAllowedProperty() {
-    return addPropertyNameInternal('stollerAllowed');
+  QueryBuilder<Location, String, QQueryOperations> savingsChildProperty() {
+    return addPropertyNameInternal('savingsChild');
+  }
+
+  QueryBuilder<Location, bool, QQueryOperations> strollerFriendlyProperty() {
+    return addPropertyNameInternal('strollerFriendly');
+  }
+
+  QueryBuilder<Location, bool, QQueryOperations> tavernNearProperty() {
+    return addPropertyNameInternal('tavernNear');
   }
 
   QueryBuilder<Location, String, QQueryOperations> telephoneProperty() {
@@ -3432,8 +3868,12 @@ extension LocationQueryProperty
     return addPropertyNameInternal('website');
   }
 
-  QueryBuilder<Location, bool, QQueryOperations> wheelchairAllowedProperty() {
-    return addPropertyNameInternal('wheelchairAllowed');
+  QueryBuilder<Location, int, QQueryOperations> websiteIdProperty() {
+    return addPropertyNameInternal('websiteId');
+  }
+
+  QueryBuilder<Location, bool, QQueryOperations> wheelchairFriendlyProperty() {
+    return addPropertyNameInternal('wheelchairFriendly');
   }
 
   QueryBuilder<Location, int, QQueryOperations> yearProperty() {

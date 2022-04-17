@@ -109,7 +109,7 @@ class _MiniItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        location.groupsAllowed
+        location.groupsAccepted
             ? Icon(MdiIcons.accountGroup,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
@@ -117,11 +117,11 @@ class _MiniItems extends StatelessWidget {
             ? Icon(MdiIcons.dogSide,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
-        location.stollerAllowed
+        location.strollerFriendly
             ? Icon(MdiIcons.babyCarriage,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
-        location.wheelchairAllowed
+        location.wheelchairFriendly
             ? Icon(MdiIcons.wheelchairAccessibility,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),

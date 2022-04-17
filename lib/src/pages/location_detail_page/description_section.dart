@@ -18,16 +18,16 @@ class DescriptionSection extends StatelessWidget {
       )),
       Column(
         children: [
-          location.groupsAllowed
+          location.groupsAccepted
               ? Row(children: const [Icon(MdiIcons.accountGroup)])
               : const Center(),
           location.dogAllowed
               ? Row(children: const [Icon(MdiIcons.dogSide)])
               : const Center(),
-          location.stollerAllowed
+          location.strollerFriendly
               ? Row(children: const [Icon(MdiIcons.babyCarriage)])
               : const Center(),
-          location.wheelchairAllowed
+          location.wheelchairFriendly
               ? Row(children: const [Icon(MdiIcons.wheelchairAccessibility)])
               : const Center(),
           location.topLocation

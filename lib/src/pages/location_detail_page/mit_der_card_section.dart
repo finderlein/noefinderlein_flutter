@@ -29,9 +29,9 @@ class MitDerCardSection extends StatelessWidget {
             Row(
               children: [
                 const Text('Ersparnis: '),
-                Text(location.savings,
+                location.savingsAdult != null ?Text(location.savingsAdult,
                     style:
-                        const TextStyle(decoration: TextDecoration.lineThrough))
+                        const TextStyle(decoration: TextDecoration.lineThrough)):Center()
               ],
             )
           ])
