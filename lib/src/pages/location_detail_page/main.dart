@@ -14,7 +14,7 @@ import 'open_section.dart';
 import 'telephone_section.dart';
 import 'mail_section.dart';
 import 'webpage_section.dart';
-import 'check_dialog.dart';
+import 'checkin_dialog.dart';
 import 'dart:math' as math;
 
 class LocationDetailsPage extends StatefulWidget {
@@ -103,7 +103,7 @@ class LocationDetailView extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      builder: (BuildContext context) => const CheckDialog());
+                      builder: (BuildContext context) => const CheckInDialog());
                 }),
             IconButton(
               icon: Icon(
