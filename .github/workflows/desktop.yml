@@ -131,6 +131,7 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            ~/android/app-release.apk
-            ~/android/app-release.aab
+            ~/android/**/app-release.apk
+            ~/android/**/app-release.aab
             ~/appimage/*.AppImage
+            ~/appimage/**/noe_finderlein-latest-x86_64.AppImage
