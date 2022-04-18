@@ -24,16 +24,13 @@ class MitDerCardSection extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onTertiary,
               )),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Mit der Card'),
+            const Text('Mit der Card', style: TextStyle(fontSize: 18)),
             Text(location.entryText),
-            Row(
-              children: [
-                const Text('Ersparnis: '),
-                location.savingsAdult != null ?Text(location.savingsAdult,
-                    style:
-                        const TextStyle(decoration: TextDecoration.lineThrough)):Center()
-              ],
-            )
+            const Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text('Ersparnis:', style: TextStyle(fontSize: 16))),
+            Text('Erwachsenen-CARD € ${location.savingsAdult}'),
+            Text('Jugend-CARD € ${location.savingsChild}'),
           ])
         ]));
   }

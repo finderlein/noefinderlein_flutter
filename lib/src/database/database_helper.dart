@@ -19,7 +19,7 @@ class DatabaseHelper {
   // static final tablevisitedLocations = TableVisitedLocations.instance;
 
   static Future<Isar> db() async {
-    final db = Isar.getInstance('mainDB');
+    final db = Isar.getInstance(_databaseName);
     if (db != null) {
       return db;
     }
@@ -33,7 +33,7 @@ class DatabaseHelper {
         ],
         directory: dir.path,
         inspector: true, // if you want to enable the inspector for debug builds
-        name: 'mainDB');
+        name: _databaseName);
     return isar;
   }
 
@@ -104,13 +104,21 @@ class DatabaseHelper {
     return count != 0;
   }
 
-  static Future<Location?> getLocationToId({required int id}) async {
+  static Future<Location> getLocationToId({required int id}) async {
     Isar db = await DatabaseHelper.db();
     final locations = await db.locations.filter().idEqualTo(id).findAll();
     if (locations.length == 1) {
       return locations.first;
     }
-    return null;
+    return Location();
+  }
+
+  static Future<void> setFavUnfav(Location loc, bool fav) async {
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      loc.favorit = fav;
+      await db.locations.put(loc);
+    });
   }
 
   static Future<void> insertOrReplaceLocations(List<Location> locations) async {

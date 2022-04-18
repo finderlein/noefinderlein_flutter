@@ -3,29 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../database/tables/location.dart';
 
+class ButtonCol {
+  Color color;
+  IconData icon;
+  String label;
+  VoidCallback onPressed;
+
+  ButtonCol(
+      {required this.color,
+      required this.icon,
+      required this.label,
+      required this.onPressed});
+}
+
 class ButtonSection extends StatelessWidget {
-  const ButtonSection({Key? key, required this.location}) : super(key: key);
+  const ButtonSection({Key? key, required this.location, required this.bcol})
+      : super(key: key);
 
   final Location location;
+  final List<ButtonCol> bcol;
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).colorScheme.secondary;
+    // Color color = Theme.of(context).colorScheme.secondary;
+    List<Widget> wcol = <Widget>[];
+    for (var i = 0; i < bcol.length; i++) {
+      wcol.add(_buildButtonColumn(
+          bcol[i].color, bcol[i].icon, bcol[i].label, bcol[i].onPressed));
+    }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildButtonColumn(color, MdiIcons.phone, 'CALL'),
-        _buildButtonColumn(color, MdiIcons.email, 'MAIL'),
-        _buildButtonColumn(color, MdiIcons.earth, 'WEBPAGE'),
-        _buildButtonColumn(color, MdiIcons.navigation, 'NAVI'),
-        _buildButtonColumn(color, MdiIcons.starOutline, 'FAV'),
-      ],
-    );
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: wcol);
   }
 }
 
-TextButton _buildButtonColumn(Color color, IconData icon, String label) {
+TextButton _buildButtonColumn(
+    Color color, IconData icon, String label, VoidCallback? onPressed) {
   return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

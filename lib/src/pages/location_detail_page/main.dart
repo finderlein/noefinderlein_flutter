@@ -14,6 +14,7 @@ import 'open_section.dart';
 import 'telephone_section.dart';
 import 'mail_section.dart';
 import 'webpage_section.dart';
+import 'check_dialog.dart';
 import 'dart:math' as math;
 
 class LocationDetailsPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class LocationDetailsPage extends StatefulWidget {
 
 /// Displays detailed information about a SampleItem.
 class _LocationDetailsPageState extends State<LocationDetailsPage> {
-  late Future<Location?> _location;
+  late Future<Location> _location;
   @override
   void initState() {
     super.initState();
@@ -37,8 +38,27 @@ class _LocationDetailsPageState extends State<LocationDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    return ReRunnableFutureBuilder(location: _location, onRerun: _runFuture);
+  }
+
+  _runFuture() {
+    _location = DatabaseHelper.getLocationToId(id: widget.id);
+    setState(() {});
+  }
+}
+
+class ReRunnableFutureBuilder extends StatelessWidget {
+  const ReRunnableFutureBuilder(
+      {Key? key, required this.location, required this.onRerun})
+      : super(key: key);
+
+  final Future<Location> location;
+  final Function onRerun;
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _location,
+      future: location,
       builder: (BuildContext context, AsyncSnapshot<Location?> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -51,7 +71,7 @@ class _LocationDetailsPageState extends State<LocationDetailsPage> {
               return Text('Error: ${snapshot.error}');
             }
             final location = snapshot.data as Location;
-            return LocationDetailView(location: location);
+            return LocationDetailView(location: location, onRerun: onRerun);
         }
       },
     );
@@ -60,19 +80,48 @@ class _LocationDetailsPageState extends State<LocationDetailsPage> {
 
 /// Displays detailed information about a SampleItem.
 class LocationDetailView extends StatelessWidget {
-  const LocationDetailView({Key? key, required this.location})
+  const LocationDetailView(
+      {Key? key, required this.location, required this.onRerun})
       : super(key: key);
 
   final Location location;
+  final Function onRerun;
 
   @override
   Widget build(BuildContext context) {
+    Color color = Theme.of(context).colorScheme.secondary;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text(location.name),
-      ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          title: Text(location.name),
+          actions: [
+            IconButton(
+                icon: const Icon(
+                  MdiIcons.check,
+                ),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => const CheckDialog());
+                }),
+            IconButton(
+              icon: Icon(
+                location.favorit ? MdiIcons.star : MdiIcons.starOutline,
+              ),
+              onPressed: () {
+                location.favorit
+                    ? _favUnfavLocation(location, false, onRerun)
+                    : _favUnfavLocation(location, true, onRerun);
+              },
+            ),
+            IconButton(
+              icon: const Icon(
+                MdiIcons.map,
+              ),
+              onPressed: () {},
+            ),
+          ]),
       body: SingleChildScrollView(
           child: Container(
               padding: const EdgeInsets.all(8),
@@ -84,7 +133,47 @@ class LocationDetailView extends StatelessWidget {
                   const SizedBox(height: 10),
                   MitDerCardSection(location: location),
                   const SizedBox(height: 15),
-                  ButtonSection(location: location),
+                  ButtonSection(location: location, bcol: [
+                    ButtonCol(
+                        color: color,
+                        icon: MdiIcons.phone,
+                        label: 'CALL',
+                        onPressed: () {
+                          _launchTel(location.telephone);
+                        }),
+                    ButtonCol(
+                        color: color,
+                        icon: MdiIcons.email,
+                        label: 'MAIL',
+                        onPressed: () {
+                          _launchMail(location.email);
+                        }),
+                    ButtonCol(
+                        color: color,
+                        icon: MdiIcons.earth,
+                        label: 'WEBPAGE',
+                        onPressed: () {
+                          _launchWeb(location.website);
+                        }),
+                    ButtonCol(
+                        color: color,
+                        icon: MdiIcons.navigation,
+                        label: 'NAVI',
+                        onPressed: () {
+                          _launchNav(location.latitude, location.longitude);
+                        }),
+                    ButtonCol(
+                        color: color,
+                        icon: location.favorit
+                            ? MdiIcons.star
+                            : MdiIcons.starOutline,
+                        label: 'FAV',
+                        onPressed: () {
+                          location.favorit
+                              ? _favUnfavLocation(location, false, onRerun)
+                              : _favUnfavLocation(location, true, onRerun);
+                        }),
+                  ]),
                   const Divider(),
                   const SizedBox(height: 8),
                   NavigationSection(
@@ -186,6 +275,11 @@ void _launchWeb(String http) async {
 
 void _launchNav(double lat, double lon) async {
   MapsLauncher.launchCoordinates(lat, lon);
+}
+
+void _favUnfavLocation(Location location, bool fav, Function onRerun) async {
+  await DatabaseHelper.setFavUnfav(location, fav);
+  await onRerun();
 }
 
 @immutable
@@ -398,5 +492,5 @@ class ActionButton extends StatelessWidget {
   }
 }
 
-void _launchURL(_url) async =>
-    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+void _launchURL(url) async =>
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
