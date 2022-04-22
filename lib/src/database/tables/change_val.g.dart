@@ -56,7 +56,8 @@ class _ChangeValWebAdapter extends IsarWebTypeAdapter<ChangeVal> {
     final object = ChangeVal();
     object.changeCount =
         IsarNative.jsObjectGet(jsObj, 'changeCount') ?? double.negativeInfinity;
-    object.year = IsarNative.jsObjectGet(jsObj, 'year');
+    object.year =
+        IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity;
     return object;
   }
 
@@ -67,7 +68,8 @@ class _ChangeValWebAdapter extends IsarWebTypeAdapter<ChangeVal> {
         return (IsarNative.jsObjectGet(jsObj, 'changeCount') ??
             double.negativeInfinity) as P;
       case 'year':
-        return (IsarNative.jsObjectGet(jsObj, 'year')) as P;
+        return (IsarNative.jsObjectGet(jsObj, 'year') ??
+            double.negativeInfinity) as P;
       default:
         throw 'Illegal propertyName';
     }
@@ -130,7 +132,7 @@ extension ChangeValQueryWhereSort
 
 extension ChangeValQueryWhere
     on QueryBuilder<ChangeVal, ChangeVal, QWhereClause> {
-  QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearEqualTo(int? year) {
+  QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearEqualTo(int year) {
     return addWhereClauseInternal(WhereClause(
       indexName: null,
       lower: [year],
@@ -141,7 +143,7 @@ extension ChangeValQueryWhere
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearNotEqualTo(
-      int? year) {
+      int year) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(WhereClause(
         indexName: null,
@@ -166,7 +168,7 @@ extension ChangeValQueryWhere
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearGreaterThan(
-    int? year, {
+    int year, {
     bool include = false,
   }) {
     return addWhereClauseInternal(WhereClause(
@@ -177,7 +179,7 @@ extension ChangeValQueryWhere
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearLessThan(
-    int? year, {
+    int year, {
     bool include = false,
   }) {
     return addWhereClauseInternal(WhereClause(
@@ -188,8 +190,8 @@ extension ChangeValQueryWhere
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearBetween(
-    int? lowerYear,
-    int? upperYear, {
+    int lowerYear,
+    int upperYear, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -254,16 +256,8 @@ extension ChangeValQueryFilter
     ));
   }
 
-  QueryBuilder<ChangeVal, ChangeVal, QAfterFilterCondition> yearIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'year',
-      value: null,
-    ));
-  }
-
   QueryBuilder<ChangeVal, ChangeVal, QAfterFilterCondition> yearEqualTo(
-      int? value) {
+      int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'year',
@@ -272,7 +266,7 @@ extension ChangeValQueryFilter
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterFilterCondition> yearGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -284,7 +278,7 @@ extension ChangeValQueryFilter
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterFilterCondition> yearLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -296,8 +290,8 @@ extension ChangeValQueryFilter
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterFilterCondition> yearBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -369,7 +363,7 @@ extension ChangeValQueryProperty
     return addPropertyNameInternal('changeCount');
   }
 
-  QueryBuilder<ChangeVal, int?, QQueryOperations> yearProperty() {
+  QueryBuilder<ChangeVal, int, QQueryOperations> yearProperty() {
     return addPropertyNameInternal('year');
   }
 }

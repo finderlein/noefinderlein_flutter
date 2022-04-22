@@ -6,6 +6,9 @@ import './tables/location.dart';
 import './tables/change_val.dart';
 import './tables/open_day.dart';
 import './tables/visited_location.dart';
+import './tables/region.dart';
+import './tables/category.dart';
+import './tables/province.dart';
 
 // import '../model/model_noec_location.dart';
 
@@ -29,7 +32,10 @@ class DatabaseHelper {
           LocationSchema,
           ChangeValSchema,
           OpenDaySchema,
-          VisitedLocationSchema
+          VisitedLocationSchema,
+          RegionSchema,
+          CategorySchema,
+          ProvinceSchema
         ],
         directory: dir.path,
         inspector: true, // if you want to enable the inspector for debug builds
@@ -38,7 +44,7 @@ class DatabaseHelper {
   }
 
   static Future<List<Location>> getAllMenuLocations(
-      {required int year, required int regionId, String? query}) async {
+      {required int year, required int regionId}) async {
     Isar db = await DatabaseHelper.db();
     final locations = await db.locations
         .filter()
@@ -50,7 +56,13 @@ class DatabaseHelper {
     return locations;
   }
 
-  static Future<int?> getLocationsCountToYear(int year) async {
+  static Future<List<Region>> getAllRegions() async {
+    Isar db = await DatabaseHelper.db();
+    final regions = db.regions.where().findAll();
+    return regions;
+  }
+
+  static Future<int> getLocationsCountToYear(int year) async {
     Isar db = await DatabaseHelper.db();
     final count = await db.locations.filter().yearEqualTo(year).count();
     return count;
@@ -118,6 +130,27 @@ class DatabaseHelper {
     await db.writeTxn((isar) async {
       loc.favorit = fav;
       await db.locations.put(loc);
+    });
+  }
+
+  static Future<void> insertOrReplaceRegions(List<Region> regions) async {
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.regions.putAll(regions);
+    });
+  }
+
+  static Future<void> insertOrReplaceProvinces(List<Province> province) async {
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.provinces.putAll(province);
+    });
+  }
+
+  static Future<void> insertOrReplaceCategories(List<Category> category) async {
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.categorys.putAll(category);
     });
   }
 

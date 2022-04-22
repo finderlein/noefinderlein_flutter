@@ -80,7 +80,8 @@ class _VisitedLocationWebAdapter extends IsarWebTypeAdapter<VisitedLocation> {
     object.visitedLocationId =
         IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
             double.negativeInfinity;
-    object.visitedLoggedDay = IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay');
+    object.visitedLoggedDay =
+        IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '';
     object.visitedLongitude =
         IsarNative.jsObjectGet(jsObj, 'visitedLongitude') ??
             double.negativeInfinity;
@@ -106,7 +107,7 @@ class _VisitedLocationWebAdapter extends IsarWebTypeAdapter<VisitedLocation> {
         return (IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
             double.negativeInfinity) as P;
       case 'visitedLoggedDay':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay')) as P;
+        return (IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '') as P;
       case 'visitedLongitude':
         return (IsarNative.jsObjectGet(jsObj, 'visitedLongitude') ??
             double.negativeInfinity) as P;
@@ -145,11 +146,8 @@ class _VisitedLocationNativeAdapter
     final value2 = object.visitedLocationId;
     final _visitedLocationId = value2;
     final value3 = object.visitedLoggedDay;
-    IsarUint8List? _visitedLoggedDay;
-    if (value3 != null) {
-      _visitedLoggedDay = IsarBinaryWriter.utf8Encoder.convert(value3);
-    }
-    dynamicSize += (_visitedLoggedDay?.length ?? 0) as int;
+    final _visitedLoggedDay = IsarBinaryWriter.utf8Encoder.convert(value3);
+    dynamicSize += (_visitedLoggedDay.length) as int;
     final value4 = object.visitedLongitude;
     final _visitedLongitude = value4;
     final value5 = object.visitedSaved;
@@ -179,7 +177,7 @@ class _VisitedLocationNativeAdapter
     object.visitedId = id;
     object.visitedLatitude = reader.readDouble(offsets[1]);
     object.visitedLocationId = reader.readLong(offsets[2]);
-    object.visitedLoggedDay = reader.readStringOrNull(offsets[3]);
+    object.visitedLoggedDay = reader.readString(offsets[3]);
     object.visitedLongitude = reader.readDouble(offsets[4]);
     object.visitedSaved = reader.readDouble(offsets[5]);
     object.visitedYear = reader.readLong(offsets[6]);
@@ -199,7 +197,7 @@ class _VisitedLocationNativeAdapter
       case 2:
         return (reader.readLong(offset)) as P;
       case 3:
-        return (reader.readStringOrNull(offset)) as P;
+        return (reader.readString(offset)) as P;
       case 4:
         return (reader.readDouble(offset)) as P;
       case 5:
@@ -446,17 +444,8 @@ extension VisitedLocationQueryFilter
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLoggedDayIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'visitedLoggedDay',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -469,7 +458,7 @@ extension VisitedLocationQueryFilter
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayGreaterThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -484,7 +473,7 @@ extension VisitedLocationQueryFilter
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayLessThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -499,8 +488,8 @@ extension VisitedLocationQueryFilter
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -909,7 +898,7 @@ extension VisitedLocationQueryProperty
     return addPropertyNameInternal('visitedLocationId');
   }
 
-  QueryBuilder<VisitedLocation, String?, QQueryOperations>
+  QueryBuilder<VisitedLocation, String, QQueryOperations>
       visitedLoggedDayProperty() {
     return addPropertyNameInternal('visitedLoggedDay');
   }

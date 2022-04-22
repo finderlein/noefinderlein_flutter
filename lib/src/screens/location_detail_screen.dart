@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:noefinderlein_flutter/src/pages/location_detail_page/telephone_section.dart';
-import '../../database/tables/location.dart';
-import '../../database/database_helper.dart';
+import '../database/tables/location.dart';
+import '../database/database_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'title_section.dart';
-import 'button_section.dart';
-import 'description_section.dart';
-import 'mit_der_card_section.dart';
-import 'navigation_section.dart';
-import 'open_section.dart';
-import 'telephone_section.dart';
-import 'mail_section.dart';
-import 'webpage_section.dart';
-import 'checkin_dialog.dart';
+import '../widgets/location_detail_page/title_section.dart';
+import '../widgets/location_detail_page/button_section.dart';
+import '../widgets/location_detail_page/description_section.dart';
+import '../widgets/location_detail_page/mit_der_card_section.dart';
+import '../widgets/location_detail_page/navigation_section.dart';
+import '../widgets/location_detail_page/open_section.dart';
+import '../widgets/location_detail_page/telephone_section.dart';
+import '../widgets/location_detail_page/mail_section.dart';
+import '../widgets/location_detail_page/webpage_section.dart';
+import '../widgets/location_detail_page/checkin_dialog.dart';
 import 'dart:math' as math;
 
-class LocationDetailsPage extends StatefulWidget {
-  const LocationDetailsPage({Key? key, required this.id}) : super(key: key);
+class LocationDetailsScreen extends StatefulWidget {
+  const LocationDetailsScreen({Key? key, required this.id}) : super(key: key);
   final int id;
   static const routeName = '/location/';
 
   @override
-  State<LocationDetailsPage> createState() => _LocationDetailsPageState();
+  State<LocationDetailsScreen> createState() => _LocationDetailsScreenState();
 }
 
 /// Displays detailed information about a SampleItem.
-class _LocationDetailsPageState extends State<LocationDetailsPage> {
+class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
   late Future<Location> _location;
   @override
   void initState() {
@@ -59,7 +58,7 @@ class ReRunnableFutureBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: location,
-      builder: (BuildContext context, AsyncSnapshot<Location?> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Location> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return const Text('Press button to start.');
@@ -205,6 +204,7 @@ class LocationDetailView extends StatelessWidget {
               ))),
       floatingActionButton: ExpandableFab(
         distance: 112.0,
+        initialOpen: false,
         children: [
           ActionButton(
             onPressed: () {
@@ -286,12 +286,12 @@ void _favUnfavLocation(Location location, bool fav, Function onRerun) async {
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
     Key? key,
-    this.initialOpen,
+    required this.initialOpen,
     required this.distance,
     required this.children,
   }) : super(key: key);
 
-  final bool? initialOpen;
+  final bool initialOpen;
   final double distance;
   final List<Widget> children;
 
@@ -301,14 +301,14 @@ class ExpandableFab extends StatefulWidget {
 
 class _ExpandableFabState extends State<ExpandableFab>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _expandAnimation;
+  late AnimationController _controller;
+  late Animation<double> _expandAnimation;
   bool _open = false;
 
   @override
   void initState() {
     super.initState();
-    _open = widget.initialOpen ?? false;
+    _open = widget.initialOpen;
     _controller = AnimationController(
       value: _open ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 250),
@@ -452,7 +452,7 @@ class _ExpandingActionButton extends StatelessWidget {
           bottom: 4.0 + offset.dy,
           child: Transform.rotate(
             angle: (1.0 - progress.value) * math.pi / 2,
-            child: child!,
+            child: child,
           ),
         );
       },
@@ -468,11 +468,11 @@ class _ExpandingActionButton extends StatelessWidget {
 class ActionButton extends StatelessWidget {
   const ActionButton({
     Key? key,
-    this.onPressed,
+    required this.onPressed,
     required this.icon,
   }) : super(key: key);
 
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
   final Widget icon;
 
   @override

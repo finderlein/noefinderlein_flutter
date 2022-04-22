@@ -18,7 +18,3 @@ void main() async {
   // SettingsView.
   runApp(MyApp(settingsController: settingsController));
 }
-
-int getCurrentYear() {
-  return 2022;
-}

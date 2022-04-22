@@ -36,7 +36,7 @@ class ButtonSection extends StatelessWidget {
 }
 
 TextButton _buildButtonColumn(
-    Color color, IconData icon, String label, VoidCallback? onPressed) {
+    Color color, IconData icon, String label, VoidCallback onPressed) {
   return TextButton(
       onPressed: onPressed,
       child: Column(

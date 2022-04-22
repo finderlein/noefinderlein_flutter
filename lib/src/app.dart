@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'model/model_location_list.dart';
 import 'database/tables/location.dart';
-import 'pages/locations_list_page.dart';
-import 'pages/location_detail_page/main.dart';
+import 'screens/locations_list_screen.dart';
+import 'screens/location_detail_screen.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
+import 'screens/settings_screen.dart';
+import 'screens/regions_list_screen.dart';
 import './widgets/downloader_modal.dart';
 import 'themes/noefinderlein.dart';
 
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
   final SettingsController settingsController;
   final NoeFinderleinTheme noefTheme = NoeFinderleinTheme();
 
+  final int year = getCurrentYear();
   @override
   Widget build(BuildContext context) {
     // Glue the SettingsController to the MaterialApp.
@@ -34,8 +37,17 @@ class MyApp extends StatelessWidget {
           // MaterialApp to restore the navigation stack when a user leaves and
           // returns to the app after it has been killed while running in the
           // background.
-          restorationScopeId: 'app',
+          restorationScopeId: 'noefindeleinApp',
 
+          initialRoute: LocationListScreen.routeName,
+          // routes: {
+          //   // LocationListScreen.routeName: (BuildContext context) =>
+          //   //     const LocationListScreen(),
+          //   RegionsListScreen.routeName: (BuildContext context) =>
+          //       RegionsListScreen(year: year),
+          //   SettingsScreen.routeName: (BuildContext context) =>
+          //       SettingsScreen(controller: settingsController)
+          // },
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations
           // depending on the user's locale.
@@ -73,27 +85,38 @@ class MyApp extends StatelessWidget {
               builder: (BuildContext context) {
                 final String name = routeSettings.name as String;
 
-                if (name.startsWith(LocationDetailsPage.routeName)) {
+                if (name.startsWith(LocationDetailsScreen.routeName)) {
                   final id = routeSettings.arguments as int;
-                  return LocationDetailsPage(id: id);
+                  return LocationDetailsScreen(id: id);
                 }
                 switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
+                  case RegionsListScreen.routeName:
+                    return RegionsListScreen(year: year);
+                  case SettingsScreen.routeName:
+                    return SettingsScreen(controller: settingsController);
                   case Downloader.routeName:
                     return Scaffold(
-                        body: Column(children: const [
+                        body: Column(children: [
                       SimpleDialog(
-                          title: Text('Downloading Data...'),
-                          children: [Downloader(year: 2022)])
+                          title: const Text('Downloading Data...'),
+                          children: [Downloader(year: year)])
                     ]));
 
-                  case LocationListView.routeName:
+                  case LocationListScreen.routeName:
                   default:
-                    return const LocationListView(
-                      year: 2022,
-                      regionId: 1,
-                    );
+                    if (routeSettings.arguments != null) {
+                      final sett =
+                          routeSettings.arguments as LocationListScreenCall;
+                      return LocationListScreen(
+                        year: sett.year,
+                        regionId: sett.regionId,
+                      );
+                    } else {
+                      return LocationListScreen(
+                        year: year,
+                        regionId: 0,
+                      );
+                    }
                 }
               },
             );
@@ -102,4 +125,8 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+int getCurrentYear() {
+  return 2022;
 }

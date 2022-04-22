@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 
 // import '../model/model_noec_location.dart';
+import '../database/tables/province.dart';
+import '../database/tables/region.dart';
+import '../database/tables/category.dart';
 import '../model/API/current_ids.dart';
 import '../database/tables/location.dart';
 import '../database/database_helper.dart';
@@ -56,6 +59,32 @@ class DataDownloader {
     } else {
       //mCallbacks.onDownloadError("No Location data yet for year: " + year.toString());
     }
+    final regionResponse = await http.get(Uri.parse('${apiUrl}Regions'));
+    if (regionResponse.statusCode == 200) {
+      await DatabaseHelper.insertOrReplaceRegions(
+          regionListFromAPIJson(json.decode(regionResponse.body)));
+    } else {
+      // If that response was not OK, throw an error.
+      throw Exception('Failed to load regions');
+    }
+
+    final provinceResponse = await http.get(Uri.parse('${apiUrl}Provinces'));
+    if (provinceResponse.statusCode == 200) {
+      await DatabaseHelper.insertOrReplaceProvinces(
+          provinceListFromAPIJson(json.decode(provinceResponse.body)));
+    } else {
+      // If that response was not OK, throw an error.
+      throw Exception('Failed to load regions');
+    }
+
+    final categoryResponse = await http.get(Uri.parse('${apiUrl}Categories'));
+    if (categoryResponse.statusCode == 200) {
+      await DatabaseHelper.insertOrReplaceCategories(
+          categoryListFromAPIJson(json.decode(categoryResponse.body)));
+    } else {
+      // If that response was not OK, throw an error.
+      throw Exception('Failed to load regions');
+    }
   }
 
   Stream<DownloaderProgress> _updatewiththisJsondata(List<int> nummern) async* {
@@ -95,8 +124,8 @@ class DataDownloader {
 
       zael = zael + changedLocationIds.length;
       final d = DownloaderProgress();
-      d.current = zael;
-      d.max = anzahlakt;
+      d.current = zael + .0;
+      d.max = anzahlakt + .0;
       yield d;
     }
   }
@@ -149,6 +178,45 @@ class DataDownloader {
     object.changeIndex = json['change_index'];
     object.favorit = false;
 
+    return object;
+  }
+
+  List<Region> regionListFromAPIJson(List<dynamic> parsedJson) {
+    List<Region> locations = <Region>[];
+    locations = parsedJson.map((i) => regionFromAPIJson(i)).toList();
+    return locations;
+  }
+
+  Region regionFromAPIJson(Map<String, dynamic> json) {
+    final object = Region();
+    object.id = json['id'];
+    object.name = json['name'];
+    return object;
+  }
+
+  List<Province> provinceListFromAPIJson(List<dynamic> parsedJson) {
+    List<Province> locations = <Province>[];
+    locations = parsedJson.map((i) => provinceFromAPIJson(i)).toList();
+    return locations;
+  }
+
+  Province provinceFromAPIJson(Map<String, dynamic> json) {
+    final object = Province();
+    object.id = json['id'];
+    object.name = json['name'];
+    return object;
+  }
+
+  List<Category> categoryListFromAPIJson(List<dynamic> parsedJson) {
+    List<Category> locations = <Category>[];
+    locations = parsedJson.map((i) => categoryFromAPIJson(i)).toList();
+    return locations;
+  }
+
+  Category categoryFromAPIJson(Map<String, dynamic> json) {
+    final object = Category();
+    object.id = json['id'];
+    object.name = json['name'];
     return object;
   }
 }

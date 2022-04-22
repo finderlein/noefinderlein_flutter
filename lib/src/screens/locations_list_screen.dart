@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
-import '../settings/settings_view.dart';
 import '../database/database_helper.dart';
-import 'location_detail_page/main.dart';
-import '../widgets/downloader_modal.dart';
+// import './location_detail_page.dart';
 import '../database/tables/location.dart';
-import '../widgets/locations_list.dart';
+import '../widgets/location_list/locations_list.dart';
+import '../widgets/drawer_main.dart';
+import '../widgets/app_bar_main.dart';
 
-class LocationListView extends StatefulWidget {
-  const LocationListView({Key? key, required this.regionId, required this.year})
+class LocationListScreen extends StatefulWidget {
+  const LocationListScreen(
+      {Key? key, required this.regionId, required this.year})
       : super(key: key);
   final int regionId;
   final int year;
   static const routeName = '/all';
 
   @override
-  State<LocationListView> createState() => _LocationListViewState();
+  State<LocationListScreen> createState() => _LocationListScreenState();
 }
 
 /// Displays a list of SampleItems.
-class _LocationListViewState extends State<LocationListView> {
+class _LocationListScreenState extends State<LocationListScreen> {
   late Future<List<Location>> _allmenuLocations;
   @override
   void initState() {
@@ -32,29 +33,8 @@ class _LocationListViewState extends State<LocationListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Noe Card Locations'),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: () {
-                // Navigator.of(context, rootNavigator: true).restorablePushNamed(Downloader.routeName);
-                Navigator.restorablePushNamed(context, Downloader.routeName);
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                // Navigate to the settings page. If the user leaves and returns
-                // to the app after it has been killed while running in the
-                // background, the navigation stack is restored.
-                Navigator.restorablePushNamed(context, SettingsView.routeName);
-              },
-            ),
-          ],
-        ),
+        drawer: DrawerMain(year: widget.year),
+        appBar: AppBarMain(customTitle: 'Alle Ziele'),
 
         // To work with lists that may contain a large number of items, it’s best
         // to use the ListView.builder constructor.
@@ -76,7 +56,7 @@ class _LocationListViewState extends State<LocationListView> {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
-                return LocationsList(locations: snapshot.data);
+                return LocationsList(locations: snapshot.data!);
               // return Text('Result: ${snapshot.data}');
             }
           },

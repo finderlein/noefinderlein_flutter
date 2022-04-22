@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/data_downloader.dart';
+import '../utilities/data_downloader.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 // import '../pages/locations_list_page.dart';
 import '../model/model_downloader_progress.dart';

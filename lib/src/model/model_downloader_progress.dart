@@ -1,4 +1,4 @@
 class DownloaderProgress {
-  int current = 0;
-  int max = 100;
+  double current = 0;
+  double max = 100;
 }

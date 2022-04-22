@@ -6,7 +6,7 @@ part 'change_val.g.dart';
 @Name("ChangeVal")
 class ChangeVal {
   @Id()
-  int? year;
+  late int year;
 
   int changeCount = 0;
 }

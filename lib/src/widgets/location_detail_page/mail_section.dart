@@ -4,10 +4,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../database/tables/location.dart';
 
 class MailSection extends StatelessWidget {
-  const MailSection({Key? key, required this.location, this.onPressed})
+  const MailSection({Key? key, required this.location, required this.onPressed})
       : super(key: key);
 
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
   final Location location;
   @override
   Widget build(BuildContext context) {
