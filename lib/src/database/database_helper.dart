@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,6 +10,7 @@ import './tables/visited_location.dart';
 import './tables/region.dart';
 import './tables/category.dart';
 import './tables/province.dart';
+import '../utilities/noefinderlein.dart';
 
 // import '../model/model_noec_location.dart';
 
@@ -21,12 +23,34 @@ class DatabaseHelper {
   // static final tableOpenDays = TableOpenDays.instance;
   // static final tablevisitedLocations = TableVisitedLocations.instance;
 
-  static Future<Isar> db() async {
+  static Isar dbSync() {
+    Noefinderlein glob = Noefinderlein();
     final db = Isar.getInstance(_databaseName);
     if (db != null) {
       return db;
     }
-    final dir = await getApplicationSupportDirectory(); // path_provider package
+    final isar = Isar.openSync(
+        schemas: [
+          LocationSchema,
+          ChangeValSchema,
+          OpenDaySchema,
+          VisitedLocationSchema,
+          RegionSchema,
+          CategorySchema,
+          ProvinceSchema
+        ],
+        directory: glob.supportDir.toString(),
+        inspector: true, // if you want to enable the inspector for debug builds
+        name: _databaseName);
+    return isar;
+  }
+
+  static Future<Isar> db() async {
+    Noefinderlein glob = Noefinderlein();
+    final db = Isar.getInstance(_databaseName);
+    if (db != null) {
+      return db;
+    }
     final isar = await Isar.open(
         schemas: [
           LocationSchema,
@@ -37,23 +61,49 @@ class DatabaseHelper {
           CategorySchema,
           ProvinceSchema
         ],
-        directory: dir.path,
+        directory: glob.supportDir.toString(),
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
     return isar;
   }
 
-  static Future<List<Location>> getAllMenuLocations(
-      {required int year, required int regionId}) async {
+  static Future<List<Location>> getAllLocations(
+      {required int year,
+      int regionId = 0,
+      bool favorites = false,
+      String searchString = '',
+      String sortBy = 'name'}) async {
     Isar db = await DatabaseHelper.db();
-    final locations = await db.locations
+    developer.log('regionId',
+        name: 'database_helper.dart', error: regionId.toString());
+    final locationsb = db.locations
         .filter()
         .yearEqualTo(year)
-        .regionEqualTo(regionId)
-        .sortByBookletNumber()
-        .thenByName()
-        .findAll();
+        .and()
+        .optional(regionId != 0, (q) => q.regionEqualTo(regionId))
+        .and()
+        .optional(favorites, (q) => q.favoritEqualTo(true))
+        .and()
+        .optional(
+            searchString != '', (q) => q.searchStringContains(searchString));
+    List<Location> locations;
+
+    if (sortBy == 'name') {
+      locations = await locationsb.sortByName().thenByBookletNumber().findAll();
+    } else {
+      locations = await locationsb.sortByBookletNumber().thenByName().findAll();
+    }
     return locations;
+  }
+
+  static String getRegionName(int regionId) {
+    Isar db = DatabaseHelper.dbSync();
+    final region = db.regions.where().idEqualTo(regionId).findFirstSync();
+    if (region != null) {
+      return region.name;
+    } else {
+      return '';
+    }
   }
 
   static Future<List<Region>> getAllRegions() async {
@@ -114,6 +164,19 @@ class DatabaseHelper {
     Isar db = await DatabaseHelper.db();
     final count = await db.locations.filter().idEqualTo(id).count();
     return count != 0;
+  }
+
+  static Future<List<Location>> getLocationsToIds(
+      {required List<int> locationIds}) async {
+    Isar db = await DatabaseHelper.db();
+    final locations = await db.locations
+        .filter()
+        .repeat(locationIds, (q, int locId) => q.idEqualTo(locId))
+        .findAll();
+    if (locations.isNotEmpty) {
+      return locations;
+    }
+    return [];
   }
 
   static Future<Location> getLocationToId({required int id}) async {

@@ -62,21 +62,17 @@ class RegionsListScreenState extends State<RegionsListScreen> {
   }
 
   Widget _buildRow(Region pair) {
-    return ListTile(
+    return Card(
+        child: ListTile(
       leading: Image.asset('assets/images/liste_region_${pair.id}.png'),
       title: Text(
         pair.name,
         style: const TextStyle(fontSize: 18.0),
       ),
       onTap: () {
-        Navigator.restorablePushNamed(context, LocationListScreen.routeName);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => LocationsListMain(
-        //           year: widget.year, regionId: pair.id)),
-        // );
+        Navigator.restorablePushNamed(context, LocationListScreen.routeName,
+            arguments: {'regionId': pair.id, 'drawer': false});
       },
-    );
+    ));
   }
 }

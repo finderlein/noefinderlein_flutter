@@ -55,4 +55,6 @@ class Location {
 
   int changeIndex = 0;
   bool favorit = false;
+
+  late String searchString;
 }

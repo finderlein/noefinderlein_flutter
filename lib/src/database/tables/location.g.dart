@@ -17,7 +17,7 @@ extension GetLocationCollection on Isar {
 final LocationSchema = CollectionSchema(
   name: 'Location',
   schema:
-      '{"name":"Location","idName":"id","properties":[{"name":"addressCity","type":"String"},{"name":"addressStreet","type":"String"},{"name":"addressZip","type":"String"},{"name":"apiId","type":"Long"},{"name":"badWeather","type":"Bool"},{"name":"bookletNumber","type":"Long"},{"name":"category","type":"Long"},{"name":"changeIndex","type":"Long"},{"name":"changedDate","type":"String"},{"name":"childFriendly","type":"Bool"},{"name":"description","type":"String"},{"name":"dogAllowed","type":"Bool"},{"name":"email","type":"String"},{"name":"entryText","type":"String"},{"name":"favorit","type":"Bool"},{"name":"fax","type":"String"},{"name":"groupsAccepted","type":"Bool"},{"name":"hint","type":"String"},{"name":"latitude","type":"Double"},{"name":"longitude","type":"Double"},{"name":"name","type":"String"},{"name":"openInWinter","type":"Bool"},{"name":"openText","type":"String"},{"name":"province","type":"Long"},{"name":"region","type":"Long"},{"name":"savingsAdult","type":"String"},{"name":"savingsChild","type":"String"},{"name":"strollerFriendly","type":"Bool"},{"name":"tavernNear","type":"Bool"},{"name":"telephone","type":"String"},{"name":"topLocation","type":"Bool"},{"name":"travelDirections","type":"String"},{"name":"website","type":"String"},{"name":"websiteId","type":"Long"},{"name":"wheelchairFriendly","type":"Bool"},{"name":"year","type":"Long"}],"indexes":[{"name":"year","unique":false,"properties":[{"name":"year","type":"Value","caseSensitive":false}]}],"links":[]}',
+      '{"name":"Location","idName":"id","properties":[{"name":"addressCity","type":"String"},{"name":"addressStreet","type":"String"},{"name":"addressZip","type":"String"},{"name":"apiId","type":"Long"},{"name":"badWeather","type":"Bool"},{"name":"bookletNumber","type":"Long"},{"name":"category","type":"Long"},{"name":"changeIndex","type":"Long"},{"name":"changedDate","type":"String"},{"name":"childFriendly","type":"Bool"},{"name":"description","type":"String"},{"name":"dogAllowed","type":"Bool"},{"name":"email","type":"String"},{"name":"entryText","type":"String"},{"name":"favorit","type":"Bool"},{"name":"fax","type":"String"},{"name":"groupsAccepted","type":"Bool"},{"name":"hint","type":"String"},{"name":"latitude","type":"Double"},{"name":"longitude","type":"Double"},{"name":"name","type":"String"},{"name":"openInWinter","type":"Bool"},{"name":"openText","type":"String"},{"name":"province","type":"Long"},{"name":"region","type":"Long"},{"name":"savingsAdult","type":"String"},{"name":"savingsChild","type":"String"},{"name":"searchString","type":"String"},{"name":"strollerFriendly","type":"Bool"},{"name":"tavernNear","type":"Bool"},{"name":"telephone","type":"String"},{"name":"topLocation","type":"Bool"},{"name":"travelDirections","type":"String"},{"name":"website","type":"String"},{"name":"websiteId","type":"Long"},{"name":"wheelchairFriendly","type":"Bool"},{"name":"year","type":"Long"}],"indexes":[{"name":"year","unique":false,"properties":[{"name":"year","type":"Value","caseSensitive":false}]}],"links":[]}',
   nativeAdapter: const _LocationNativeAdapter(),
   webAdapter: const _LocationWebAdapter(),
   idName: 'id',
@@ -49,15 +49,16 @@ final LocationSchema = CollectionSchema(
     'region': 24,
     'savingsAdult': 25,
     'savingsChild': 26,
-    'strollerFriendly': 27,
-    'tavernNear': 28,
-    'telephone': 29,
-    'topLocation': 30,
-    'travelDirections': 31,
-    'website': 32,
-    'websiteId': 33,
-    'wheelchairFriendly': 34,
-    'year': 35
+    'searchString': 27,
+    'strollerFriendly': 28,
+    'tavernNear': 29,
+    'telephone': 30,
+    'topLocation': 31,
+    'travelDirections': 32,
+    'website': 33,
+    'websiteId': 34,
+    'wheelchairFriendly': 35,
+    'year': 36
   },
   listProperties: {},
   indexIds: {'year': 0},
@@ -115,6 +116,7 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
     IsarNative.jsObjectSet(jsObj, 'region', object.region);
     IsarNative.jsObjectSet(jsObj, 'savingsAdult', object.savingsAdult);
     IsarNative.jsObjectSet(jsObj, 'savingsChild', object.savingsChild);
+    IsarNative.jsObjectSet(jsObj, 'searchString', object.searchString);
     IsarNative.jsObjectSet(jsObj, 'strollerFriendly', object.strollerFriendly);
     IsarNative.jsObjectSet(jsObj, 'tavernNear', object.tavernNear);
     IsarNative.jsObjectSet(jsObj, 'telephone', object.telephone);
@@ -170,6 +172,7 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
         IsarNative.jsObjectGet(jsObj, 'region') ?? double.negativeInfinity;
     object.savingsAdult = IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '';
     object.savingsChild = IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '';
+    object.searchString = IsarNative.jsObjectGet(jsObj, 'searchString') ?? '';
     object.strollerFriendly =
         IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false;
     object.tavernNear = IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false;
@@ -255,6 +258,8 @@ class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
         return (IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '') as P;
       case 'savingsChild':
         return (IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '') as P;
+      case 'searchString':
+        return (IsarNative.jsObjectGet(jsObj, 'searchString') ?? '') as P;
       case 'strollerFriendly':
         return (IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false)
             as P;
@@ -360,27 +365,30 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
     final value26 = object.savingsChild;
     final _savingsChild = IsarBinaryWriter.utf8Encoder.convert(value26);
     dynamicSize += (_savingsChild.length) as int;
-    final value27 = object.strollerFriendly;
-    final _strollerFriendly = value27;
-    final value28 = object.tavernNear;
-    final _tavernNear = value28;
-    final value29 = object.telephone;
-    final _telephone = IsarBinaryWriter.utf8Encoder.convert(value29);
+    final value27 = object.searchString;
+    final _searchString = IsarBinaryWriter.utf8Encoder.convert(value27);
+    dynamicSize += (_searchString.length) as int;
+    final value28 = object.strollerFriendly;
+    final _strollerFriendly = value28;
+    final value29 = object.tavernNear;
+    final _tavernNear = value29;
+    final value30 = object.telephone;
+    final _telephone = IsarBinaryWriter.utf8Encoder.convert(value30);
     dynamicSize += (_telephone.length) as int;
-    final value30 = object.topLocation;
-    final _topLocation = value30;
-    final value31 = object.travelDirections;
-    final _travelDirections = IsarBinaryWriter.utf8Encoder.convert(value31);
+    final value31 = object.topLocation;
+    final _topLocation = value31;
+    final value32 = object.travelDirections;
+    final _travelDirections = IsarBinaryWriter.utf8Encoder.convert(value32);
     dynamicSize += (_travelDirections.length) as int;
-    final value32 = object.website;
-    final _website = IsarBinaryWriter.utf8Encoder.convert(value32);
+    final value33 = object.website;
+    final _website = IsarBinaryWriter.utf8Encoder.convert(value33);
     dynamicSize += (_website.length) as int;
-    final value33 = object.websiteId;
-    final _websiteId = value33;
-    final value34 = object.wheelchairFriendly;
-    final _wheelchairFriendly = value34;
-    final value35 = object.year;
-    final _year = value35;
+    final value34 = object.websiteId;
+    final _websiteId = value34;
+    final value35 = object.wheelchairFriendly;
+    final _wheelchairFriendly = value35;
+    final value36 = object.year;
+    final _year = value36;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -414,15 +422,16 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
     writer.writeLong(offsets[24], _region);
     writer.writeBytes(offsets[25], _savingsAdult);
     writer.writeBytes(offsets[26], _savingsChild);
-    writer.writeBool(offsets[27], _strollerFriendly);
-    writer.writeBool(offsets[28], _tavernNear);
-    writer.writeBytes(offsets[29], _telephone);
-    writer.writeBool(offsets[30], _topLocation);
-    writer.writeBytes(offsets[31], _travelDirections);
-    writer.writeBytes(offsets[32], _website);
-    writer.writeLong(offsets[33], _websiteId);
-    writer.writeBool(offsets[34], _wheelchairFriendly);
-    writer.writeLong(offsets[35], _year);
+    writer.writeBytes(offsets[27], _searchString);
+    writer.writeBool(offsets[28], _strollerFriendly);
+    writer.writeBool(offsets[29], _tavernNear);
+    writer.writeBytes(offsets[30], _telephone);
+    writer.writeBool(offsets[31], _topLocation);
+    writer.writeBytes(offsets[32], _travelDirections);
+    writer.writeBytes(offsets[33], _website);
+    writer.writeLong(offsets[34], _websiteId);
+    writer.writeBool(offsets[35], _wheelchairFriendly);
+    writer.writeLong(offsets[36], _year);
   }
 
   @override
@@ -457,15 +466,16 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
     object.region = reader.readLong(offsets[24]);
     object.savingsAdult = reader.readString(offsets[25]);
     object.savingsChild = reader.readString(offsets[26]);
-    object.strollerFriendly = reader.readBool(offsets[27]);
-    object.tavernNear = reader.readBool(offsets[28]);
-    object.telephone = reader.readString(offsets[29]);
-    object.topLocation = reader.readBool(offsets[30]);
-    object.travelDirections = reader.readString(offsets[31]);
-    object.website = reader.readString(offsets[32]);
-    object.websiteId = reader.readLong(offsets[33]);
-    object.wheelchairFriendly = reader.readBool(offsets[34]);
-    object.year = reader.readLong(offsets[35]);
+    object.searchString = reader.readString(offsets[27]);
+    object.strollerFriendly = reader.readBool(offsets[28]);
+    object.tavernNear = reader.readBool(offsets[29]);
+    object.telephone = reader.readString(offsets[30]);
+    object.topLocation = reader.readBool(offsets[31]);
+    object.travelDirections = reader.readString(offsets[32]);
+    object.website = reader.readString(offsets[33]);
+    object.websiteId = reader.readLong(offsets[34]);
+    object.wheelchairFriendly = reader.readBool(offsets[35]);
+    object.year = reader.readLong(offsets[36]);
     return object;
   }
 
@@ -530,22 +540,24 @@ class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
       case 26:
         return (reader.readString(offset)) as P;
       case 27:
-        return (reader.readBool(offset)) as P;
+        return (reader.readString(offset)) as P;
       case 28:
         return (reader.readBool(offset)) as P;
       case 29:
-        return (reader.readString(offset)) as P;
-      case 30:
         return (reader.readBool(offset)) as P;
-      case 31:
+      case 30:
         return (reader.readString(offset)) as P;
+      case 31:
+        return (reader.readBool(offset)) as P;
       case 32:
         return (reader.readString(offset)) as P;
       case 33:
-        return (reader.readLong(offset)) as P;
+        return (reader.readString(offset)) as P;
       case 34:
-        return (reader.readBool(offset)) as P;
+        return (reader.readLong(offset)) as P;
       case 35:
+        return (reader.readBool(offset)) as P;
+      case 36:
         return (reader.readLong(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -2513,6 +2525,111 @@ extension LocationQueryFilter
     ));
   }
 
+  QueryBuilder<Location, Location, QAfterFilterCondition> searchStringEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'searchString',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      searchStringGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'searchString',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> searchStringLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'searchString',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> searchStringBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'searchString',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      searchStringStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'searchString',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> searchStringEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'searchString',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> searchStringContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'searchString',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> searchStringMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'searchString',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<Location, Location, QAfterFilterCondition>
       strollerFriendlyEqualTo(bool value) {
     return addFilterConditionInternal(FilterCondition(
@@ -3188,6 +3305,14 @@ extension LocationQueryWhereSortBy
     return addSortByInternal('savingsChild', Sort.desc);
   }
 
+  QueryBuilder<Location, Location, QAfterSortBy> sortBySearchString() {
+    return addSortByInternal('searchString', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> sortBySearchStringDesc() {
+    return addSortByInternal('searchString', Sort.desc);
+  }
+
   QueryBuilder<Location, Location, QAfterSortBy> sortByStrollerFriendly() {
     return addSortByInternal('strollerFriendly', Sort.asc);
   }
@@ -3488,6 +3613,14 @@ extension LocationQueryWhereSortThenBy
     return addSortByInternal('savingsChild', Sort.desc);
   }
 
+  QueryBuilder<Location, Location, QAfterSortBy> thenBySearchString() {
+    return addSortByInternal('searchString', Sort.asc);
+  }
+
+  QueryBuilder<Location, Location, QAfterSortBy> thenBySearchStringDesc() {
+    return addSortByInternal('searchString', Sort.desc);
+  }
+
   QueryBuilder<Location, Location, QAfterSortBy> thenByStrollerFriendly() {
     return addSortByInternal('strollerFriendly', Sort.asc);
   }
@@ -3689,6 +3822,11 @@ extension LocationQueryWhereDistinct
     return addDistinctByInternal('savingsChild', caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<Location, Location, QDistinct> distinctBySearchString(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('searchString', caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<Location, Location, QDistinct> distinctByStrollerFriendly() {
     return addDistinctByInternal('strollerFriendly');
   }
@@ -3842,6 +3980,10 @@ extension LocationQueryProperty
 
   QueryBuilder<Location, String, QQueryOperations> savingsChildProperty() {
     return addPropertyNameInternal('savingsChild');
+  }
+
+  QueryBuilder<Location, String, QQueryOperations> searchStringProperty() {
+    return addPropertyNameInternal('searchString');
   }
 
   QueryBuilder<Location, bool, QQueryOperations> strollerFriendlyProperty() {

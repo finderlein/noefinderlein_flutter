@@ -1,8 +1,10 @@
+import 'dart:ffi';
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 
-import 'model/model_location_list.dart';
 import 'database/tables/location.dart';
 import 'screens/locations_list_screen.dart';
 import 'screens/location_detail_screen.dart';
@@ -11,6 +13,7 @@ import 'screens/settings_screen.dart';
 import 'screens/regions_list_screen.dart';
 import './widgets/downloader_modal.dart';
 import 'themes/noefinderlein.dart';
+import 'utilities/noefinderlein.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -21,8 +24,8 @@ class MyApp extends StatelessWidget {
 
   final SettingsController settingsController;
   final NoeFinderleinTheme noefTheme = NoeFinderleinTheme();
+  Noefinderlein glob = Noefinderlein();
 
-  final int year = getCurrentYear();
   @override
   Widget build(BuildContext context) {
     // Glue the SettingsController to the MaterialApp.
@@ -91,7 +94,7 @@ class MyApp extends StatelessWidget {
                 }
                 switch (routeSettings.name) {
                   case RegionsListScreen.routeName:
-                    return RegionsListScreen(year: year);
+                    return RegionsListScreen(year: glob.year);
                   case SettingsScreen.routeName:
                     return SettingsScreen(controller: settingsController);
                   case Downloader.routeName:
@@ -99,24 +102,38 @@ class MyApp extends StatelessWidget {
                         body: Column(children: [
                       SimpleDialog(
                           title: const Text('Downloading Data...'),
-                          children: [Downloader(year: year)])
+                          children: [Downloader(year: glob.year)])
                     ]));
+                  case MapScreen.routeName:
+                    final arguments = routeSettings.arguments as Map;
+                    var locationIds = arguments['locations'];
 
+                    return MapScreen(
+                        locationIds: locationIds,
+                        settingsController: settingsController);
+                  case '/':
                   case LocationListScreen.routeName:
-                  default:
                     if (routeSettings.arguments != null) {
-                      final sett =
-                          routeSettings.arguments as LocationListScreenCall;
+                      final arguments = routeSettings.arguments as Map;
+                      int regionId = arguments['regionId'];
+                      bool drawer = arguments['drawer'] ?? true;
+                      bool favorites = arguments['favorites'] ?? false;
+                      developer.log('regionId',
+                          name: 'app.dart', error: regionId.toString());
                       return LocationListScreen(
-                        year: sett.year,
-                        regionId: sett.regionId,
-                      );
+                          year: glob.year,
+                          regionId: regionId,
+                          drawer: drawer,
+                          favorites: favorites);
                     } else {
                       return LocationListScreen(
-                        year: year,
+                        year: glob.year,
                         regionId: 0,
                       );
                     }
+                  default:
+                    assert(false, 'Need to implement ${routeSettings.name}');
+                    return const Center();
                 }
               },
             );
@@ -125,8 +142,4 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-}
-
-int getCurrentYear() {
-  return 2022;
 }

@@ -11,6 +11,36 @@ class LocationsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return CustomScrollView(slivers: [
+    //   SliverAppBar(
+    //     floating: true,
+    //     pinned: true,
+    //     snap: false,
+    //     centerTitle: false,
+    //     title: Text('Kindacode.com'),
+    //     actions: [
+    //       IconButton(
+    //         icon: Icon(Icons.shopping_cart),
+    //         onPressed: () {},
+    //       ),
+    //     ],
+    //     bottom: AppBar(
+    //       title: Container(
+    //         width: double.infinity,
+    //         height: 40,
+    //         color: Colors.white,
+    //         child: Center(
+    //           child: TextField(
+    //             decoration: InputDecoration(
+    //                 hintText: 'Search for something',
+    //                 prefixIcon: Icon(Icons.search),
+    //                 suffixIcon: Icon(Icons.camera_alt)),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // ]);
     return ListView.builder(
         padding: const EdgeInsets.all(0),
         itemCount: locations.length,

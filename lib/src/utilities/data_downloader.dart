@@ -177,7 +177,8 @@ class DataDownloader {
     object.changedDate = json['changed_date'];
     object.changeIndex = json['change_index'];
     object.favorit = false;
-
+    object.searchString =
+        '${object.name.toLowerCase()} ${object.description.toLowerCase()}';
     return object;
   }
 
