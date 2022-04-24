@@ -23,8 +23,20 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+      - run: |
+          echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
+          gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
+      - run: |
+          echo "noefinderlein_keystore=release.keystore" >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_alias=noefinderlein" >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/Noefinderlein_Keystore.txt
       - run: mkdir lib/auth
-      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - run: |
+          echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrl = \"${{ secrets.MAPURL }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";" >> lib/auth/secrets.dart
+          echo "var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
       - uses: actions/setup-java@v2
         with:
           distribution: "zulu"
@@ -36,23 +48,14 @@ jobs:
       - run: flutter upgrade
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build apk
+      - run: flutter build apk --split-per-abi
       - run: flutter build appbundle
       - uses: actions/upload-artifact@v3
         with:
           name: android
           path: |
-            build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/bundle/release/app-release.aab
-      # - uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     automatic_release_tag: "latest"
-      #     prerelease: true
-      #     title: "Development Build"
-      #     files: |
-      #       build/app/outputs/flutter-apk/app-release.apk
-      #       build/app/outputs/bundle/release/app-release.aab
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
 
   # macos:
   #   runs-on: macos-latest
@@ -141,6 +144,6 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            android/**/app-release.apk
-            android/**/app-release.aab
+            android/**/*.apk
+            android/**/*.aab
             appimage/*.AppImage
