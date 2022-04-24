@@ -12,8 +12,10 @@ import '../database/database_helper.dart';
 
 import '../model/model_downloader_progress.dart';
 
+import '../../auth/secrets.dart';
+
 class DataDownloader {
-  final String apiUrl = "https://noecard.reitschmied.at/apiv2/";
+  final String apiUrl = dataApi;
   Stream<DownloaderProgress> refresh(int year) async* {
     final d = DownloaderProgress();
     d.current = 0;
