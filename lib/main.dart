@@ -14,6 +14,7 @@ void main() async {
   // This prevents a sudden theme change when the app is first displayed.
   await settingsController.loadSettings();
 
+  WidgetsFlutterBinding.ensureInitialized();
   Noefinderlein glob = Noefinderlein(settingsController: settingsController);
   await glob.init();
   // Run the app and pass in the SettingsController. The app listens to the

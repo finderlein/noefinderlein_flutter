@@ -15,7 +15,7 @@ import '../utilities/noefinderlein.dart';
 // import '../model/model_noec_location.dart';
 
 class DatabaseHelper {
-  static const _databaseName = "noeFinderlein2.3.db";
+  static const _databaseName = "noeFinderlein2.4.db";
   static const _databaseVersion = 1;
 
   // static final tableLocations = Location.instance;
@@ -39,7 +39,7 @@ class DatabaseHelper {
           CategorySchema,
           ProvinceSchema
         ],
-        directory: glob.supportDir.toString(),
+        directory: glob.supportDir.path,
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
     return isar;
@@ -61,7 +61,7 @@ class DatabaseHelper {
           CategorySchema,
           ProvinceSchema
         ],
-        directory: glob.supportDir.toString(),
+        directory: glob.supportDir.path,
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
     return isar;

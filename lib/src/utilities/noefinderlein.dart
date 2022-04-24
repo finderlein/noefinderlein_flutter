@@ -12,6 +12,7 @@ class Noefinderlein {
   late SettingsController settingsController;
   late Directory supportDir;
   late int year;
+  bool downloaderRan = false;
 
   //initialize variables in here
   Noefinderlein._internal() {
@@ -21,7 +22,7 @@ class Noefinderlein {
       yearCalc--;
     }
     year = yearCalc;
-    supportDir = Directory.current;
+    // supportDir
     // settingsController =
   }
 

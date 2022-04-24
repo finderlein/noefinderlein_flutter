@@ -9,6 +9,7 @@ import '../widgets/location_list/locations_list.dart';
 import '../widgets/drawer_main.dart';
 import '../widgets/downloader_modal.dart';
 import '../widgets/search_text_field.dart';
+import '../utilities/noefinderlein.dart';
 
 class LocationListScreen extends StatefulWidget {
   const LocationListScreen(
@@ -35,6 +36,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
   bool _search = false;
   String searchString = '';
   List<int> currentIds = [];
+  Noefinderlein glob = Noefinderlein();
 
   @override
   void initState() {
@@ -52,6 +54,10 @@ class _LocationListScreenState extends State<LocationListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (!glob.downloaderRan) {
+      glob.downloaderRan = true;
+      Future.delayed(Duration.zero, () => showDownloader(context));
+    }
     return Scaffold(
         drawer: widget.drawer ? DrawerMain(year: widget.year) : null,
         appBar: AppBar(
@@ -142,13 +148,6 @@ class _LocationListScreenState extends State<LocationListScreen> {
                     arguments: {'locations': currentIds});
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: () {
-                // Navigator.of(context, rootNavigator: true).restorablePushNamed(Downloader.routeName);
-                Navigator.restorablePushNamed(context, Downloader.routeName);
-              },
-            )
           ],
         ),
 
@@ -182,6 +181,29 @@ class _LocationListScreenState extends State<LocationListScreen> {
             }
           },
         ));
+  }
+
+  void showDownloader(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) =>
+            SimpleDialog(title: const Text('Downloading Data...'), children: [
+              Downloader(
+                year: widget.year,
+                callback: () {
+                  setState(() {
+                    //add
+                    _search = false;
+                    _allmenuLocations = DatabaseHelper.getAllLocations(
+                      year: widget.year,
+                      regionId: widget.regionId,
+                      favorites: widget.favorites,
+                      searchString: searchString,
+                    );
+                  });
+                },
+              )
+            ]));
   }
 }
 

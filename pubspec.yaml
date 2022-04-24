@@ -28,6 +28,7 @@ dependencies:
   latlong2: ^0.8.1
   flutter_map_location_marker: any
   shared_preferences: ^2.0.13
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:

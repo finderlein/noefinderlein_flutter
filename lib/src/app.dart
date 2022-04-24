@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
+import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
 
 import 'database/tables/location.dart';
 import 'screens/locations_list_screen.dart';
@@ -97,13 +98,15 @@ class MyApp extends StatelessWidget {
                     return RegionsListScreen(year: glob.year);
                   case SettingsScreen.routeName:
                     return SettingsScreen(controller: settingsController);
-                  case Downloader.routeName:
-                    return Scaffold(
-                        body: Column(children: [
-                      SimpleDialog(
-                          title: const Text('Downloading Data...'),
-                          children: [Downloader(year: glob.year)])
-                    ]));
+                  // case Downloader.routeName:
+                  //   return Scaffold(
+                  //       body: Column(children: [
+                  //     SimpleDialog(
+                  //         title: const Text('Downloading Data...'),
+                  //         children: [Downloader(year: glob.year, callback: () {
+
+                  //         },)])
+                  //   ]));
                   case MapScreen.routeName:
                     final arguments = routeSettings.arguments as Map;
                     var locationIds = arguments['locations'];
@@ -111,6 +114,8 @@ class MyApp extends StatelessWidget {
                     return MapScreen(
                         locationIds: locationIds,
                         settingsController: settingsController);
+                  case NearScreen.routeName:
+                    return NearScreen(year: glob.year);
                   case '/':
                   case LocationListScreen.routeName:
                     if (routeSettings.arguments != null) {
