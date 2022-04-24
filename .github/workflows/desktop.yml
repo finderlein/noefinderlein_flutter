@@ -123,17 +123,17 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: android
-          path: ~/android
+          path: android
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: ~/android
+        working-directory: android
       - uses: actions/download-artifact@v3
         with:
           name: appimage
-          path: ~/appimage
+          path: appimage
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: ~/appimage
+        working-directory: appimage
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -141,7 +141,7 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            ~/android/**/app-release.apk
-            ~/android/**/app-release.aab
-            ~/appimage/*.AppImage
-            ~/appimage/**/noe_finderlein-latest-x86_64.AppImage
+            android/**/app-release.apk
+            android/**/app-release.aab
+            appimage/*.AppImage
+            appimage/**/noe_finderlein-latest-x86_64.AppImage
