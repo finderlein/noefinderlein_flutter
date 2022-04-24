@@ -65,26 +65,26 @@ class _NearScreenState extends State<NearScreen> {
       itemBuilder: (context) => [
         if (Platform.isIOS)
           const PopupMenuItem(
-            child: Text("Get Location Accuracy"),
             value: 1,
+            child: Text("Get Location Accuracy"),
           ),
         if (Platform.isIOS)
           const PopupMenuItem(
-            child: Text("Request Temporary Full Accuracy"),
             value: 2,
+            child: Text("Request Temporary Full Accuracy"),
           ),
         const PopupMenuItem(
-          child: Text("Open App Settings"),
           value: 3,
+          child: Text("Open App Settings"),
         ),
         if (Platform.isAndroid || Platform.isWindows)
           const PopupMenuItem(
-            child: Text("Open Location Settings"),
             value: 4,
+            child: Text("Open Location Settings"),
           ),
         const PopupMenuItem(
-          child: Text("Clear"),
           value: 5,
+          child: Text("Clear"),
         ),
       ],
     );
