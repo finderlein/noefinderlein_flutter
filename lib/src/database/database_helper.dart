@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 
 import './tables/location.dart';
 import './tables/change_val.dart';
@@ -16,7 +16,7 @@ import '../utilities/noefinderlein.dart';
 
 class DatabaseHelper {
   static const _databaseName = "noeFinderlein2.4.db";
-  static const _databaseVersion = 1;
+  // static const _databaseVersion = 1;
 
   // static final tableLocations = Location.instance;
   // static final tableChangeVal = TableChangeVal.instance;
@@ -145,13 +145,13 @@ class DatabaseHelper {
 
   static Future<String> getStringAktDates(int year) async {
     Isar db = await DatabaseHelper.db();
-    var locations;
+    List<Location> locations = [];
     try {
       locations =
           await db.locations.filter().yearEqualTo(year).sortById().findAll();
     } catch (error) {}
     String returnJson = '{"year":${year.toString()}';
-    if (locations != null && locations.isNotEmpty) {
+    if (locations.isNotEmpty) {
       List<String> stringArray = locations
           .map((row) => '{"id":${row.id},"cId":${row.changeIndex}}')
           .toList();

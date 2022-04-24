@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -6,13 +6,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
 
-import 'database/tables/location.dart';
+// import 'database/tables/location.dart';
 import 'screens/locations_list_screen.dart';
 import 'screens/location_detail_screen.dart';
 import 'settings/settings_controller.dart';
 import 'screens/settings_screen.dart';
 import 'screens/regions_list_screen.dart';
-import './widgets/downloader_modal.dart';
+// import './widgets/downloader_modal.dart';
 import 'themes/noefinderlein.dart';
 import 'utilities/noefinderlein.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   final SettingsController settingsController;
   final NoeFinderleinTheme noefTheme = NoeFinderleinTheme();
-  Noefinderlein glob = Noefinderlein();
+  final Noefinderlein glob = Noefinderlein();
 
   @override
   Widget build(BuildContext context) {

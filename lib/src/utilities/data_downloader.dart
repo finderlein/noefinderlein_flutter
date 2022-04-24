@@ -31,36 +31,29 @@ class DataDownloader {
       // If that response was not OK, throw an error.
       throw Exception('Failed to load post');
     }
-    if (yearData != null) {
-      bool updateneeded =
-          await DatabaseHelper.updateForYearNeeded(year, yearData.changeid);
-      int currentChangeIdInDB =
-          await DatabaseHelper.getCurrentLastChangeId(year);
-      if (updateneeded) {
-        String putBody = await DatabaseHelper.getStringAktDates(year);
-        final uri = Uri.parse('${apiUrl}Locations/getChangedDestinationIds');
-        final getChangedDastinationsResponse = await http.put(uri,
-            headers: {"Content-Type": "application/json"}, body: putBody);
 
-        List<int> changedLocationIds;
-        if (getChangedDastinationsResponse.statusCode == 200) {
-          // If server returns an OK response, parse the JSON.
-          changedLocationIds =
-              List<int>.from(json.decode(getChangedDastinationsResponse.body));
-          print('changedLocationIds: ' + changedLocationIds.toString());
-        } else {
-          // If that response was not OK, throw an error.
-          throw Exception('Failed to load post');
-        }
-        if (changedLocationIds != null) {
-          yield* _updatewiththisJsondata(changedLocationIds);
+    bool updateneeded =
+        await DatabaseHelper.updateForYearNeeded(year, yearData.changeid);
+    int currentChangeIdInDB = await DatabaseHelper.getCurrentLastChangeId(year);
+    if (updateneeded) {
+      String putBody = await DatabaseHelper.getStringAktDates(year);
+      final uri = Uri.parse('${apiUrl}Locations/getChangedDestinationIds');
+      final getChangedDastinationsResponse = await http.put(uri,
+          headers: {"Content-Type": "application/json"}, body: putBody);
 
-          //await DatabaseHelper.updateChangeId(year, yearData.changeid);
-        }
+      List<int> changedLocationIds;
+      if (getChangedDastinationsResponse.statusCode == 200) {
+        // If server returns an OK response, parse the JSON.
+        changedLocationIds =
+            List<int>.from(json.decode(getChangedDastinationsResponse.body));
+        print('changedLocationIds: $changedLocationIds');
+      } else {
+        // If that response was not OK, throw an error.
+        throw Exception('Failed to load post');
       }
-    } else {
-      //mCallbacks.onDownloadError("No Location data yet for year: " + year.toString());
+      yield* _updatewiththisJsondata(changedLocationIds);
     }
+
     final regionResponse = await http.get(Uri.parse('${apiUrl}Regions'));
     if (regionResponse.statusCode == 200) {
       await DatabaseHelper.insertOrReplaceRegions(
