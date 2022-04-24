@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: mkdir lib/auth
-      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";\nvar mapUrl = \"${{ secrets.MAPURL }}\";\nvar mapUrlDark = \"${{ secrets.MAPURLDARK }}\";\nvar dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
       - uses: actions/setup-java@v2
         with:
           distribution: "zulu"
