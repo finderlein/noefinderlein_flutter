@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
+import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';
 
 import '../screens/locations_list_screen.dart';
 import '../screens/regions_list_screen.dart';
@@ -65,6 +66,10 @@ class DrawerMain extends StatelessWidget {
               // Update the state of the app.
               // ...
               Navigator.pop(context);
+              Navigator.restorablePushNamed(
+                context,
+                VisitedScreen.routeName,
+              );
             },
           ),
           ListTile(

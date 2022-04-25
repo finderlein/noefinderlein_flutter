@@ -188,6 +188,32 @@ class DatabaseHelper {
     return Location();
   }
 
+  static Future<void> saveVisited(
+      {required int year,
+      required int locationId,
+      required double amount,
+      required String date}) async {
+    VisitedLocation vl = VisitedLocation();
+    vl.visitedLocationId = locationId;
+    vl.visitedLoggedDay = date;
+    vl.visitedSaved = amount;
+    vl.visitedYear = year;
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.visitedLocations.put(vl);
+    });
+  }
+
+  static Future<List<VisitedLocation>> getVisited({required int year}) async {
+    Isar db = await DatabaseHelper.db();
+    List<VisitedLocation> vl = await db.visitedLocations
+        .filter()
+        .visitedYearEqualTo(year)
+        .sortByVisitedLoggedDay()
+        .findAll();
+    return vl;
+  }
+
   static Future<void> setFavUnfav(Location loc, bool fav) async {
     Isar db = await DatabaseHelper.db();
     await db.writeTxn((isar) async {

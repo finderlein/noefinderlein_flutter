@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
+import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';
 
 // import 'database/tables/location.dart';
 import 'screens/locations_list_screen.dart';
@@ -116,6 +117,8 @@ class MyApp extends StatelessWidget {
                         settingsController: settingsController);
                   case NearScreen.routeName:
                     return NearScreen(year: glob.year);
+                  case VisitedScreen.routeName:
+                    return VisitedScreen(year: glob.year);
                   case '/':
                   case LocationListScreen.routeName:
                     if (routeSettings.arguments != null) {

@@ -102,7 +102,27 @@ class LocationDetailView extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      builder: (BuildContext context) => const CheckInDialog());
+                      builder: (BuildContext context) => CheckInDialog(
+                            location: location,
+                            callback: (
+                                {required double amount,
+                                required String date}) async {
+                              await DatabaseHelper.saveVisited(
+                                  year: location.year,
+                                  locationId: location.id,
+                                  amount: amount,
+                                  date: date);
+                              final snackBar = SnackBar(
+                                content: Text(
+                                    'Saved amount € $amount on Date $date'),
+                              );
+
+                              // Find the ScaffoldMessenger in the widget tree
+                              // and use it to show a SnackBar.
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                          ));
                 }),
             IconButton(
               icon: Icon(
