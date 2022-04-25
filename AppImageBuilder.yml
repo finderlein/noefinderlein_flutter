@@ -25,6 +25,9 @@ AppDir:
     include:
       - libgtk-3-0
       - libfreetype6
+      - libcanberra-gtk-module
+      - libpackagekit-glib2-18
+      - dconf-gsettings-backend
     exclude:
       - humanity-icon-theme
       - hicolor-icon-theme
