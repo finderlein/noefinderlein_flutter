@@ -25,7 +25,7 @@ AppDir:
     include:
       - libgtk-3-0
       - libfreetype6
-      - libcanberra-gtk-module
+      - libcanberra-gtk3-module
       - libpackagekit-glib2-18
       - dconf-gsettings-backend
     exclude:
