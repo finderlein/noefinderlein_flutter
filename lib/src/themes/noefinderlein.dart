@@ -44,7 +44,7 @@ class NoeFinderleinTheme {
           onPrimary: Color.fromARGB(255, 207, 207, 207),
           secondary: Color(0xffFF9800),
           onSecondary: Color.fromARGB(255, 29, 29, 29),
-          error: Color.fromARGB(255, 85, 1, 0),
+          error: Color.fromARGB(255, 241, 6, 2),
           onError: Colors.white,
           background: Color.fromARGB(255, 51, 51, 51),
           onBackground: Color.fromARGB(255, 209, 209, 209),

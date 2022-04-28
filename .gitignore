@@ -50,3 +50,6 @@ app.*.map.json
 #appimage
 AppDir
 appimage-builder-cache
+
+
+/lib/auth/secrets.dart

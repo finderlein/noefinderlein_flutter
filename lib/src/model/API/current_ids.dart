@@ -3,7 +3,10 @@ class CurrentIds {
   int daysChngId;
   int daysChangeCount;
 
-  CurrentIds({required this.changeid, required this.daysChngId, required this.daysChangeCount});
+  CurrentIds(
+      {required this.changeid,
+      required this.daysChngId,
+      required this.daysChangeCount});
 
   factory CurrentIds.fromJson(Map<String, dynamic> json) {
     return CurrentIds(

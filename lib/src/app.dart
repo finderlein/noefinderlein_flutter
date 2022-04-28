@@ -1,14 +1,21 @@
+// import 'dart:ffi';
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
+import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
+import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';
 
-import 'database/tables/location.dart';
-import 'pages/locations_list_page.dart';
-import 'pages/location_detail_page/main.dart';
+// import 'database/tables/location.dart';
+import 'screens/locations_list_screen.dart';
+import 'screens/location_detail_screen.dart';
 import 'settings/settings_controller.dart';
-import 'settings/settings_view.dart';
-import './widgets/downloader_modal.dart';
+import 'screens/settings_screen.dart';
+import 'screens/regions_list_screen.dart';
+// import './widgets/downloader_modal.dart';
 import 'themes/noefinderlein.dart';
+import 'utilities/noefinderlein.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -19,6 +26,7 @@ class MyApp extends StatelessWidget {
 
   final SettingsController settingsController;
   final NoeFinderleinTheme noefTheme = NoeFinderleinTheme();
+  final Noefinderlein glob = Noefinderlein();
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +42,17 @@ class MyApp extends StatelessWidget {
           // MaterialApp to restore the navigation stack when a user leaves and
           // returns to the app after it has been killed while running in the
           // background.
-          restorationScopeId: 'app',
+          restorationScopeId: 'noefindeleinApp',
 
+          initialRoute: LocationListScreen.routeName,
+          // routes: {
+          //   // LocationListScreen.routeName: (BuildContext context) =>
+          //   //     const LocationListScreen(),
+          //   RegionsListScreen.routeName: (BuildContext context) =>
+          //       RegionsListScreen(year: year),
+          //   SettingsScreen.routeName: (BuildContext context) =>
+          //       SettingsScreen(controller: settingsController)
+          // },
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations
           // depending on the user's locale.
@@ -73,27 +90,58 @@ class MyApp extends StatelessWidget {
               builder: (BuildContext context) {
                 final String name = routeSettings.name as String;
 
-                if (name.startsWith(LocationDetailsPage.routeName)) {
+                if (name.startsWith(LocationDetailsScreen.routeName)) {
                   final id = routeSettings.arguments as int;
-                  return LocationDetailsPage(id: id);
+                  return LocationDetailsScreen(id: id);
                 }
                 switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
-                  case Downloader.routeName:
-                    return Scaffold(
-                        body: Column(children: const [
-                      SimpleDialog(
-                          title: Text('Downloading Data...'),
-                          children: [Downloader(year: 2022)])
-                    ]));
+                  case RegionsListScreen.routeName:
+                    return RegionsListScreen(year: glob.year);
+                  case SettingsScreen.routeName:
+                    return SettingsScreen(controller: settingsController);
+                  // case Downloader.routeName:
+                  //   return Scaffold(
+                  //       body: Column(children: [
+                  //     SimpleDialog(
+                  //         title: const Text('Downloading Data...'),
+                  //         children: [Downloader(year: glob.year, callback: () {
 
-                  case LocationListView.routeName:
+                  //         },)])
+                  //   ]));
+                  case MapScreen.routeName:
+                    final arguments = routeSettings.arguments as Map;
+                    var locationIds = arguments['locations'];
+
+                    return MapScreen(
+                        locationIds: locationIds,
+                        settingsController: settingsController);
+                  case NearScreen.routeName:
+                    return NearScreen(year: glob.year);
+                  case VisitedScreen.routeName:
+                    return VisitedScreen(year: glob.year);
+                  case '/':
+                  case LocationListScreen.routeName:
+                    if (routeSettings.arguments != null) {
+                      final arguments = routeSettings.arguments as Map;
+                      int regionId = arguments['regionId'];
+                      bool drawer = arguments['drawer'] ?? true;
+                      bool favorites = arguments['favorites'] ?? false;
+                      developer.log('regionId',
+                          name: 'app.dart', error: regionId.toString());
+                      return LocationListScreen(
+                          year: glob.year,
+                          regionId: regionId,
+                          drawer: drawer,
+                          favorites: favorites);
+                    } else {
+                      return LocationListScreen(
+                        year: glob.year,
+                        regionId: 0,
+                      );
+                    }
                   default:
-                    return const LocationListView(
-                      year: 2022,
-                      regionId: 1,
-                    );
+                    assert(false, 'Need to implement ${routeSettings.name}');
+                    return const Center();
                 }
               },
             );

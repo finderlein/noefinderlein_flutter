@@ -17,18 +17,15 @@ extension GetVisitedLocationCollection on Isar {
 final VisitedLocationSchema = CollectionSchema(
   name: 'VisitedLocation',
   schema:
-      '{"name":"VisitedLocation","idName":"visitedId","properties":[{"name":"visitedAccepted","type":"Bool"},{"name":"visitedLatitude","type":"Double"},{"name":"visitedLocationId","type":"Long"},{"name":"visitedLoggedDay","type":"String"},{"name":"visitedLongitude","type":"Double"},{"name":"visitedSaved","type":"Double"},{"name":"visitedYear","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"VisitedLocation","idName":"visitedId","properties":[{"name":"visitedLocationId","type":"Long"},{"name":"visitedLoggedDay","type":"String"},{"name":"visitedSaved","type":"Double"},{"name":"visitedYear","type":"Long"}],"indexes":[],"links":[]}',
   nativeAdapter: const _VisitedLocationNativeAdapter(),
   webAdapter: const _VisitedLocationWebAdapter(),
   idName: 'visitedId',
   propertyIds: {
-    'visitedAccepted': 0,
-    'visitedLatitude': 1,
-    'visitedLocationId': 2,
-    'visitedLoggedDay': 3,
-    'visitedLongitude': 4,
-    'visitedSaved': 5,
-    'visitedYear': 6
+    'visitedLocationId': 0,
+    'visitedLoggedDay': 1,
+    'visitedSaved': 2,
+    'visitedYear': 3
   },
   listProperties: {},
   indexIds: {},
@@ -55,13 +52,10 @@ class _VisitedLocationWebAdapter extends IsarWebTypeAdapter<VisitedLocation> {
   Object serialize(
       IsarCollection<VisitedLocation> collection, VisitedLocation object) {
     final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'visitedAccepted', object.visitedAccepted);
     IsarNative.jsObjectSet(jsObj, 'visitedId', object.visitedId);
-    IsarNative.jsObjectSet(jsObj, 'visitedLatitude', object.visitedLatitude);
     IsarNative.jsObjectSet(
         jsObj, 'visitedLocationId', object.visitedLocationId);
     IsarNative.jsObjectSet(jsObj, 'visitedLoggedDay', object.visitedLoggedDay);
-    IsarNative.jsObjectSet(jsObj, 'visitedLongitude', object.visitedLongitude);
     IsarNative.jsObjectSet(jsObj, 'visitedSaved', object.visitedSaved);
     IsarNative.jsObjectSet(jsObj, 'visitedYear', object.visitedYear);
     return jsObj;
@@ -71,19 +65,13 @@ class _VisitedLocationWebAdapter extends IsarWebTypeAdapter<VisitedLocation> {
   VisitedLocation deserialize(
       IsarCollection<VisitedLocation> collection, dynamic jsObj) {
     final object = VisitedLocation();
-    object.visitedAccepted =
-        IsarNative.jsObjectGet(jsObj, 'visitedAccepted') ?? false;
     object.visitedId =
         IsarNative.jsObjectGet(jsObj, 'visitedId') ?? double.negativeInfinity;
-    object.visitedLatitude = IsarNative.jsObjectGet(jsObj, 'visitedLatitude') ??
-        double.negativeInfinity;
     object.visitedLocationId =
         IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
             double.negativeInfinity;
-    object.visitedLoggedDay = IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay');
-    object.visitedLongitude =
-        IsarNative.jsObjectGet(jsObj, 'visitedLongitude') ??
-            double.negativeInfinity;
+    object.visitedLoggedDay =
+        IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '';
     object.visitedSaved = IsarNative.jsObjectGet(jsObj, 'visitedSaved') ??
         double.negativeInfinity;
     object.visitedYear =
@@ -94,22 +82,14 @@ class _VisitedLocationWebAdapter extends IsarWebTypeAdapter<VisitedLocation> {
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
-      case 'visitedAccepted':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedAccepted') ?? false) as P;
       case 'visitedId':
         return (IsarNative.jsObjectGet(jsObj, 'visitedId') ??
-            double.negativeInfinity) as P;
-      case 'visitedLatitude':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedLatitude') ??
             double.negativeInfinity) as P;
       case 'visitedLocationId':
         return (IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
             double.negativeInfinity) as P;
       case 'visitedLoggedDay':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay')) as P;
-      case 'visitedLongitude':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedLongitude') ??
-            double.negativeInfinity) as P;
+        return (IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '') as P;
       case 'visitedSaved':
         return (IsarNative.jsObjectGet(jsObj, 'visitedSaved') ??
             double.negativeInfinity) as P;
@@ -138,51 +118,36 @@ class _VisitedLocationNativeAdapter
       List<int> offsets,
       AdapterAlloc alloc) {
     var dynamicSize = 0;
-    final value0 = object.visitedAccepted;
-    final _visitedAccepted = value0;
-    final value1 = object.visitedLatitude;
-    final _visitedLatitude = value1;
-    final value2 = object.visitedLocationId;
-    final _visitedLocationId = value2;
-    final value3 = object.visitedLoggedDay;
-    IsarUint8List? _visitedLoggedDay;
-    if (value3 != null) {
-      _visitedLoggedDay = IsarBinaryWriter.utf8Encoder.convert(value3);
-    }
-    dynamicSize += (_visitedLoggedDay?.length ?? 0) as int;
-    final value4 = object.visitedLongitude;
-    final _visitedLongitude = value4;
-    final value5 = object.visitedSaved;
-    final _visitedSaved = value5;
-    final value6 = object.visitedYear;
-    final _visitedYear = value6;
+    final value0 = object.visitedLocationId;
+    final _visitedLocationId = value0;
+    final value1 = object.visitedLoggedDay;
+    final _visitedLoggedDay = IsarBinaryWriter.utf8Encoder.convert(value1);
+    dynamicSize += (_visitedLoggedDay.length) as int;
+    final value2 = object.visitedSaved;
+    final _visitedSaved = value2;
+    final value3 = object.visitedYear;
+    final _visitedYear = value3;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBool(offsets[0], _visitedAccepted);
-    writer.writeDouble(offsets[1], _visitedLatitude);
-    writer.writeLong(offsets[2], _visitedLocationId);
-    writer.writeBytes(offsets[3], _visitedLoggedDay);
-    writer.writeDouble(offsets[4], _visitedLongitude);
-    writer.writeDouble(offsets[5], _visitedSaved);
-    writer.writeLong(offsets[6], _visitedYear);
+    writer.writeLong(offsets[0], _visitedLocationId);
+    writer.writeBytes(offsets[1], _visitedLoggedDay);
+    writer.writeDouble(offsets[2], _visitedSaved);
+    writer.writeLong(offsets[3], _visitedYear);
   }
 
   @override
   VisitedLocation deserialize(IsarCollection<VisitedLocation> collection,
       int id, IsarBinaryReader reader, List<int> offsets) {
     final object = VisitedLocation();
-    object.visitedAccepted = reader.readBool(offsets[0]);
     object.visitedId = id;
-    object.visitedLatitude = reader.readDouble(offsets[1]);
-    object.visitedLocationId = reader.readLong(offsets[2]);
-    object.visitedLoggedDay = reader.readStringOrNull(offsets[3]);
-    object.visitedLongitude = reader.readDouble(offsets[4]);
-    object.visitedSaved = reader.readDouble(offsets[5]);
-    object.visitedYear = reader.readLong(offsets[6]);
+    object.visitedLocationId = reader.readLong(offsets[0]);
+    object.visitedLoggedDay = reader.readString(offsets[1]);
+    object.visitedSaved = reader.readDouble(offsets[2]);
+    object.visitedYear = reader.readLong(offsets[3]);
     return object;
   }
 
@@ -193,18 +158,12 @@ class _VisitedLocationNativeAdapter
       case -1:
         return id as P;
       case 0:
-        return (reader.readBool(offset)) as P;
-      case 1:
-        return (reader.readDouble(offset)) as P;
-      case 2:
         return (reader.readLong(offset)) as P;
+      case 1:
+        return (reader.readString(offset)) as P;
+      case 2:
+        return (reader.readDouble(offset)) as P;
       case 3:
-        return (reader.readStringOrNull(offset)) as P;
-      case 4:
-        return (reader.readDouble(offset)) as P;
-      case 5:
-        return (reader.readDouble(offset)) as P;
-      case 6:
         return (reader.readLong(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -304,15 +263,6 @@ extension VisitedLocationQueryWhere
 extension VisitedLocationQueryFilter
     on QueryBuilder<VisitedLocation, VisitedLocation, QFilterCondition> {
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedAcceptedEqualTo(bool value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'visitedAccepted',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedIdEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
@@ -360,37 +310,6 @@ extension VisitedLocationQueryFilter
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLatitudeGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'visitedLatitude',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLatitudeLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'visitedLatitude',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLatitudeBetween(double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'visitedLatitude',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
     ));
   }
 
@@ -446,17 +365,8 @@ extension VisitedLocationQueryFilter
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLoggedDayIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'visitedLoggedDay',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -469,7 +379,7 @@ extension VisitedLocationQueryFilter
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayGreaterThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -484,7 +394,7 @@ extension VisitedLocationQueryFilter
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayLessThan(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -499,8 +409,8 @@ extension VisitedLocationQueryFilter
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
       visitedLoggedDayBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -558,37 +468,6 @@ extension VisitedLocationQueryFilter
       property: 'visitedLoggedDay',
       value: pattern,
       caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLongitudeGreaterThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: false,
-      property: 'visitedLongitude',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLongitudeLessThan(double value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: false,
-      property: 'visitedLongitude',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterFilterCondition>
-      visitedLongitudeBetween(double lower, double upper) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'visitedLongitude',
-      lower: lower,
-      includeLower: false,
-      upper: upper,
-      includeUpper: false,
     ));
   }
 
@@ -681,16 +560,6 @@ extension VisitedLocationQueryLinks
 extension VisitedLocationQueryWhereSortBy
     on QueryBuilder<VisitedLocation, VisitedLocation, QSortBy> {
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      sortByVisitedAccepted() {
-    return addSortByInternal('visitedAccepted', Sort.asc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      sortByVisitedAcceptedDesc() {
-    return addSortByInternal('visitedAccepted', Sort.desc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
       sortByVisitedId() {
     return addSortByInternal('visitedId', Sort.asc);
   }
@@ -698,16 +567,6 @@ extension VisitedLocationQueryWhereSortBy
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
       sortByVisitedIdDesc() {
     return addSortByInternal('visitedId', Sort.desc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      sortByVisitedLatitude() {
-    return addSortByInternal('visitedLatitude', Sort.asc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      sortByVisitedLatitudeDesc() {
-    return addSortByInternal('visitedLatitude', Sort.desc);
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
@@ -728,16 +587,6 @@ extension VisitedLocationQueryWhereSortBy
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
       sortByVisitedLoggedDayDesc() {
     return addSortByInternal('visitedLoggedDay', Sort.desc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      sortByVisitedLongitude() {
-    return addSortByInternal('visitedLongitude', Sort.asc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      sortByVisitedLongitudeDesc() {
-    return addSortByInternal('visitedLongitude', Sort.desc);
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
@@ -764,16 +613,6 @@ extension VisitedLocationQueryWhereSortBy
 extension VisitedLocationQueryWhereSortThenBy
     on QueryBuilder<VisitedLocation, VisitedLocation, QSortThenBy> {
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      thenByVisitedAccepted() {
-    return addSortByInternal('visitedAccepted', Sort.asc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      thenByVisitedAcceptedDesc() {
-    return addSortByInternal('visitedAccepted', Sort.desc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
       thenByVisitedId() {
     return addSortByInternal('visitedId', Sort.asc);
   }
@@ -781,16 +620,6 @@ extension VisitedLocationQueryWhereSortThenBy
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
       thenByVisitedIdDesc() {
     return addSortByInternal('visitedId', Sort.desc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      thenByVisitedLatitude() {
-    return addSortByInternal('visitedLatitude', Sort.asc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      thenByVisitedLatitudeDesc() {
-    return addSortByInternal('visitedLatitude', Sort.desc);
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
@@ -811,16 +640,6 @@ extension VisitedLocationQueryWhereSortThenBy
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
       thenByVisitedLoggedDayDesc() {
     return addSortByInternal('visitedLoggedDay', Sort.desc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      thenByVisitedLongitude() {
-    return addSortByInternal('visitedLongitude', Sort.asc);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
-      thenByVisitedLongitudeDesc() {
-    return addSortByInternal('visitedLongitude', Sort.desc);
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterSortBy>
@@ -847,18 +666,8 @@ extension VisitedLocationQueryWhereSortThenBy
 extension VisitedLocationQueryWhereDistinct
     on QueryBuilder<VisitedLocation, VisitedLocation, QDistinct> {
   QueryBuilder<VisitedLocation, VisitedLocation, QDistinct>
-      distinctByVisitedAccepted() {
-    return addDistinctByInternal('visitedAccepted');
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QDistinct>
       distinctByVisitedId() {
     return addDistinctByInternal('visitedId');
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QDistinct>
-      distinctByVisitedLatitude() {
-    return addDistinctByInternal('visitedLatitude');
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QDistinct>
@@ -870,11 +679,6 @@ extension VisitedLocationQueryWhereDistinct
       distinctByVisitedLoggedDay({bool caseSensitive = true}) {
     return addDistinctByInternal('visitedLoggedDay',
         caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<VisitedLocation, VisitedLocation, QDistinct>
-      distinctByVisitedLongitude() {
-    return addDistinctByInternal('visitedLongitude');
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QDistinct>
@@ -890,18 +694,8 @@ extension VisitedLocationQueryWhereDistinct
 
 extension VisitedLocationQueryProperty
     on QueryBuilder<VisitedLocation, VisitedLocation, QQueryProperty> {
-  QueryBuilder<VisitedLocation, bool, QQueryOperations>
-      visitedAcceptedProperty() {
-    return addPropertyNameInternal('visitedAccepted');
-  }
-
   QueryBuilder<VisitedLocation, int, QQueryOperations> visitedIdProperty() {
     return addPropertyNameInternal('visitedId');
-  }
-
-  QueryBuilder<VisitedLocation, double, QQueryOperations>
-      visitedLatitudeProperty() {
-    return addPropertyNameInternal('visitedLatitude');
   }
 
   QueryBuilder<VisitedLocation, int, QQueryOperations>
@@ -909,14 +703,9 @@ extension VisitedLocationQueryProperty
     return addPropertyNameInternal('visitedLocationId');
   }
 
-  QueryBuilder<VisitedLocation, String?, QQueryOperations>
+  QueryBuilder<VisitedLocation, String, QQueryOperations>
       visitedLoggedDayProperty() {
     return addPropertyNameInternal('visitedLoggedDay');
-  }
-
-  QueryBuilder<VisitedLocation, double, QQueryOperations>
-      visitedLongitudeProperty() {
-    return addPropertyNameInternal('visitedLongitude');
   }
 
   QueryBuilder<VisitedLocation, double, QQueryOperations>

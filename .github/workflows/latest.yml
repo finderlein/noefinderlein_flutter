@@ -1,0 +1,149 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  android:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
+          gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
+      - run: |
+          echo "noefinderlein_keystore=release.keystore" >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_alias=noefinderlein" >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/Noefinderlein_Keystore.txt
+      - run: mkdir lib/auth
+      - run: |
+          echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrl = \"${{ secrets.MAPURL }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";" >> lib/auth/secrets.dart
+          echo "var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: "11"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: flutter upgrade
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --split-per-abi
+      - run: flutter build appbundle
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
+
+  # macos:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "2.13.0"
+  #     - run: flutter upgrade
+  #     - run: flutter pub get
+  #     - run: flutter test
+  #     - run: flutter build ios --release --no-codesign
+
+  # web:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "2.12.0-4.2.pre"
+  #         channel: "beta"
+  #     - run: flutter upgrade
+  #     - run: flutter pub get
+  #     - run: flutter test
+  #     - run: flutter build web
+
+  # windows:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "2.12.0-4.2.pre"
+  #         channel: "beta"
+  #     - run: flutter config --enable-windows-desktop
+  #     - run: flutter build windows
+
+  appimage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib/auth
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev
+      - run: flutter config --enable-linux-desktop
+      - run: flutter build linux
+      - name: Build AppImage
+        uses: AppImageCrafters/build-appimage@master
+        with:
+          recipe: AppImageBuilder.yml
+        env:
+          UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
+      - uses: actions/upload-artifact@v3
+        with:
+          name: appimage
+          path: ./*.AppImage
+
+  deploy:
+    needs: [android, appimage]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: android
+          path: android
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: android
+      - uses: actions/download-artifact@v3
+        with:
+          name: appimage
+          path: appimage
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: appimage
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            android/**/*.apk
+            android/**/*.aab
+            appimage/*.AppImage

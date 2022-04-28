@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import '../utils/data_downloader.dart';
+import '../utilities/data_downloader.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 // import '../pages/locations_list_page.dart';
 import '../model/model_downloader_progress.dart';
 
 class Downloader extends StatefulWidget {
-  const Downloader({Key? key, required this.year}) : super(key: key);
+  const Downloader({Key? key, required this.year, required this.callback})
+      : super(key: key);
   final int year;
+  final Function callback;
   static const routeName = '/downloader';
 
   @override
@@ -60,8 +62,10 @@ class DownloaderState extends State<Downloader> {
             );
           case ConnectionState.done:
             print(snapshot.data);
-            WidgetsBinding.instance
-                .addPostFrameCallback((_) => Navigator.pop(context));
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.pop(context);
+              widget.callback();
+            });
             return const Text('done');
         }
         return Container(); // unreachable

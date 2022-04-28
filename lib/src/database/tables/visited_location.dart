@@ -11,9 +11,6 @@ class VisitedLocation {
   int visitedLocationId = 0;
   int visitedYear = 0;
 
-  String? visitedLoggedDay;
-  bool visitedAccepted = false;
-  double visitedLatitude = 0;
-  double visitedLongitude = 0;
+  late String visitedLoggedDay;
   double visitedSaved = 0;
 }

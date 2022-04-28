@@ -24,13 +24,17 @@ AppDir:
       - sourceline: deb http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
     include:
       - libgtk-3-0
+      - libfreetype6
+      - libcanberra-gtk3-module
+      - libpackagekit-glib2-18
+      - dconf-gsettings-backend
     exclude:
       - humanity-icon-theme
       - hicolor-icon-theme
       - adwaita-icon-theme
       - ubuntu-mono
   files:
-    # include: []
+    include: []
     exclude:
       - usr/share/man
       - usr/share/doc/*/README.*
@@ -38,8 +42,8 @@ AppDir:
       - usr/share/doc/*/NEWS.*
       - usr/share/doc/*/TODO.*
   test:
-    fedora-30:
-      image: appimagecrafters/tests-env:fedora-30
+    fedora-33:
+      image: appimagecrafters/tests-env:fedora-353
       command: ./AppRun
       use_host_x: true
     debian-stable:
