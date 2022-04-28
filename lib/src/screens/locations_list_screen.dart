@@ -186,8 +186,10 @@ class _LocationListScreenState extends State<LocationListScreen> {
   void showDownloader(BuildContext context) {
     showDialog(
         context: context,
-        builder: (context) =>
-            AlertDialog(title: const Text('Downloading Data...'), scrollable: true,content: Column(children: [
+        builder: (context) => AlertDialog(
+            title: const Text('Downloading Data...'),
+            scrollable: true,
+            content: Column(children: [
               Downloader(
                 year: widget.year,
                 callback: () {
