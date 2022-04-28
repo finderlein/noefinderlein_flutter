@@ -8,7 +8,7 @@ script:
 AppDir:
   path: ./AppDir
   app_info:
-    id: at.reitschmied.noefinderlein-flutter
+    id: at.reitschmied.noefinderlein_flutter
     name: noe_finderlein
     icon: finderlein_logo_bunt
     version: latest
