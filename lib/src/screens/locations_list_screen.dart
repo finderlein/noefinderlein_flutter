@@ -187,7 +187,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
     showDialog(
         context: context,
         builder: (context) =>
-            SimpleDialog(title: const Text('Downloading Data...'), children: [
+            AlertDialog(title: const Text('Downloading Data...'), scrollable: true,content: Column(children: [
               Downloader(
                 year: widget.year,
                 callback: () {
@@ -203,7 +203,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
                   });
                 },
               )
-            ]));
+            ])));
   }
 }
 
