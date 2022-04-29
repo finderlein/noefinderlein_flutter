@@ -19,10 +19,12 @@ import '../../auth/secrets.dart';
 class DataDownloader {
   final String apiUrl = dataApi;
   final int dayPkgCount = 500;
-  Stream<DownloaderProgress> refresh(int year) async* {
+  Stream<DownloaderProgressNull> refresh(int year) async* {
     bool loadOpenData = true;
-    final d = DownloaderProgress();
+    bool dataget = false;
+    final d = DownloaderProgressNull();
     d.current = 0;
+    d.max = 400;
     yield d;
     // CurrentIds yearData = noefinderleinAPI.loadChanges(year).execute().body();
     final loadChangesResponse = await http.get(
@@ -39,7 +41,12 @@ class DataDownloader {
     bool updateneeded =
         await DatabaseHelper.updateForYearNeeded(year, yearData.changeid);
     int currentChangeIdInDB = await DatabaseHelper.getCurrentLastChangeId(year);
+    // updateneeded = true;
+    developer.log('updateneeded:',
+        name: 'data_downloader.dart',
+        error: '$updateneeded $year ${yearData.changeid}');
     if (updateneeded) {
+      dataget = true;
       String putBody = await DatabaseHelper.getStringAktDates(year);
       final uri = Uri.parse('${apiUrl}Locations/getChangedDestinationIds');
       final getChangedDastinationsResponse = await http.put(uri,
@@ -50,7 +57,7 @@ class DataDownloader {
         // If server returns an OK response, parse the JSON.
         changedLocationIds =
             List<int>.from(json.decode(getChangedDastinationsResponse.body));
-        print('changedLocationIds: $changedLocationIds');
+        // print('changedLocationIds: $changedLocationIds');
       } else {
         // If that response was not OK, throw an error.
         throw Exception('Failed to load post');
@@ -62,51 +69,65 @@ class DataDownloader {
     developer.log('loadOpendata:',
         name: 'data_downloader.dart', error: loadOpenData);
     developer.log('Day Update neeeded?:',
-        name: 'data_downloader.dart', error: currentChangeIdInDB);
-    if (loadOpenData && currentChangeIdInDB < yearData.changeid) {
+        name: 'data_downloader.dart',
+        error:
+            '$currentChangeIdInDB/${yearData.daysChngId} - ${currentChangeIdInDB < yearData.daysChngId}');
+    if (loadOpenData && currentChangeIdInDB < yearData.daysChngId) {
+      dataget = true;
       int downloadChangeAnz = yearData.daysChangeCount;
       double anzPackagesD = (downloadChangeAnz / dayPkgCount) + 1;
       int anzPackages = anzPackagesD.round();
       developer.log('gesamt und anzahl an x packages',
           name: 'data_downloader.dart',
           error: "$downloadChangeAnz $anzPackages");
-      final d = DownloaderProgress();
-      d.current = 0;
-      d.max = downloadChangeAnz + .0;
-      yield d;
-      yield* downloadSegment(year, yearData.daysChangeCount, anzPackages, 0, 0);
+      yield* downloadSegment(
+          year, yearData.daysChangeCount, anzPackages, 0, 0, downloadChangeAnz);
     }
 
-    final regionResponse = await http.get(Uri.parse('${apiUrl}Regions'));
-    if (regionResponse.statusCode == 200) {
-      await DatabaseHelper.insertOrReplaceRegions(
-          regionListFromAPIJson(json.decode(regionResponse.body)));
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load regions');
-    }
+    if (dataget) {
+      final oks = DownloaderProgressNull();
+      final regionResponse = await http.get(Uri.parse('${apiUrl}Regions'));
+      if (regionResponse.statusCode == 200) {
+        await DatabaseHelper.insertOrReplaceRegions(
+            regionListFromAPIJson(json.decode(regionResponse.body)));
+      } else {
+        // If that response was not OK, throw an error.
+        throw Exception('Failed to load regions');
+      }
+      oks.region = true;
+      yield oks;
 
-    final provinceResponse = await http.get(Uri.parse('${apiUrl}Provinces'));
-    if (provinceResponse.statusCode == 200) {
-      await DatabaseHelper.insertOrReplaceProvinces(
-          provinceListFromAPIJson(json.decode(provinceResponse.body)));
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load regions');
-    }
+      final provinceResponse = await http.get(Uri.parse('${apiUrl}Provinces'));
+      if (provinceResponse.statusCode == 200) {
+        await DatabaseHelper.insertOrReplaceProvinces(
+            provinceListFromAPIJson(json.decode(provinceResponse.body)));
+      } else {
+        // If that response was not OK, throw an error.
+        throw Exception('Failed to load regions');
+      }
+      oks.province = true;
+      yield oks;
 
-    final categoryResponse = await http.get(Uri.parse('${apiUrl}Categories'));
-    if (categoryResponse.statusCode == 200) {
-      await DatabaseHelper.insertOrReplaceCategories(
-          categoryListFromAPIJson(json.decode(categoryResponse.body)));
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load regions');
+      final categoryResponse = await http.get(Uri.parse('${apiUrl}Categories'));
+      if (categoryResponse.statusCode == 200) {
+        await DatabaseHelper.insertOrReplaceCategories(
+            categoryListFromAPIJson(json.decode(categoryResponse.body)));
+      } else {
+        // If that response was not OK, throw an error.
+        throw Exception('Failed to load regions');
+      }
+      oks.category = true;
+      yield oks;
     }
   }
 
-  Stream<DownloaderProgress> downloadSegment(int year, int completeEndChangeId,
-      int pkgCount, int progressC, int counter) async* {
+  Stream<DownloaderProgressNull> downloadSegment(
+      int year,
+      int completeEndChangeId,
+      int pkgCount,
+      int progressC,
+      int counter,
+      int downloadChangeAnz) async* {
     int beginsegment = await DatabaseHelper.getCurrentLastChangeId(year);
     developer.log('status',
         name: 'data_downloader.dart',
@@ -123,12 +144,12 @@ class DataDownloader {
             error: "got changes count: ${changedLocationIds.length}");
 
         int inserted = await DatabaseHelper.insertOpenDays(changedLocationIds);
-        final d = DownloaderProgress();
-        d.current = progressC + inserted + .0;
-
+        final d = DownloaderProgressNull();
+        d.dcurrent = progressC + inserted + .0;
+        d.dmax = downloadChangeAnz + .0;
         yield d;
-        downloadSegment(year, completeEndChangeId, pkgCount,
-            (progressC + inserted), (counter + 1));
+        yield* downloadSegment(year, completeEndChangeId, pkgCount,
+            (progressC + inserted), (counter + 1), downloadChangeAnz);
       } else {
         // If that response was not OK, throw an error.
         throw Exception('Failed to load segment');
@@ -136,10 +157,10 @@ class DataDownloader {
     }
   }
 
-  Stream<DownloaderProgress> _updatewiththisJsondata(
+  Stream<DownloaderProgressNull> _updatewiththisJsondata(
       List<int> nummern, int year, int changeid) async* {
     int anzahlakt = nummern.length;
-    int zael = 1;
+    int zael = 0;
 
     List<String> idList = <String>[];
 
@@ -153,7 +174,7 @@ class DataDownloader {
     }
     for (int i = 0; i < partitions.length; i++) {
       String putBody = '{"arr":[${partitions[i].join(',')}]}';
-      print('putBody: $putBody');
+      // print('putBody: $putBody');
       List<Location> changedLocationIds;
       final getLocationToIdsResponse = await http.put(
           Uri.parse('${apiUrl}Locations/getLocationsToIds'),
@@ -164,7 +185,7 @@ class DataDownloader {
         // If server returns an OK response, parse the JSON.
         changedLocationIds =
             locationListFromAPIJson(json.decode(getLocationToIdsResponse.body));
-        print('newLocations $changedLocationIds');
+        // print('newLocations $changedLocationIds');
       } else {
         // If that response was not OK, throw an error.
         throw Exception('Failed to load put');
@@ -173,7 +194,11 @@ class DataDownloader {
       await DatabaseHelper.insertOrReplaceLocations(changedLocationIds);
 
       zael = zael + changedLocationIds.length;
-      final d = DownloaderProgress();
+      final d = DownloaderProgressNull();
+      developer.log('count',
+          name: 'data_downloader.dart',
+          error:
+              "zael: $zael, added: ${changedLocationIds.length}, i: $i, anzahlakt: $anzahlakt");
       d.current = zael + .0;
       d.max = anzahlakt + .0;
       yield d;
@@ -189,7 +214,7 @@ class DataDownloader {
 
   OpenDay openDayFromAPIJson(Map<String, dynamic> json, int year) {
     final object = OpenDay();
-    object.active = json['a'];
+    object.active = json['a'] == 1;
     object.changeIndex = json['c'];
     object.day = json['d'];
     object.locationId = json['l'];
