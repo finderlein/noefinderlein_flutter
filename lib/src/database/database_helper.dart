@@ -96,6 +96,16 @@ class DatabaseHelper {
     return locations;
   }
 
+  static Future<void> updateChangeId(int year, int changeid) async {
+    ChangeVal val = ChangeVal();
+    val.year = year;
+    val.changeCount = changeid;
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.changeVals.put(val);
+    });
+  }
+
   static String getRegionName(int regionId) {
     Isar db = DatabaseHelper.dbSync();
     final region = db.regions.where().idEqualTo(regionId).findFirstSync();
@@ -126,6 +136,14 @@ class DatabaseHelper {
         .changeCountGreaterThan(changedcount - 1)
         .count();
     return count == 0;
+  }
+
+  static Future<int> insertOpenDays(List<OpenDay> opendays) async {
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.openDays.putAll(opendays, replaceOnConflict: true);
+    });
+    return opendays.length;
   }
 
   static Future<int> getCurrentLastChangeId(int year) async {

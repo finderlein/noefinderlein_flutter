@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:noefinderlein_flutter/src/database/tables/open_day.dart';
+import 'dart:developer' as developer;
 
 // import '../model/model_noec_location.dart';
 import '../database/tables/province.dart';
@@ -16,11 +18,13 @@ import '../../auth/secrets.dart';
 
 class DataDownloader {
   final String apiUrl = dataApi;
+  final int dayPkgCount = 500;
   Stream<DownloaderProgress> refresh(int year) async* {
+    bool loadOpenData = true;
     final d = DownloaderProgress();
     d.current = 0;
     yield d;
-    //CurrentIds yearData = noefinderleinAPI.loadChanges(year).execute().body();
+    // CurrentIds yearData = noefinderleinAPI.loadChanges(year).execute().body();
     final loadChangesResponse = await http.get(
         Uri.parse('${apiUrl}Changevals/getCurrentIds?year=${year.toString()}'));
     CurrentIds yearData;
@@ -51,7 +55,26 @@ class DataDownloader {
         // If that response was not OK, throw an error.
         throw Exception('Failed to load post');
       }
-      yield* _updatewiththisJsondata(changedLocationIds);
+
+      yield* _updatewiththisJsondata(
+          changedLocationIds, year, yearData.changeid);
+    }
+    developer.log('loadOpendata:',
+        name: 'data_downloader.dart', error: loadOpenData);
+    developer.log('Day Update neeeded?:',
+        name: 'data_downloader.dart', error: currentChangeIdInDB);
+    if (loadOpenData && currentChangeIdInDB < yearData.changeid) {
+      int downloadChangeAnz = yearData.daysChangeCount;
+      double anzPackagesD = (downloadChangeAnz / dayPkgCount) + 1;
+      int anzPackages = anzPackagesD.round();
+      developer.log('gesamt und anzahl an x packages',
+          name: 'data_downloader.dart',
+          error: "$downloadChangeAnz $anzPackages");
+      final d = DownloaderProgress();
+      d.current = 0;
+      d.max = downloadChangeAnz + .0;
+      yield d;
+      yield* downloadSegment(year, yearData.daysChangeCount, anzPackages, 0, 0);
     }
 
     final regionResponse = await http.get(Uri.parse('${apiUrl}Regions'));
@@ -82,7 +105,39 @@ class DataDownloader {
     }
   }
 
-  Stream<DownloaderProgress> _updatewiththisJsondata(List<int> nummern) async* {
+  Stream<DownloaderProgress> downloadSegment(int year, int completeEndChangeId,
+      int pkgCount, int progressC, int counter) async* {
+    int beginsegment = await DatabaseHelper.getCurrentLastChangeId(year);
+    developer.log('status',
+        name: 'data_downloader.dart',
+        error:
+            "counter: $counter pkgCount: $pkgCount beginsegment: $beginsegment completeEndChangeId: $completeEndChangeId");
+    if (counter < (pkgCount + 20) && beginsegment < completeEndChangeId) {
+      final segmentResponse = await http.get(Uri.parse(
+          '${apiUrl}Days/getChangeSegmentCount?year=$year&changeStart=$beginsegment&count=$dayPkgCount'));
+      if (segmentResponse.statusCode == 200) {
+        List<OpenDay> changedLocationIds =
+            openDayListFromAPIJson(json.decode(segmentResponse.body), year);
+        developer.log('status',
+            name: 'data_downloader.dart',
+            error: "got changes count: ${changedLocationIds.length}");
+
+        int inserted = await DatabaseHelper.insertOpenDays(changedLocationIds);
+        final d = DownloaderProgress();
+        d.current = progressC + inserted + .0;
+
+        yield d;
+        downloadSegment(year, completeEndChangeId, pkgCount,
+            (progressC + inserted), (counter + 1));
+      } else {
+        // If that response was not OK, throw an error.
+        throw Exception('Failed to load segment');
+      }
+    }
+  }
+
+  Stream<DownloaderProgress> _updatewiththisJsondata(
+      List<int> nummern, int year, int changeid) async* {
     int anzahlakt = nummern.length;
     int zael = 1;
 
@@ -123,6 +178,23 @@ class DataDownloader {
       d.max = anzahlakt + .0;
       yield d;
     }
+    await DatabaseHelper.updateChangeId(year, changeid);
+  }
+
+  List<OpenDay> openDayListFromAPIJson(List<dynamic> parsedJson, int year) {
+    List<OpenDay> days = <OpenDay>[];
+    days = parsedJson.map((i) => openDayFromAPIJson(i, year)).toList();
+    return days;
+  }
+
+  OpenDay openDayFromAPIJson(Map<String, dynamic> json, int year) {
+    final object = OpenDay();
+    object.active = json['a'];
+    object.changeIndex = json['c'];
+    object.day = json['d'];
+    object.locationId = json['l'];
+    object.year = year;
+    return object;
   }
 
   List<Location> locationListFromAPIJson(List<dynamic> parsedJson) {

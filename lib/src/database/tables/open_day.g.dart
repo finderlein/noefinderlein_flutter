@@ -17,20 +17,34 @@ extension GetOpenDayCollection on Isar {
 final OpenDaySchema = CollectionSchema(
   name: 'OpenDay',
   schema:
-      '{"name":"OpenDay","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"changeIndex","type":"Long"},{"name":"day","type":"String"},{"name":"locationId","type":"Long"},{"name":"year","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"OpenDay","idName":"id","properties":[{"name":"active","type":"Bool"},{"name":"changeIndex","type":"Long"},{"name":"compIndex","type":"String"},{"name":"day","type":"String"},{"name":"locationId","type":"Long"},{"name":"year","type":"Long"}],"indexes":[{"name":"compIndex","unique":true,"properties":[{"name":"compIndex","type":"Value","caseSensitive":true}]},{"name":"day","unique":false,"properties":[{"name":"day","type":"Hash","caseSensitive":true}]},{"name":"locationId","unique":false,"properties":[{"name":"locationId","type":"Value","caseSensitive":false}]},{"name":"year","unique":false,"properties":[{"name":"year","type":"Value","caseSensitive":false}]}],"links":[]}',
   nativeAdapter: const _OpenDayNativeAdapter(),
   webAdapter: const _OpenDayWebAdapter(),
   idName: 'id',
   propertyIds: {
     'active': 0,
     'changeIndex': 1,
-    'day': 2,
-    'locationId': 3,
-    'year': 4
+    'compIndex': 2,
+    'day': 3,
+    'locationId': 4,
+    'year': 5
   },
   listProperties: {},
-  indexIds: {},
-  indexTypes: {},
+  indexIds: {'compIndex': 0, 'day': 1, 'locationId': 2, 'year': 3},
+  indexTypes: {
+    'compIndex': [
+      NativeIndexType.string,
+    ],
+    'day': [
+      NativeIndexType.stringHash,
+    ],
+    'locationId': [
+      NativeIndexType.long,
+    ],
+    'year': [
+      NativeIndexType.long,
+    ]
+  },
   linkIds: {},
   backlinkIds: {},
   linkedCollections: [],
@@ -54,6 +68,7 @@ class _OpenDayWebAdapter extends IsarWebTypeAdapter<OpenDay> {
     final jsObj = IsarNative.newJsObject();
     IsarNative.jsObjectSet(jsObj, 'active', object.active);
     IsarNative.jsObjectSet(jsObj, 'changeIndex', object.changeIndex);
+    IsarNative.jsObjectSet(jsObj, 'compIndex', object.compIndex);
     IsarNative.jsObjectSet(jsObj, 'day', object.day);
     IsarNative.jsObjectSet(jsObj, 'id', object.id);
     IsarNative.jsObjectSet(jsObj, 'locationId', object.locationId);
@@ -84,6 +99,8 @@ class _OpenDayWebAdapter extends IsarWebTypeAdapter<OpenDay> {
       case 'changeIndex':
         return (IsarNative.jsObjectGet(jsObj, 'changeIndex') ??
             double.negativeInfinity) as P;
+      case 'compIndex':
+        return (IsarNative.jsObjectGet(jsObj, 'compIndex') ?? '') as P;
       case 'day':
         return (IsarNative.jsObjectGet(jsObj, 'day') ?? '') as P;
       case 'id':
@@ -115,13 +132,16 @@ class _OpenDayNativeAdapter extends IsarNativeTypeAdapter<OpenDay> {
     final _active = value0;
     final value1 = object.changeIndex;
     final _changeIndex = value1;
-    final value2 = object.day;
-    final _day = IsarBinaryWriter.utf8Encoder.convert(value2);
+    final value2 = object.compIndex;
+    final _compIndex = IsarBinaryWriter.utf8Encoder.convert(value2);
+    dynamicSize += (_compIndex.length) as int;
+    final value3 = object.day;
+    final _day = IsarBinaryWriter.utf8Encoder.convert(value3);
     dynamicSize += (_day.length) as int;
-    final value3 = object.locationId;
-    final _locationId = value3;
-    final value4 = object.year;
-    final _year = value4;
+    final value4 = object.locationId;
+    final _locationId = value4;
+    final value5 = object.year;
+    final _year = value5;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -130,9 +150,10 @@ class _OpenDayNativeAdapter extends IsarNativeTypeAdapter<OpenDay> {
     final writer = IsarBinaryWriter(buffer, staticSize);
     writer.writeBool(offsets[0], _active);
     writer.writeLong(offsets[1], _changeIndex);
-    writer.writeBytes(offsets[2], _day);
-    writer.writeLong(offsets[3], _locationId);
-    writer.writeLong(offsets[4], _year);
+    writer.writeBytes(offsets[2], _compIndex);
+    writer.writeBytes(offsets[3], _day);
+    writer.writeLong(offsets[4], _locationId);
+    writer.writeLong(offsets[5], _year);
   }
 
   @override
@@ -141,10 +162,10 @@ class _OpenDayNativeAdapter extends IsarNativeTypeAdapter<OpenDay> {
     final object = OpenDay();
     object.active = reader.readBool(offsets[0]);
     object.changeIndex = reader.readLong(offsets[1]);
-    object.day = reader.readString(offsets[2]);
+    object.day = reader.readString(offsets[3]);
     object.id = id;
-    object.locationId = reader.readLong(offsets[3]);
-    object.year = reader.readLong(offsets[4]);
+    object.locationId = reader.readLong(offsets[4]);
+    object.year = reader.readLong(offsets[5]);
     return object;
   }
 
@@ -161,8 +182,10 @@ class _OpenDayNativeAdapter extends IsarNativeTypeAdapter<OpenDay> {
       case 2:
         return (reader.readString(offset)) as P;
       case 3:
-        return (reader.readLong(offset)) as P;
+        return (reader.readString(offset)) as P;
       case 4:
+        return (reader.readLong(offset)) as P;
+      case 5:
         return (reader.readLong(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -173,9 +196,63 @@ class _OpenDayNativeAdapter extends IsarNativeTypeAdapter<OpenDay> {
   void attachLinks(Isar isar, int id, OpenDay object) {}
 }
 
+extension OpenDayByIndex on IsarCollection<OpenDay> {
+  Future<OpenDay?> getByCompIndex(String compIndex) {
+    return getByIndex('compIndex', [compIndex]);
+  }
+
+  OpenDay? getByCompIndexSync(String compIndex) {
+    return getByIndexSync('compIndex', [compIndex]);
+  }
+
+  Future<bool> deleteByCompIndex(String compIndex) {
+    return deleteByIndex('compIndex', [compIndex]);
+  }
+
+  bool deleteByCompIndexSync(String compIndex) {
+    return deleteByIndexSync('compIndex', [compIndex]);
+  }
+
+  Future<List<OpenDay?>> getAllByCompIndex(List<String> compIndexValues) {
+    final values = compIndexValues.map((e) => [e]).toList();
+    return getAllByIndex('compIndex', values);
+  }
+
+  List<OpenDay?> getAllByCompIndexSync(List<String> compIndexValues) {
+    final values = compIndexValues.map((e) => [e]).toList();
+    return getAllByIndexSync('compIndex', values);
+  }
+
+  Future<int> deleteAllByCompIndex(List<String> compIndexValues) {
+    final values = compIndexValues.map((e) => [e]).toList();
+    return deleteAllByIndex('compIndex', values);
+  }
+
+  int deleteAllByCompIndexSync(List<String> compIndexValues) {
+    final values = compIndexValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync('compIndex', values);
+  }
+}
+
 extension OpenDayQueryWhereSort on QueryBuilder<OpenDay, OpenDay, QWhere> {
   QueryBuilder<OpenDay, OpenDay, QAfterWhere> anyId() {
     return addWhereClauseInternal(const WhereClause(indexName: null));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhere> anyCompIndex() {
+    return addWhereClauseInternal(const WhereClause(indexName: 'compIndex'));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhere> anyDay() {
+    return addWhereClauseInternal(const WhereClause(indexName: 'day'));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhere> anyLocationId() {
+    return addWhereClauseInternal(const WhereClause(indexName: 'locationId'));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhere> anyYear() {
+    return addWhereClauseInternal(const WhereClause(indexName: 'year'));
   }
 }
 
@@ -250,6 +327,268 @@ extension OpenDayQueryWhere on QueryBuilder<OpenDay, OpenDay, QWhereClause> {
       includeUpper: includeUpper,
     ));
   }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> compIndexEqualTo(
+      String compIndex) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'compIndex',
+      lower: [compIndex],
+      includeLower: true,
+      upper: [compIndex],
+      includeUpper: true,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> compIndexNotEqualTo(
+      String compIndex) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'compIndex',
+        upper: [compIndex],
+        includeUpper: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'compIndex',
+        lower: [compIndex],
+        includeLower: false,
+      ));
+    } else {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'compIndex',
+        lower: [compIndex],
+        includeLower: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'compIndex',
+        upper: [compIndex],
+        includeUpper: false,
+      ));
+    }
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> compIndexGreaterThan(
+    String compIndex, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'compIndex',
+      lower: [compIndex],
+      includeLower: include,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> compIndexLessThan(
+    String compIndex, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'compIndex',
+      upper: [compIndex],
+      includeUpper: include,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> compIndexBetween(
+    String lowerCompIndex,
+    String upperCompIndex, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'compIndex',
+      lower: [lowerCompIndex],
+      includeLower: includeLower,
+      upper: [upperCompIndex],
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> compIndexStartsWith(
+      String CompIndexPrefix) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'compIndex',
+      lower: [CompIndexPrefix],
+      includeLower: true,
+      upper: ['$CompIndexPrefix\u{FFFFF}'],
+      includeUpper: true,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> dayEqualTo(String day) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'day',
+      lower: [day],
+      includeLower: true,
+      upper: [day],
+      includeUpper: true,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> dayNotEqualTo(String day) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'day',
+        upper: [day],
+        includeUpper: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'day',
+        lower: [day],
+        includeLower: false,
+      ));
+    } else {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'day',
+        lower: [day],
+        includeLower: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'day',
+        upper: [day],
+        includeUpper: false,
+      ));
+    }
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> locationIdEqualTo(
+      int locationId) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'locationId',
+      lower: [locationId],
+      includeLower: true,
+      upper: [locationId],
+      includeUpper: true,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> locationIdNotEqualTo(
+      int locationId) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'locationId',
+        upper: [locationId],
+        includeUpper: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'locationId',
+        lower: [locationId],
+        includeLower: false,
+      ));
+    } else {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'locationId',
+        lower: [locationId],
+        includeLower: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'locationId',
+        upper: [locationId],
+        includeUpper: false,
+      ));
+    }
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> locationIdGreaterThan(
+    int locationId, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'locationId',
+      lower: [locationId],
+      includeLower: include,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> locationIdLessThan(
+    int locationId, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'locationId',
+      upper: [locationId],
+      includeUpper: include,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> locationIdBetween(
+    int lowerLocationId,
+    int upperLocationId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'locationId',
+      lower: [lowerLocationId],
+      includeLower: includeLower,
+      upper: [upperLocationId],
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> yearEqualTo(int year) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'year',
+      lower: [year],
+      includeLower: true,
+      upper: [year],
+      includeUpper: true,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> yearNotEqualTo(int year) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'year',
+        upper: [year],
+        includeUpper: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'year',
+        lower: [year],
+        includeLower: false,
+      ));
+    } else {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'year',
+        lower: [year],
+        includeLower: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'year',
+        upper: [year],
+        includeUpper: false,
+      ));
+    }
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> yearGreaterThan(
+    int year, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'year',
+      lower: [year],
+      includeLower: include,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> yearLessThan(
+    int year, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'year',
+      upper: [year],
+      includeUpper: include,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterWhereClause> yearBetween(
+    int lowerYear,
+    int upperYear, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'year',
+      lower: [lowerYear],
+      includeLower: includeLower,
+      upper: [upperYear],
+      includeUpper: includeUpper,
+    ));
+  }
 }
 
 extension OpenDayQueryFilter
@@ -308,6 +647,109 @@ extension OpenDayQueryFilter
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'compIndex',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'compIndex',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'compIndex',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'compIndex',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'compIndex',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'compIndex',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'compIndex',
+      value: value,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterFilterCondition> compIndexMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'compIndex',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -577,6 +1019,14 @@ extension OpenDayQueryWhereSortBy on QueryBuilder<OpenDay, OpenDay, QSortBy> {
     return addSortByInternal('changeIndex', Sort.desc);
   }
 
+  QueryBuilder<OpenDay, OpenDay, QAfterSortBy> sortByCompIndex() {
+    return addSortByInternal('compIndex', Sort.asc);
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterSortBy> sortByCompIndexDesc() {
+    return addSortByInternal('compIndex', Sort.desc);
+  }
+
   QueryBuilder<OpenDay, OpenDay, QAfterSortBy> sortByDay() {
     return addSortByInternal('day', Sort.asc);
   }
@@ -628,6 +1078,14 @@ extension OpenDayQueryWhereSortThenBy
     return addSortByInternal('changeIndex', Sort.desc);
   }
 
+  QueryBuilder<OpenDay, OpenDay, QAfterSortBy> thenByCompIndex() {
+    return addSortByInternal('compIndex', Sort.asc);
+  }
+
+  QueryBuilder<OpenDay, OpenDay, QAfterSortBy> thenByCompIndexDesc() {
+    return addSortByInternal('compIndex', Sort.desc);
+  }
+
   QueryBuilder<OpenDay, OpenDay, QAfterSortBy> thenByDay() {
     return addSortByInternal('day', Sort.asc);
   }
@@ -671,6 +1129,11 @@ extension OpenDayQueryWhereDistinct
     return addDistinctByInternal('changeIndex');
   }
 
+  QueryBuilder<OpenDay, OpenDay, QDistinct> distinctByCompIndex(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('compIndex', caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<OpenDay, OpenDay, QDistinct> distinctByDay(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('day', caseSensitive: caseSensitive);
@@ -697,6 +1160,10 @@ extension OpenDayQueryProperty
 
   QueryBuilder<OpenDay, int, QQueryOperations> changeIndexProperty() {
     return addPropertyNameInternal('changeIndex');
+  }
+
+  QueryBuilder<OpenDay, String, QQueryOperations> compIndexProperty() {
+    return addPropertyNameInternal('compIndex');
   }
 
   QueryBuilder<OpenDay, String, QQueryOperations> dayProperty() {

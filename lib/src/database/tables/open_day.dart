@@ -8,10 +8,18 @@ class OpenDay {
   @Id()
   int id = Isar.autoIncrement;
 
+  @Index()
+  int year = 0;
+
+  @Index()
   late String day;
+
+  @Index()
   late int locationId;
 
-  int year = 0;
+  @Index(type: IndexType.value, unique: true)
+  String get compIndex => '${locationId.toString()}$day';
+
   bool active = true;
   int changeIndex = 0;
 }
