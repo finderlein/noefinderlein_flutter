@@ -78,6 +78,12 @@ class _LocationListScreenState extends State<LocationListScreen> {
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
           actions: [
+            IconButton(
+              icon: const Icon(MdiIcons.download),
+              onPressed: () {
+                Future.delayed(Duration.zero, () => showDownloader(context));
+              },
+            ),
             !_search
                 ? IconButton(
                     icon: const Icon(MdiIcons.magnify),
@@ -187,25 +193,31 @@ class _LocationListScreenState extends State<LocationListScreen> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
             title: const Text('Downloading Data...'),
-            scrollable: true,
-            content: Column(children: [
-              Downloader(
-                year: widget.year,
-                callback: () {
-                  setState(() {
-                    //add
-                    _search = false;
-                    _allmenuLocations = DatabaseHelper.getAllLocations(
-                      year: widget.year,
-                      regionId: widget.regionId,
-                      favorites: widget.favorites,
-                      searchString: searchString,
-                    );
-                  });
-                },
-              )
-            ])));
+            content: Builder(builder: (context) {
+              var height = MediaQuery.of(context).size.height;
+              var width = MediaQuery.of(context).size.width;
+              return SizedBox(
+                  height: height / 2,
+                  width: width / 3,
+                  child: Downloader(
+                    year: widget.year,
+                    callback: () {
+                      setState(() {
+                        //add
+                        _search = false;
+                        _allmenuLocations = DatabaseHelper.getAllLocations(
+                          year: widget.year,
+                          regionId: widget.regionId,
+                          favorites: widget.favorites,
+                          searchString: searchString,
+                        );
+                      });
+                    },
+                  ));
+            })));
   }
 }
 
