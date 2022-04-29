@@ -17,7 +17,7 @@ dependencies:
   isar: 2.2.1
   isar_flutter_libs: 2.2.1 # contains the binaries
   path_provider: ^2.0.0
-  path: ^1.8.1
+  path: ^1.8.0
   http:
   flutter_animation_progress_bar:
   material_design_icons_flutter: 5.0.6595

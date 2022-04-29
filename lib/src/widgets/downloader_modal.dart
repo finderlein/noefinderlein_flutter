@@ -62,7 +62,7 @@ class DownloaderState extends State<Downloader> {
             );
           case ConnectionState.done:
             print(snapshot.data);
-            WidgetsBinding.instance.addPostFrameCallback((_) {
+            WidgetsBinding.instance?.addPostFrameCallback((_) {
               Navigator.pop(context);
               widget.callback();
             });
