@@ -15,7 +15,7 @@ import '../utilities/noefinderlein.dart';
 // import '../model/model_noec_location.dart';
 
 class DatabaseHelper {
-  static const _databaseName = "noeFinderlein2.4.db";
+  static const _databaseName = "noeFinderlein2.13.db";
   // static const _databaseVersion = 1;
 
   // static final tableLocations = Location.instance;
@@ -130,12 +130,19 @@ class DatabaseHelper {
 
   static Future<bool> updateForYearNeeded(int year, int changedcount) async {
     Isar db = await DatabaseHelper.db();
-    final count = await db.changeVals
-        .filter()
-        .yearEqualTo(year)
-        .changeCountGreaterThan(changedcount - 1)
-        .count();
-    return count == 0;
+    final changeVal =
+        await db.changeVals.filter().yearEqualTo(year).findFirst();
+    developer.log('changeVal',
+        name: 'database_helper.dart',
+        error: '${changeVal?.changeCount} + ${changeVal?.year}');
+    developer.log('changedcount',
+        name: 'database_helper.dart', error: changedcount);
+    if (changeVal == null) {
+      return true;
+    } else if (changeVal.changeCount < changedcount) {
+      return true;
+    }
+    return false;
   }
 
   static Future<int> insertOpenDays(List<OpenDay> opendays) async {
@@ -277,12 +284,12 @@ class DatabaseHelper {
           updateList.add(location);
         } else {
           // insert
-          print('insertLocation: $location');
-          print('locationsList: $insertList');
+          // print('insertLocation: $location');
+          // print('locationsList: $insertList');
           insertList.add(location);
         }
       } catch (e) {
-        print(e);
+        // print(e);
       }
     }
     await _insOrRepl(updateList, insertList);
