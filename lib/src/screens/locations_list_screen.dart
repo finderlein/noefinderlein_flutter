@@ -56,7 +56,19 @@ class _LocationListScreenState extends State<LocationListScreen> {
   Widget build(BuildContext context) {
     if (!glob.downloaderRan) {
       glob.downloaderRan = true;
-      Future.delayed(Duration.zero, () => showDownloader(context));
+      Future.delayed(
+          Duration.zero,
+          () => showDownloader(context).then((_) {
+                developer.log('downloadcallback:',
+                    name: 'locations_list_screen.dart', error: 'now');
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                Navigator.pushReplacementNamed(
+                  context,
+                  LocationListScreen.routeName,
+                );
+              }));
     }
     return Scaffold(
         drawer: widget.drawer ? DrawerMain(year: widget.year) : null,
@@ -81,7 +93,22 @@ class _LocationListScreenState extends State<LocationListScreen> {
             IconButton(
               icon: const Icon(MdiIcons.download),
               onPressed: () {
-                Future.delayed(Duration.zero, () => showDownloader(context));
+                Future.delayed(
+                    Duration.zero,
+                    () => showDownloader(context).then(
+                          (_) {
+                            developer.log('downloadcallback:',
+                                name: 'locations_list_screen.dart',
+                                error: 'now');
+                            if (Navigator.canPop(context)) {
+                              Navigator.pop(context);
+                            }
+                            Navigator.pushReplacementNamed(
+                              context,
+                              LocationListScreen.routeName,
+                            );
+                          },
+                        ));
               },
             ),
             !_search
@@ -134,13 +161,14 @@ class _LocationListScreenState extends State<LocationListScreen> {
                                             .onSurface))),
                           ])).then((value) => setState(() {
                     //add
-
-                    _allmenuLocations = DatabaseHelper.getAllLocations(
-                        year: widget.year,
-                        regionId: widget.regionId,
-                        favorites: widget.favorites,
-                        searchString: '',
-                        sortBy: value);
+                    if (value != null) {
+                      _allmenuLocations = DatabaseHelper.getAllLocations(
+                          year: widget.year,
+                          regionId: widget.regionId,
+                          favorites: widget.favorites,
+                          searchString: '',
+                          sortBy: value);
+                    }
                   })),
             ),
             IconButton(
@@ -167,6 +195,9 @@ class _LocationListScreenState extends State<LocationListScreen> {
           future: _allmenuLocations,
           builder:
               (BuildContext context, AsyncSnapshot<List<Location>> snapshot) {
+            developer.log('connectionState',
+                name: 'locations_list_screen.dart',
+                error: snapshot.connectionState);
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 return const Text('Press button to start.');
@@ -175,48 +206,31 @@ class _LocationListScreenState extends State<LocationListScreen> {
                 developer.log('waiting', name: 'locations_list_screen.dart');
                 return const Center(child: CircularProgressIndicator());
               case ConnectionState.done:
-                developer.log('done', name: 'locations_list_screen.dart');
+                // developer.log('done',
+                //     name: 'locations_list_screen.dart', error: snapshot.data);
                 if (snapshot.data != null) {
                   currentIds = genIdList(snapshot.data);
+                  return LocationsList(locations: snapshot.data!);
                 }
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
-                return LocationsList(locations: snapshot.data!);
-              // return Text('Result: ${snapshot.data}');
+                return Text('Result: ${snapshot.data}');
             }
           },
         ));
   }
 
-  void showDownloader(BuildContext context) {
-    showDialog(
+  Future<void> showDownloader(BuildContext context) {
+    return showDialog(
         context: context,
         builder: (context) => AlertDialog(
+            scrollable: true,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            title: const Text('Downloading Data...'),
+            title: Text('Downloading data for year ${widget.year}'),
             content: Builder(builder: (context) {
-              var height = MediaQuery.of(context).size.height;
-              var width = MediaQuery.of(context).size.width;
-              return SizedBox(
-                  height: height / 2,
-                  width: width / 3,
-                  child: Downloader(
-                    year: widget.year,
-                    callback: () {
-                      setState(() {
-                        //add
-                        _search = false;
-                        _allmenuLocations = DatabaseHelper.getAllLocations(
-                          year: widget.year,
-                          regionId: widget.regionId,
-                          favorites: widget.favorites,
-                          searchString: searchString,
-                        );
-                      });
-                    },
-                  ));
+              return Downloader(year: widget.year);
             })));
   }
 }

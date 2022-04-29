@@ -15,7 +15,7 @@ import '../utilities/noefinderlein.dart';
 // import '../model/model_noec_location.dart';
 
 class DatabaseHelper {
-  static const _databaseName = "noeFinderlein2.13.db";
+  static const _databaseName = "noeFinderlein2.28.db";
   // static const _databaseVersion = 1;
 
   // static final tableLocations = Location.instance;
@@ -93,6 +93,7 @@ class DatabaseHelper {
     } else {
       locations = await locationsb.sortByBookletNumber().thenByName().findAll();
     }
+    // print(locations);
     return locations;
   }
 

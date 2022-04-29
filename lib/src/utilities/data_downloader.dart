@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
@@ -19,7 +20,26 @@ import '../../auth/secrets.dart';
 class DataDownloader {
   final String apiUrl = dataApi;
   final int dayPkgCount = 500;
+
   Stream<DownloaderProgressNull> refresh(int year) async* {
+    try {
+      final loadChangesResponse = await http.get(Uri.parse(
+          '${apiUrl}Changevals/getCurrentIds?year=${year.toString()}'));
+      CurrentIds yearData;
+      if (loadChangesResponse.statusCode == 200) {
+        // If server returns an OK response, parse the JSON.
+        yearData = CurrentIds.fromJson(json.decode(loadChangesResponse.body));
+        yield* refreshSec(year, yearData);
+      }
+    } catch (error) {
+      final d = DownloaderProgressNull();
+      d.error = error.toString();
+      yield d;
+    }
+  }
+
+  Stream<DownloaderProgressNull> refreshSec(
+      int year, CurrentIds yearData) async* {
     bool loadOpenData = true;
     bool dataget = false;
     final d = DownloaderProgressNull();
@@ -29,14 +49,6 @@ class DataDownloader {
     // CurrentIds yearData = noefinderleinAPI.loadChanges(year).execute().body();
     final loadChangesResponse = await http.get(
         Uri.parse('${apiUrl}Changevals/getCurrentIds?year=${year.toString()}'));
-    CurrentIds yearData;
-    if (loadChangesResponse.statusCode == 200) {
-      // If server returns an OK response, parse the JSON.
-      yearData = CurrentIds.fromJson(json.decode(loadChangesResponse.body));
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load post');
-    }
 
     bool updateneeded =
         await DatabaseHelper.updateForYearNeeded(year, yearData.changeid);

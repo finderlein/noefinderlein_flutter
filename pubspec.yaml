@@ -19,7 +19,7 @@ dependencies:
   path_provider: ^2.0.0
   path: ^1.8.0
   http:
-  flutter_animation_progress_bar:
+  # flutter_animation_progress_bar:
   material_design_icons_flutter: 5.0.6595
   url_launcher: ^6.0.20
   maps_launcher: ^2.0.1

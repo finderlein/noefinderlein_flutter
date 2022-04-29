@@ -16,4 +16,5 @@ class DownloaderProgressNull {
   bool? region;
   bool? province;
   bool? category;
+  String error = '';
 }

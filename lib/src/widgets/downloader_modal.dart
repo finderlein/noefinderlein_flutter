@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:noefinderlein_flutter/src/screens/locations_list_screen.dart';
 import '../utilities/data_downloader.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+// import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 // import '../pages/locations_list_page.dart';
 import '../model/model_downloader_progress.dart';
 import 'dart:developer' as developer;
 
 class Downloader extends StatefulWidget {
-  const Downloader({Key? key, required this.year, required this.callback})
-      : super(key: key);
+  const Downloader({Key? key, required this.year}) : super(key: key);
   final int year;
-  final Function callback;
   static const routeName = '/downloader';
 
   @override
@@ -75,11 +74,34 @@ class DownloaderState extends State<Downloader> {
             if (d.category != null) {
               dp.category = d.category!;
             }
+
             if (snapshot.connectionState == ConnectionState.done) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
+                // Navigator.popUntil(
+                //     context, ModalRoute.withName(LocationListScreen.routeName));
                 Navigator.pop(context);
-                widget.callback();
               });
+              if (d.error != '') {
+                developer.log('error',
+                    name: 'downloader_modal.dart', error: d.error);
+                developer.log('connectionState',
+                    name: 'downloader_modal.dart',
+                    error: snapshot.connectionState);
+                Future.microtask(() {
+                  final snackBar = SnackBar(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    content: Text(
+                      "There was an error downloading. Maybe there is no internet-connection?\n\nThe error was: ${d.error}",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onError),
+                    ),
+                  );
+
+                  // Find the ScaffoldMessenger in the widget tree
+                  // and use it to show a SnackBar.
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              }
             }
             return ProgressBars(barData: dp);
         }
@@ -103,68 +125,42 @@ class ProgressBars extends StatelessWidget {
         error:
             '${barData.current.roundToDouble()}/${barData.max.roundToDouble()} ${barData.dcurrent.roundToDouble()}/${barData.dmax.roundToDouble()}');
     return Column(children: [
-      Text('Location Data'),
+      const Text('Location Data'),
       LinearProgressIndicator(
-        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-        // progressColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary.withAlpha(100),
         minHeight: 20,
         semanticsValue: barData.current.round().toString(),
         semanticsLabel: ' Downloading',
         value: barData.current / barData.max,
-        // border: Border.all(
-        //   width: 1,
-        // ),
-        // displayTextStyle:
-        //     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
       ),
       Text('${barData.current}/${barData.max}'),
-      Divider(),
-      Text('Location Open Data'),
+      const Divider(),
+      const Text('Location Open Data'),
       LinearProgressIndicator(
         color: Theme.of(context).colorScheme.secondary,
         backgroundColor:
             Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-        // progressColor: Theme.of(context).colorScheme.primary,
         minHeight: 20,
         semanticsValue: barData.dcurrent.round().toString(),
         semanticsLabel: ' Downloading',
         value: barData.dcurrent / barData.dmax,
-        // border: Border.all(
-        //   width: 1,
-        // ),
-        // displayTextStyle:
-        //     TextStyle(color: Theme.of(context).colorScheme.onPrimary),
       ),
       Text('${barData.dcurrent}/${barData.dmax}'),
-      Divider(),
+      const Divider(),
       Row(children: [
-        Text('Region...'),
-        barData.region ? Text('OK') : Center()
+        const Text('Region...'),
+        barData.region ? const Text('OK') : const Center()
       ]),
-      Divider(),
+      const Divider(),
       Row(children: [
-        Text('Province...'),
-        barData.province ? Text('OK') : Center()
+        const Text('Province...'),
+        barData.province ? const Text('OK') : const Center()
       ]),
-      Divider(),
+      const Divider(),
       Row(children: [
-        Text('Category...'),
-        barData.category ? Text('OK') : Center()
+        const Text('Category...'),
+        barData.category ? const Text('OK') : const Center()
       ]),
-      // FAProgressBar(
-      //   backgroundColor:
-      //       Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-      //   progressColor: Theme.of(context).colorScheme.secondary,
-      //   currentValue: ((barData.dcurrent / barData.dmax) * 100).roundToDouble(),
-      //   displayText: ' %',
-      //   // maxValue: barData.max.roundToDouble(),
-
-      //   displayTextStyle: TextStyle(
-      //       fontSize: 10, color: Theme.of(context).colorScheme.onSecondary),
-      //   // border: Border.all(
-      //   //   width: 1,
-      //   // ),
-      // ),
     ]);
   }
 }

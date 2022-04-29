@@ -27,10 +27,10 @@ jobs:
           echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
           gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
       - run: |
-          echo "noefinderlein_keystore=release.keystore" >> android/Noefinderlein_Keystore.txt
-          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/Noefinderlein_Keystore.txt
-          echo "noefinderlein_alias=noefinderlein" >> android/Noefinderlein_Keystore.txt
-          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/Noefinderlein_Keystore.txt
+          echo "noefinderlein_keystore=release.keystore" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_alias=noefinderlein" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/noefinderlein_keystore.txt
       - run: mkdir lib/auth
       - run: |
           echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";" >> lib/auth/secrets.dart

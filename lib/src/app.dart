@@ -94,6 +94,8 @@ class MyApp extends StatelessWidget {
                   final id = routeSettings.arguments as int;
                   return LocationDetailsScreen(id: id);
                 }
+                developer.log('routeName',
+                    name: 'app.dart', error: routeSettings.name);
                 switch (routeSettings.name) {
                   case RegionsListScreen.routeName:
                     return RegionsListScreen(year: glob.year);
