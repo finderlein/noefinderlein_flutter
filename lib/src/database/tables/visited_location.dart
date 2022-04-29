@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:noefinderlein_flutter/src/database/tables/location.dart';
 
 part 'visited_location.g.dart';
 

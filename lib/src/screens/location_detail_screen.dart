@@ -108,10 +108,9 @@ class LocationDetailView extends StatelessWidget {
                                 {required double amount,
                                 required String date}) async {
                               await DatabaseHelper.saveVisited(
-                                  year: location.year,
-                                  locationId: location.id,
                                   amount: amount,
-                                  date: date);
+                                  date: date,
+                                  location: location);
                               final snackBar = SnackBar(
                                 content: Text(
                                     'Saved amount € $amount on Date $date'),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noefinderlein_flutter/src/database/tables/visited_location.dart';
 
 import '../database/database_helper.dart';
+import '../model/model_visited_with_location.dart';
 import '../widgets/app_bar_main.dart';
 import '../widgets/drawer_main.dart';
 import 'dart:developer' as developer;
@@ -20,7 +21,7 @@ class VisitedScreen extends StatefulWidget {
 
 /// Displays a list of SampleItems.
 class VisitedScreenState extends State<VisitedScreen> {
-  late Future<List<VisitedLocation>> _allVisitedLocations;
+  late Future<List<VisitedWithLocation>> _allVisitedLocations;
   String customTitle = 'Alle Ziele';
 
   @override
@@ -39,7 +40,7 @@ class VisitedScreenState extends State<VisitedScreen> {
         body: FutureBuilder(
           future: _allVisitedLocations,
           builder: (BuildContext context,
-              AsyncSnapshot<List<VisitedLocation>> snapshot) {
+              AsyncSnapshot<List<VisitedWithLocation>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 return const Text('Press button to start.');
@@ -49,19 +50,19 @@ class VisitedScreenState extends State<VisitedScreen> {
                 return const Center(child: CircularProgressIndicator());
               case ConnectionState.done:
                 developer.log('done', name: 'visited_screen.dart');
-                List<VisitedLocation> locations =
-                    snapshot.data as List<VisitedLocation>;
+                List<VisitedWithLocation> locations =
+                    snapshot.data as List<VisitedWithLocation>;
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
-                return VisitedList(locations: locations);
+                return visitedList(locations: locations);
               // return Text('Result: ${snapshot.data}');
             }
           },
         ));
   }
 
-  Widget VisitedList({required List<VisitedLocation> locations}) {
+  Widget visitedList({required List<VisitedWithLocation> locations}) {
     return ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: locations.length,
@@ -71,11 +72,11 @@ class VisitedScreenState extends State<VisitedScreen> {
         });
   }
 
-  Widget _buildRow(VisitedLocation loc) {
+  Widget _buildRow(VisitedWithLocation loc) {
     return Card(
         child: ListTile(
       title: Text(
-        loc.visitedId.toString(),
+        loc.location.name.toString(),
         style: const TextStyle(fontSize: 18.0),
       ),
       onTap: () {},

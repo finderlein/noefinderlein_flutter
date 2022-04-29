@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'package:isar/isar.dart';
 // import 'package:path_provider/path_provider.dart';
 
+import '../model/model_visited_with_location.dart';
 import './tables/location.dart';
 import './tables/change_val.dart';
 import './tables/open_day.dart';
@@ -15,7 +16,7 @@ import '../utilities/noefinderlein.dart';
 // import '../model/model_noec_location.dart';
 
 class DatabaseHelper {
-  static const _databaseName = "noeFinderlein2.28.db";
+  static const _databaseName = "noeFinderlein2.30.db";
   // static const _databaseVersion = 1;
 
   // static final tableLocations = Location.instance;
@@ -215,29 +216,39 @@ class DatabaseHelper {
   }
 
   static Future<void> saveVisited(
-      {required int year,
-      required int locationId,
-      required double amount,
-      required String date}) async {
+      {required double amount,
+      required String date,
+      required Location location}) async {
     VisitedLocation vl = VisitedLocation();
-    vl.visitedLocationId = locationId;
+    vl.visitedLocationId = location.id;
     vl.visitedLoggedDay = date;
     vl.visitedSaved = amount;
-    vl.visitedYear = year;
+    vl.visitedYear = location.year;
     Isar db = await DatabaseHelper.db();
     await db.writeTxn((isar) async {
       await db.visitedLocations.put(vl);
     });
   }
 
-  static Future<List<VisitedLocation>> getVisited({required int year}) async {
+  static Future<List<VisitedWithLocation>> getVisited(
+      {required int year}) async {
     Isar db = await DatabaseHelper.db();
     List<VisitedLocation> vl = await db.visitedLocations
         .filter()
         .visitedYearEqualTo(year)
         .sortByVisitedLoggedDay()
         .findAll();
-    return vl;
+    List<VisitedWithLocation> vwl = <VisitedWithLocation>[];
+    for (VisitedLocation l in vl) {
+      VisitedWithLocation nvwl = VisitedWithLocation();
+      nvwl.visited = l;
+      Location? loc = await db.locations.get(l.visitedLocationId);
+      if (loc != null) {
+        nvwl.location = loc;
+        vwl.add(nvwl);
+      }
+    }
+    return vwl;
   }
 
   static Future<void> setFavUnfav(Location loc, bool fav) async {
