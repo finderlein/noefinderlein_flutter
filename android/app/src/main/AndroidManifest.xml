@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.reitschmied.noefinderlein_flutter">
    <application
-        android:label="noefinderlein_flutter"
+        android:label="NÖ Finderlein"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher_noefinderlein">
         <activity

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:io' show Platform;
 import 'dart:async';
@@ -17,7 +18,6 @@ class NearScreen extends StatefulWidget {
   State<NearScreen> createState() => _NearScreenState();
 }
 
-/// Displays a list of SampleItems.
 class _NearScreenState extends State<NearScreen> {
   static const String _kLocationServicesDisabledMessage =
       'Location services are disabled.';
@@ -95,10 +95,18 @@ class _NearScreenState extends State<NearScreen> {
     return Scaffold(
         drawer: DrawerMain(year: widget.year),
         appBar: AppBar(
-          title: Text('bla'),
+          title: Text('Ziele nach Nähe'),
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          actions: [_createActions()],
+          actions: [
+            IconButton(
+              icon: const Icon(MdiIcons.crosshairsGps),
+              onPressed: () async {
+                await _getCurrentPosition();
+              },
+            ),
+            _createActions()
+          ],
         ),
 
         // To work with lists that may contain a large number of items, it’s best

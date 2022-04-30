@@ -25,7 +25,9 @@ class NoeFinderleinTheme {
           onSurface: Color.fromARGB(255, 51, 51, 51),
           tertiary: Color(0xFFFFDE10),
           onTertiary: Color(0xff003672),
-          tertiaryContainer: Color(0xffff7802));
+          tertiaryContainer: Color(0xffff7802),
+          surfaceVariant: Colors.white,
+          onSurfaceVariant: Colors.black);
 
       // noecard yellow Color(0xFFFFDE10)
       // noecard orange Color(0xffFF9800)
@@ -52,7 +54,9 @@ class NoeFinderleinTheme {
           onSurface: Colors.white,
           tertiary: Color(0xff003672),
           onTertiary: Color(0xFFFFDE10),
-          tertiaryContainer: Color.fromARGB(255, 255, 119, 0));
+          tertiaryContainer: Color.fromARGB(255, 255, 119, 0),
+          surfaceVariant: Color.fromARGB(255, 36, 36, 36),
+          onSurfaceVariant: Color.fromARGB(255, 223, 223, 223));
 
       t = ThemeData.from(textTheme: txtTheme, colorScheme: colorScheme)
           // We can also add on some extra properties that ColorScheme seems to miss
