@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:developer' as developer;
+import 'package:geolocator/geolocator.dart';
 import 'package:isar/isar.dart';
 // import 'package:path_provider/path_provider.dart';
 
+import '../model/model_location_with_position.dart';
+import '../model/model_position_item.dart';
 import '../model/model_visited_with_location.dart';
 import './tables/location.dart';
 import './tables/change_val.dart';
@@ -122,6 +125,43 @@ class DatabaseHelper {
     Isar db = await DatabaseHelper.db();
     final regions = db.regions.where().findAll();
     return regions;
+  }
+
+  static Future<List<LocationWithPosition>> getAllNearLocations(
+      {required int year, required List<Position> positions}) async {
+    Isar db = await DatabaseHelper.db();
+    List<Location> locs =
+        await db.locations.filter().yearEqualTo(year).sortByName().findAll();
+    List<LocationWithPosition> returnArr = <LocationWithPosition>[];
+    if (positions.isNotEmpty) {
+      developer.log('position',
+          name: 'database_helper.dart',
+          error: '${positions.last.latitude} ${positions.last.longitude}');
+    }
+    for (Location l in locs) {
+      LocationWithPosition newlp = LocationWithPosition();
+      newlp.location = l;
+
+      if (positions.isNotEmpty) {
+        newlp.distance = Geolocator.distanceBetween(positions.last.latitude,
+                positions.last.longitude, l.latitude, l.longitude)
+            .toInt();
+        if (newlp.distance > 3000) {
+          newlp.distanceWithUnit =
+              (newlp.distance / 1000).toStringAsFixed(1) + ' km';
+        } else {
+          newlp.distanceWithUnit = newlp.distance.toString() + ' m';
+        }
+        newlp.bearing = Geolocator.bearingBetween(positions.last.latitude,
+                positions.last.longitude, l.latitude, l.longitude)
+            .toInt();
+        returnArr.add(newlp);
+      }
+    }
+    returnArr.sort(((a, b) {
+      return a.distance - b.distance;
+    }));
+    return returnArr;
   }
 
   static Future<int> getLocationsCountToYear(int year) async {

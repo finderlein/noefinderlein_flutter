@@ -41,8 +41,11 @@ class _LocationListScreenState extends State<LocationListScreen> {
   @override
   void initState() {
     super.initState();
-
-    customTitle = DatabaseHelper.getRegionName(widget.regionId);
+    if (widget.favorites) {
+      customTitle = 'Favoriten';
+    } else {
+      customTitle = DatabaseHelper.getRegionName(widget.regionId);
+    }
     developer.log('regionId',
         name: 'locations_list_screen.dart', error: widget.regionId.toString());
     _allmenuLocations = DatabaseHelper.getAllLocations(

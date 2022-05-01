@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../database/tables/location.dart';
+import 'categoryIcon.dart';
 
 class LocationsListItem extends StatelessWidget {
   const LocationsListItem({Key? key, required this.location}) : super(key: key);
@@ -129,59 +130,8 @@ class _MiniItems extends StatelessWidget {
             ? Image.asset('assets/images/top_ausflugsziel.png',
                 height: 24, width: 24)
             : const Center(),
-        _CategoryIcon(category: location.category)
+        CategoryIcon(category: location.category)
       ],
     );
-  }
-}
-
-class _CategoryIcon extends StatelessWidget {
-  const _CategoryIcon({Key? key, required this.category}) : super(key: key);
-
-  final int category;
-  @override
-  Widget build(BuildContext context) {
-    switch (category) {
-      case 1:
-        {
-          return Image.asset('assets/images/stifte.png', height: 24, width: 24);
-        }
-      case 2:
-        {
-          return Image.asset('assets/images/burgen_schloesser.png',
-              height: 24, width: 24);
-        }
-      case 3:
-        {
-          return Image.asset('assets/images/museen_ausstellungen.png',
-              height: 24, width: 24);
-        }
-      case 4:
-        {
-          return Image.asset('assets/images/erlebnis_natur.png',
-              height: 24, width: 24);
-        }
-      case 5:
-        {
-          return Image.asset('assets/images/sport_und_freizeit.png',
-              height: 24, width: 24);
-        }
-      case 6:
-        {
-          return Image.asset('assets/images/bergbahnen.png',
-              height: 24, width: 24);
-        }
-      case 7:
-        {
-          return Image.asset('assets/images/schifffahrt.png',
-              height: 24, width: 24);
-        }
-      case 8:
-        {
-          return Image.asset('assets/images/lokalbahn.png',
-              height: 24, width: 24);
-        }
-    }
-    return const Center();
   }
 }
