@@ -9,10 +9,10 @@ AppDir:
   path: ./AppDir
   app_info:
     id: at.reitschmied.noefinderlein_flutter
-    name: noe_finderlein
+    name: NÖ Finderlein
     icon: finderlein_logo_bunt
     version: latest
-    exec: noefinderlein_flutter
+    exec: GDK_BACKEND=x11 noefinderlein_flutter
     exec_args: $@
   apt:
     arch: amd64
@@ -28,6 +28,28 @@ AppDir:
       - libcanberra-gtk3-module
       - libpackagekit-glib2-18
       - dconf-gsettings-backend
+
+      # Full bundle requirements
+      - libx11-6
+      - libgl1
+      - libglapi-mesa
+      - libdrm2
+      - libegl1
+      - libxcb-shape0
+      - libxcb1
+      - libx11-xcb1
+      - fontconfig-config
+      - libfontconfig1
+      - libfreetype6
+      - libglx0
+      - libxcb-xfixes0
+      - libxcb-render0
+      - libxcb-glx0
+      - libxcb-shm0
+      - libglvnd0
+      - libxcb-dri3-0
+      - libxcb-dri2-0
+      - libxcb-present0
     exclude:
       - humanity-icon-theme
       - hicolor-icon-theme
