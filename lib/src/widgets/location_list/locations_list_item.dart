@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../database/tables/location.dart';
-import 'categoryIcon.dart';
+import '../../utilities/categoryIcon.dart';
 
 class LocationsListItem extends StatelessWidget {
   const LocationsListItem({Key? key, required this.location}) : super(key: key);
