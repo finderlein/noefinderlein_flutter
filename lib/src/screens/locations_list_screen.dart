@@ -5,6 +5,7 @@ import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'dart:developer' as developer;
 import '../database/database_helper.dart';
 import '../database/tables/location.dart';
+import '../widgets/filter_modal.dart';
 import '../widgets/location_list/locations_list.dart';
 import '../widgets/drawer_main.dart';
 import '../widgets/downloader_modal.dart';
@@ -176,7 +177,11 @@ class _LocationListScreenState extends State<LocationListScreen> {
             ),
             IconButton(
               icon: const Icon(MdiIcons.filterOutline),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => Filter(callback: () {}));
+              },
             ),
             IconButton(
               icon: const Icon(MdiIcons.map),
