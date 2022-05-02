@@ -12,7 +12,7 @@ AppDir:
     name: "NOE Finderlein"
     icon: finderlein_logo_bunt
     version: latest
-    exec: "GDK_BACKEND=x11 noefinderlein_flutter"
+    exec: "noefinderlein_flutter"
     exec_args: $@
   apt:
     arch: amd64
@@ -30,26 +30,26 @@ AppDir:
       - dconf-gsettings-backend
 
       # Full bundle requirements
-      # - libx11-6
-      # - libgl1
-      # - libglapi-mesa
-      # - libdrm2
-      # - libegl1
-      # - libxcb-shape0
-      # - libxcb1
-      # - libx11-xcb1
-      # - fontconfig-config
-      # - libfontconfig1
-      # - libfreetype6
-      # - libglx0
-      # - libxcb-xfixes0
-      # - libxcb-render0
-      # - libxcb-glx0
-      # - libxcb-shm0
-      # - libglvnd0
-      # - libxcb-dri3-0
-      # - libxcb-dri2-0
-      # - libxcb-present0
+      - libx11-6
+      - libgl1
+      - libglapi-mesa
+      - libdrm2
+      - libegl1
+      - libxcb-shape0
+      - libxcb1
+      - libx11-xcb1
+      - fontconfig-config
+      - libfontconfig1
+      - libfreetype6
+      - libglx0
+      - libxcb-xfixes0
+      - libxcb-render0
+      - libxcb-glx0
+      - libxcb-shm0
+      - libglvnd0
+      - libxcb-dri3-0
+      - libxcb-dri2-0
+      - libxcb-present0
     exclude:
       - humanity-icon-theme
       - hicolor-icon-theme
