@@ -110,20 +110,36 @@ class _MiniItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        location.groupsAccepted
-            ? Icon(MdiIcons.accountGroup,
+        location.badWeather
+            ? Icon(MdiIcons.weatherRainy,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
-        location.dogAllowed
-            ? Icon(MdiIcons.dogSide,
+        location.childFriendly
+            ? Icon(MdiIcons.humanMaleChild,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
         location.strollerFriendly
             ? Icon(MdiIcons.babyCarriage,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
+        location.dogAllowed
+            ? Icon(MdiIcons.dogSide,
+                color: Theme.of(context).colorScheme.onSurface)
+            : const Center(),
         location.wheelchairFriendly
             ? Icon(MdiIcons.wheelchairAccessibility,
+                color: Theme.of(context).colorScheme.onSurface)
+            : const Center(),
+        location.tavernNear
+            ? Icon(MdiIcons.food,
+                color: Theme.of(context).colorScheme.onSurface)
+            : const Center(),
+        location.groupsAccepted
+            ? Icon(MdiIcons.accountGroup,
+                color: Theme.of(context).colorScheme.onSurface)
+            : const Center(),
+        location.openInWinter
+            ? Icon(MdiIcons.weatherSnowyHeavy,
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
         location.topLocation

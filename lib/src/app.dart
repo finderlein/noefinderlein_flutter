@@ -56,16 +56,18 @@ class MyApp extends StatelessWidget {
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations
           // depending on the user's locale.
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', null), // English, no country code
-            // Locale('de', null), // German
-          ],
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          // localizationsDelegates: const [
+          //   AppLocalizations.delegate,
+          //   GlobalMaterialLocalizations.delegate,
+          //   GlobalWidgetsLocalizations.delegate,
+          //   GlobalCupertinoLocalizations.delegate,
+          // ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          // supportedLocales: const [
+          //   Locale('en', null), // English, no country code
+          //   // Locale('de', null), // German
+          // ],
 
           // Use AppLocalizations to configure the correct application title
           // depending on the user's locale.
@@ -73,7 +75,7 @@ class MyApp extends StatelessWidget {
           // The appTitle is defined in .arb files found in the localization
           // directory.
           onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
+              AppLocalizations.of(context).appTitle,
 
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the

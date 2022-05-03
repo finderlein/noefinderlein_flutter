@@ -1,0 +1,42 @@
+{
+  "appTitle": "noefinderlein_flutter",
+  "@appTitle": {
+    "description": "The Nö Finderlein (inoffical Nö Card App)"
+  },
+  "stifte": "Stifte",
+  "burgen_schloesser": "Burgen und Schlösser",
+  "museen_ausstellungen": "Museen und Ausstellungen",
+  "erlebnis_natur": "Erlebniswelten und Naturparks",
+  "sport_und_freizeit": "Sport und Freizeit",
+  "bergbahnen": "Bergbahnen",
+  "schifffahrt": "Schifffahrt",
+  "lokalbahn": "Lokalbahn",
+
+  "title_filter": "Liste filtern",
+  "setFilter": "Filter aktivieren",
+  "filter_day_active_text": "Nur die Ziele anzeigen die am gewählten Tag offen haben",
+  "cancel": "Abbrechen",
+  "favorites": "Favorites",
+
+  "sortby": "Sortiere nach...?",
+  "name": "Name",
+
+  "bookletId": "Nö Card Nummer",
+  "downloadingTitle": "Hole Daten fürs Jahr {year}",
+  "@downloadingTitle": {
+    "type": "text",
+    "placeholders": {
+      "year": {}
+    }
+  },
+
+  "badWeather": "Auch bei Schlechtwetter geeignet",
+  "childFriendly": "Kinderfreundlich",
+  "strollerFriendly": "Kinderwagengerecht",
+  "dogAllowed": "Hunde erlaubt",
+  "wheelchairFriendly": "Rollstuhlgerecht",
+  "tavernNear": "Wirtshauskultur-Partner in der Nähe",
+  "groupsAccepted": "CARD bei Gruppen akzeptiert",
+  "openInWinter": "Auch im Winter geöffnet",
+  "topLocation": "Top-Ausflugsziel"
+}

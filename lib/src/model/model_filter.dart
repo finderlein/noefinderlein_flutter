@@ -1,7 +1,16 @@
 class FilterElements {
   DateTime date = DateTime.now();
   bool onlyShowOnDate = false;
-  List<int> categories = <int>[];
+  List<bool> categories = <bool>[
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ];
 
   bool badWeather = false;
   bool childFriendly = false;

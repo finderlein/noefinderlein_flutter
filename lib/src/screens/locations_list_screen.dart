@@ -12,6 +12,8 @@ import '../widgets/downloader_modal.dart';
 import '../widgets/search_text_field.dart';
 import '../utilities/noefinderlein.dart';
 
+import '../localization/app_localizations_context.dart';
+
 class LocationListScreen extends StatefulWidget {
   const LocationListScreen(
       {Key? key,
@@ -42,11 +44,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.favorites) {
-      customTitle = 'Favoriten';
-    } else {
-      customTitle = DatabaseHelper.getRegionName(widget.regionId);
-    }
+
     developer.log('regionId',
         name: 'locations_list_screen.dart', error: widget.regionId.toString());
     _allmenuLocations = DatabaseHelper.getAllLocations(
@@ -58,6 +56,11 @@ class _LocationListScreenState extends State<LocationListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.favorites) {
+      customTitle = context.loc.favorites;
+    } else {
+      customTitle = DatabaseHelper.getRegionName(widget.regionId);
+    }
     if (!glob.downloaderRan) {
       glob.downloaderRan = true;
       Future.delayed(
@@ -143,27 +146,25 @@ class _LocationListScreenState extends State<LocationListScreen> {
               icon: const Icon(MdiIcons.sortAlphabeticalVariant),
               onPressed: () => showDialog(
                   context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Sortiere nach...?'),
-                          actions: [
-                            TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'bookletId'),
-                                child: Text(
-                                  'Nö Card Nummer',
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface),
-                                )),
-                            TextButton(
-                                onPressed: () => Navigator.pop(context, 'name'),
-                                child: Text('Namen',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface))),
-                          ])).then((value) => setState(() {
+                  builder: (BuildContext context) =>
+                      AlertDialog(title: Text(context.loc.sortby), actions: [
+                        TextButton(
+                            onPressed: () =>
+                                Navigator.pop(context, 'bookletId'),
+                            child: Text(
+                              context.loc.bookletId,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                            )),
+                        TextButton(
+                            onPressed: () => Navigator.pop(context, 'name'),
+                            child: Text(context.loc.name,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface))),
+                      ])).then((value) => setState(() {
                     //add
                     if (value != null) {
                       _allmenuLocations = DatabaseHelper.getAllLocations(
@@ -236,7 +237,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
             scrollable: true,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            title: Text('Downloading data for year ${widget.year}'),
+            title: Text(context.loc.downloadingTitle(widget.year.toString())),
             content: Builder(builder: (context) {
               return Downloader(year: widget.year);
             })));
