@@ -4,54 +4,58 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../database/tables/location.dart';
+import '../../model/model_location_with_open.dart';
 import '../../utilities/categoryIcon.dart';
 
 class LocationsListItem extends StatelessWidget {
-  const LocationsListItem({Key? key, required this.location}) : super(key: key);
+  const LocationsListItem({Key? key, required this.locationWo})
+      : super(key: key);
 
-  final Location location;
+  final LocationWithOpen locationWo;
 
   @override
   Widget build(BuildContext context) {
+    Location location = locationWo.location;
     return Card(
+        color: locationWo.open ? null : Colors.grey,
         child: SizedBox(
-      height: 60,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Visibility(
-              visible: location.bookletNumber != 0,
-              child: Container(
-                margin: const EdgeInsets.only(right: 10.0),
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary),
-                    child: Center(
-                      child: Text(
-                        location.bookletNumber.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+          height: 60,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Visibility(
+                  visible: location.bookletNumber != 0,
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: AspectRatio(
+                      aspectRatio: 1.0,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary),
+                        child: Center(
+                          child: Text(
+                            location.bookletNumber.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 2.0, 0.0),
+                    child: _NameBlock(location: location),
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 2.0, 0.0),
-                child: _NameBlock(location: location),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 }
 

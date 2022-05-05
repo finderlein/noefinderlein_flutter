@@ -184,34 +184,41 @@ class CheckInDialogState extends State<CheckInDialog> {
                             });
                           },
                         ),
-                        Spacer(),
+                        const Spacer(),
                         ElevatedButton(
-                          style: _errorText != null
-                              ? null
-                              : ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<
-                                          Color>(
-                                      Theme.of(context).colorScheme.secondary)),
-                          onPressed: _errorText != null
-                              ? null
-                              : () {
-                                  var amount =
-                                      double.tryParse(amountinput.value.text);
-                                  var date = dateinput.value.text;
-                                  if (amount != null) {
-                                    widget.callback(amount: amount, date: date);
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                          child: Text(
-                            'Save',
-                            style: TextStyle(
-                              color: _errorText != null
-                                  ? null
-                                  : Theme.of(context).colorScheme.onSecondary,
-                            ),
-                          ),
-                        ),
+                            style: _errorText != null
+                                ? null
+                                : ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .secondary)),
+                            onPressed: _errorText != null
+                                ? null
+                                : () {
+                                    var amount =
+                                        double.tryParse(amountinput.value.text);
+                                    var date = dateinput.value.text;
+                                    if (amount != null) {
+                                      widget.callback(
+                                          amount: amount, date: date);
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                  color: _errorText != null
+                                      ? null
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                ),
+                              ),
+                            )),
                       ],
                     ))
               ]);

@@ -12,14 +12,18 @@
   "schifffahrt": "Schifffahrt",
   "lokalbahn": "Lokalbahn",
 
-  "title_filter": "Liste filtern",
+  "title_filter": "Filter Einstellungen",
   "setFilter": "Filter aktivieren",
+  "resetFilter": "Filter zurücksetzen",
+  "filteracive": "Filter ist aktiv",
   "filter_day_active_text": "Nur die Ziele anzeigen die am gewählten Tag offen haben",
   "cancel": "Abbrechen",
   "favorites": "Favorites",
 
   "sortby": "Sortiere nach...?",
   "name": "Name",
+  "dontcare": "egal",
+  "must": "muss",
 
   "bookletId": "Nö Card Nummer",
   "downloadingTitle": "Hole Daten fürs Jahr {year}",

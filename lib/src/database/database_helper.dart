@@ -4,6 +4,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:isar/isar.dart';
 // import 'package:path_provider/path_provider.dart';
 
+import '../model/model_filter.dart';
+import '../model/model_location_with_open.dart';
 import '../model/model_location_with_position.dart';
 import '../model/model_position_item.dart';
 import '../model/model_visited_with_location.dart';
@@ -15,6 +17,7 @@ import './tables/region.dart';
 import './tables/category.dart';
 import './tables/province.dart';
 import '../utilities/noefinderlein.dart';
+import 'package:intl/intl.dart';
 
 // import '../model/model_noec_location.dart';
 
@@ -71,16 +74,18 @@ class DatabaseHelper {
     return isar;
   }
 
-  static Future<List<Location>> getAllLocations(
+  static Future<List<LocationWithOpen>> getAllLocations(
       {required int year,
       int regionId = 0,
       bool favorites = false,
       String searchString = '',
-      String sortBy = 'name'}) async {
+      String sortBy = 'name',
+      FilterElements? filterE}) async {
     Isar db = await DatabaseHelper.db();
     developer.log('regionId',
         name: 'database_helper.dart', error: regionId.toString());
-    final locationsb = db.locations
+    QueryBuilder<Location, Location, QAfterFilterCondition> locationsb = db
+        .locations
         .filter()
         .yearEqualTo(year)
         .and()
@@ -92,13 +97,114 @@ class DatabaseHelper {
             searchString != '', (q) => q.searchStringContains(searchString));
     List<Location> locations;
 
+    if (filterE != null && filterE.filterActive()) {
+      if (filterE.badWeather) {
+        locationsb = locationsb.badWeatherEqualTo(true);
+      }
+      if (filterE.childFriendly) {
+        locationsb = locationsb.childFriendlyEqualTo(true);
+      }
+      if (filterE.strollerFriendly) {
+        locationsb = locationsb.strollerFriendlyEqualTo(true);
+      }
+      if (filterE.dogAllowed) {
+        locationsb = locationsb.dogAllowedEqualTo(true);
+      }
+      if (filterE.tavernNear) {
+        locationsb = locationsb.tavernNearEqualTo(true);
+      }
+      if (filterE.wheelchairFriendly) {
+        locationsb = locationsb.wheelchairFriendlyEqualTo(true);
+      }
+      if (filterE.groupsAccepted) {
+        locationsb = locationsb.groupsAcceptedEqualTo(true);
+      }
+      if (filterE.topLocation) {
+        locationsb = locationsb.topLocationEqualTo(true);
+      }
+      if (filterE.openInWinter) {
+        locationsb = locationsb.openInWinterEqualTo(true);
+      }
+    }
     if (sortBy == 'name') {
       locations = await locationsb.sortByName().thenByBookletNumber().findAll();
     } else {
       locations = await locationsb.sortByBookletNumber().thenByName().findAll();
     }
+    if (filterE != null && filterE.filterActive()) {
+      List<int> catPos = <int>[];
+      List<int> catNeg = <int>[];
+      for (int i = 0; i < filterE.categories.length; i++) {
+        if (filterE.categories[i]) {
+          catPos.add(i + 1);
+        }
+        if (!filterE.categories[i]) {
+          catNeg.add(i + 1);
+        }
+      }
+      developer.log('cat',
+          name: 'database_helper.dart', error: catPos.join(','));
+      developer.log('cat',
+          name: 'database_helper.dart', error: catNeg.join(','));
+      locations = locations.where((element) {
+        if (catNeg.isNotEmpty) {
+          return catNeg.contains(element.category);
+        } else {
+          return catPos.contains(element.category);
+        }
+      }).toList();
+      if (filterE.onlyShowOnDate) {
+        List<OpenDay> od = await db.openDays
+            .filter()
+            .yearEqualTo(year)
+            .and()
+            .activeEqualTo(true)
+            .and()
+            .dayEqualTo(DateFormat('yyyy-MM-dd').format(filterE.date))
+            .findAll();
+        List<int> ids = od.map((e) => e.locationId).toList();
+        developer.log('ids',
+            name: 'database_helper.dart', error: ids.join(','));
+        locations = locations.where((element) {
+          return ids.contains(element.id);
+        }).toList();
+      }
+    }
+    List<LocationWithOpen> lwo = <LocationWithOpen>[];
+    List<OpenDay> od = await db.openDays
+        .filter()
+        .yearEqualTo(year)
+        .and()
+        .dayEqualTo(DateFormat('yyyy-MM-dd').format(DateTime.now()))
+        .findAll();
+    // developer.log('od',
+    //     name: 'database_helper.dart',
+    //     error: od.map((e) => e.locationId).toList().join(','));
+    // developer.log('locations',
+    //     name: 'database_helper.dart',
+    //     error: locations.map((e) => e.id).toList().join(','));
+
+    for (Location l in locations) {
+      LocationWithOpen lw = LocationWithOpen();
+      lw.location = l;
+      bool found = false;
+      for (OpenDay o in od) {
+        if (o.locationId == l.id) {
+          lw.open = o.active;
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        // developer.log('not found', name: 'database_helper.dart', error: l.id);
+        lw.open = false;
+      }
+
+      lwo.add(lw);
+    }
     // print(locations);
-    return locations;
+    return lwo;
   }
 
   static Future<void> updateChangeId(int year, int changeid) async {

@@ -5,7 +5,10 @@ import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'dart:developer' as developer;
 import '../database/database_helper.dart';
 import '../database/tables/location.dart';
+import '../model/model_filter.dart';
+import '../model/model_location_with_open.dart';
 import '../widgets/filter_modal.dart';
+import '../widgets/location_list/filter_active_item.dart';
 import '../widgets/location_list/locations_list.dart';
 import '../widgets/drawer_main.dart';
 import '../widgets/downloader_modal.dart';
@@ -34,12 +37,15 @@ class LocationListScreen extends StatefulWidget {
 
 /// Displays a list of SampleItems.
 class _LocationListScreenState extends State<LocationListScreen> {
-  late Future<List<Location>> _allmenuLocations;
+  late Future<List<LocationWithOpen>> _allmenuLocations;
   String customTitle = 'Alle Ziele';
   bool _search = false;
   String searchString = '';
   List<int> currentIds = [];
   Noefinderlein glob = Noefinderlein();
+  String sortBy = 'name';
+  FilterElements filterE = FilterElements();
+  bool filterActive = false;
 
   @override
   void initState() {
@@ -47,11 +53,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
 
     developer.log('regionId',
         name: 'locations_list_screen.dart', error: widget.regionId.toString());
-    _allmenuLocations = DatabaseHelper.getAllLocations(
-        year: widget.year,
-        regionId: widget.regionId,
-        favorites: widget.favorites,
-        searchString: searchString);
+    restartDBGet();
   }
 
   @override
@@ -87,11 +89,8 @@ class _LocationListScreenState extends State<LocationListScreen> {
                   developer.log('searchbox',
                       name: 'locations_list_screen.dart', error: low);
                   setState(() {
-                    _allmenuLocations = DatabaseHelper.getAllLocations(
-                        year: widget.year,
-                        regionId: widget.regionId,
-                        favorites: widget.favorites,
-                        searchString: low);
+                    searchString = low;
+                    restartDBGet();
                   });
                 }),
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -134,11 +133,8 @@ class _LocationListScreenState extends State<LocationListScreen> {
                       setState(() {
                         //add
                         _search = false;
-                        _allmenuLocations = DatabaseHelper.getAllLocations(
-                            year: widget.year,
-                            regionId: widget.regionId,
-                            favorites: widget.favorites,
-                            searchString: '');
+                        searchString = '';
+                        restartDBGet();
                       });
                     },
                   ),
@@ -167,21 +163,31 @@ class _LocationListScreenState extends State<LocationListScreen> {
                       ])).then((value) => setState(() {
                     //add
                     if (value != null) {
-                      _allmenuLocations = DatabaseHelper.getAllLocations(
-                          year: widget.year,
-                          regionId: widget.regionId,
-                          favorites: widget.favorites,
-                          searchString: '',
-                          sortBy: value);
+                      sortBy = value;
+                      restartDBGet();
                     }
                   })),
             ),
             IconButton(
-              icon: const Icon(MdiIcons.filterOutline),
+              icon:
+                  Icon(filterActive ? MdiIcons.filter : MdiIcons.filterOutline),
               onPressed: () {
+                // showDialog(
+                //     context: context,
+                //     builder: (context) => Filter(callback: () {}));
                 showDialog(
                     context: context,
-                    builder: (context) => Filter(callback: () {}));
+                    builder: (context) {
+                      return Filter(
+                          filterE: filterE,
+                          callback: (FilterElements filterEC) {
+                            setState(() {
+                              filterE = filterEC;
+                              filterActive = filterE.filterActive();
+                              restartDBGet();
+                            });
+                          });
+                    });
               },
             ),
             IconButton(
@@ -202,8 +208,8 @@ class _LocationListScreenState extends State<LocationListScreen> {
         // builds Widgets as they’re scrolled into view.
         body: FutureBuilder(
           future: _allmenuLocations,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Location>> snapshot) {
+          builder: (BuildContext context,
+              AsyncSnapshot<List<LocationWithOpen>> snapshot) {
             developer.log('connectionState',
                 name: 'locations_list_screen.dart',
                 error: snapshot.connectionState);
@@ -219,7 +225,13 @@ class _LocationListScreenState extends State<LocationListScreen> {
                 //     name: 'locations_list_screen.dart', error: snapshot.data);
                 if (snapshot.data != null) {
                   currentIds = genIdList(snapshot.data);
-                  return LocationsList(locations: snapshot.data!);
+                  return Column(children: [
+                    if (filterActive)
+                      FilterActiveItem(
+                        filterE: filterE,
+                      ),
+                    Expanded(child: LocationsList(locations: snapshot.data!))
+                  ]);
                 }
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -228,6 +240,18 @@ class _LocationListScreenState extends State<LocationListScreen> {
             }
           },
         ));
+  }
+
+  void restartDBGet() {
+    setState(() {
+      _allmenuLocations = DatabaseHelper.getAllLocations(
+          year: widget.year,
+          regionId: widget.regionId,
+          favorites: widget.favorites,
+          searchString: searchString,
+          sortBy: sortBy,
+          filterE: filterE);
+    });
   }
 
   Future<void> showDownloader(BuildContext context) {
@@ -244,17 +268,17 @@ class _LocationListScreenState extends State<LocationListScreen> {
   }
 }
 
-String genIdString(List<Location>? locations) {
+String genIdString(List<LocationWithOpen>? locations) {
   if (locations != null) {
-    return locations.map((e) => e.id).join(',');
+    return locations.map((e) => e.location.id).join(',');
   } else {
     return '';
   }
 }
 
-List<int> genIdList(List<Location>? locations) {
+List<int> genIdList(List<LocationWithOpen>? locations) {
   if (locations != null) {
-    return locations.map((e) => e.id).toList();
+    return locations.map((e) => e.location.id).toList();
   } else {
     return [];
   }

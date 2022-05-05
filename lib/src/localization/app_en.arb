@@ -12,14 +12,18 @@
   "schifffahrt": "Shipping",
   "lokalbahn": "Local railway",
 
-  "title_filter": "Filter the list",
+  "title_filter": "Filter settings",
   "setFilter": "Activate Filter",
+  "resetFilter": "Reset Filter",
+  "filteracive": "Filter is active",
   "filter_day_active_text": "Only show locations which are open on the specified day",
   "cancel": "Cancel",
   "favorites": "Favorites",
 
   "sortby": "Sort by...?",
   "name": "Name",
+  "dontcare": "don't care",
+  "must": "must",
 
   "bookletId": "Booklet Number",
   "downloadingTitle": "Downloading data for year {year}",

@@ -21,4 +21,25 @@ class FilterElements {
   bool groupsAccepted = false;
   bool topLocation = false;
   bool openInWinter = false;
+
+  bool filterActive() {
+    bool f = false;
+    for (bool c in categories) {
+      if (!c) {
+        f = true;
+        break;
+      }
+    }
+    return f ||
+        onlyShowOnDate ||
+        badWeather ||
+        childFriendly ||
+        strollerFriendly ||
+        dogAllowed ||
+        tavernNear ||
+        wheelchairFriendly ||
+        groupsAccepted ||
+        topLocation ||
+        openInWinter;
+  }
 }
