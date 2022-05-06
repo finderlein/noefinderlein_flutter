@@ -15,47 +15,59 @@ class LocationsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorFilter cf = const ColorFilter.matrix(<double>[
+      0.2126, 0.7152, 0.0722, 0, 0, //
+      0.2126, 0.7152, 0.0722, 0, 0,
+      0.2126, 0.7152, 0.0722, 0, 0,
+      0, 0, 0, 1, 0,
+    ]);
     Location location = locationWo.location;
+    if (locationWo.open) {
+      return lItem(context, location);
+    }
+    return ColorFiltered(colorFilter: cf, child: lItem(context, location));
+  }
+
+  Widget lItem(BuildContext context, Location location) {
     return Card(
-        color: locationWo.open ? null : Colors.grey,
         child: SizedBox(
-          height: 60,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Visibility(
-                  visible: location.bookletNumber != 0,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 10.0),
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary),
-                        child: Center(
-                          child: Text(
-                            location.bookletNumber.toString(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                        ),
+      height: 60,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Visibility(
+              visible: location.bookletNumber != 0,
+              child: Container(
+                margin: const EdgeInsets.only(right: 10.0),
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary),
+                    child: Center(
+                      child: Text(
+                        location.bookletNumber.toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 2.0, 0.0),
-                    child: _NameBlock(location: location),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ));
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 2.0, 0.0),
+                child: _NameBlock(location: location),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
 

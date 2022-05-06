@@ -18,6 +18,7 @@
   "filteracive": "Filter ist aktiv",
   "filter_day_active_text": "Nur die Ziele anzeigen die am gewählten Tag offen haben",
   "cancel": "Abbrechen",
+  "ok": "OK",
   "favorites": "Favorites",
 
   "sortby": "Sortiere nach...?",
@@ -42,5 +43,44 @@
   "tavernNear": "Wirtshauskultur-Partner in der Nähe",
   "groupsAccepted": "CARD bei Gruppen akzeptiert",
   "openInWinter": "Auch im Winter geöffnet",
-  "topLocation": "Top-Ausflugsziel"
+  "topLocation": "Top-Ausflugsziel",
+
+  "notOpenToday": "Möglicherweise heute nicht offen",
+  "possibleNotOpen": "Möglicherweise am {day} nicht offen",
+  "@possibleNotOpen": {
+    "placeholders": {
+      "day": {
+        "type": "String",
+        "example": "2022-04-05"
+      }
+    }
+  },
+  "yearDisplay": "Jahr {year1}/{year2}",
+  "@yearDisplay": {
+    "placeholders": {
+      "year1": {
+        "type": "String",
+        "example": "2022"
+      },
+      "year2": {
+        "type": "String",
+        "example": "2023"
+      }
+    }
+  },
+  "map": "Karte",
+
+  "readon": "Weiterlesen",
+  "search": "Suchen",
+  "drawerAllLocations": "Alle Ziele",
+  "drawerProvinces": "Regionen",
+  "drawerFavorits": "Favoriten",
+  "drawerVisited": "Besichtigte",
+  "drawerNear": "In der Nähe",
+  "drawerSettings": "Einstellungen",
+
+  "settingsTitle": "Einstellungen",
+  "noVisited": "Es schaut so aus als ob Sie noch kein Ziel besucht haben...\n\nOder vielleicht haben Sie vergessen das Ziel auf der Detailseite auf besichtigt ✔️ zu setzen?",
+
+  "visitedRemoveTitle": "Eintrag löschen?"
 }

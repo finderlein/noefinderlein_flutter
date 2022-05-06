@@ -131,6 +131,7 @@ class DatabaseHelper {
     } else {
       locations = await locationsb.sortByBookletNumber().thenByName().findAll();
     }
+    List<OpenDay> od = <OpenDay>[];
     if (filterE != null && filterE.filterActive()) {
       List<int> catPos = <int>[];
       List<int> catNeg = <int>[];
@@ -147,22 +148,22 @@ class DatabaseHelper {
       developer.log('cat',
           name: 'database_helper.dart', error: catNeg.join(','));
       locations = locations.where((element) {
-        if (catNeg.isNotEmpty) {
-          return catNeg.contains(element.category);
-        } else {
-          return catPos.contains(element.category);
-        }
+        return catPos.contains(element.category);
+        // if (catNeg.isNotEmpty) {
+        //   return catPos.contains(element.category);
+        // } else {
+        //   return catPos.contains(element.category);
+        // }
       }).toList();
       if (filterE.onlyShowOnDate) {
-        List<OpenDay> od = await db.openDays
+        od = await db.openDays
             .filter()
             .yearEqualTo(year)
             .and()
-            .activeEqualTo(true)
-            .and()
             .dayEqualTo(DateFormat('yyyy-MM-dd').format(filterE.date))
             .findAll();
-        List<int> ids = od.map((e) => e.locationId).toList();
+        List<int> ids =
+            od.where((e) => e.active).map((e) => e.locationId).toList();
         developer.log('ids',
             name: 'database_helper.dart', error: ids.join(','));
         locations = locations.where((element) {
@@ -170,13 +171,16 @@ class DatabaseHelper {
         }).toList();
       }
     }
+
     List<LocationWithOpen> lwo = <LocationWithOpen>[];
-    List<OpenDay> od = await db.openDays
-        .filter()
-        .yearEqualTo(year)
-        .and()
-        .dayEqualTo(DateFormat('yyyy-MM-dd').format(DateTime.now()))
-        .findAll();
+    if (od.isEmpty) {
+      od = await db.openDays
+          .filter()
+          .yearEqualTo(year)
+          .and()
+          .dayEqualTo(DateFormat('yyyy-MM-dd').format(DateTime.now()))
+          .findAll();
+    }
     // developer.log('od',
     //     name: 'database_helper.dart',
     //     error: od.map((e) => e.locationId).toList().join(','));
@@ -187,6 +191,7 @@ class DatabaseHelper {
     for (Location l in locations) {
       LocationWithOpen lw = LocationWithOpen();
       lw.location = l;
+
       bool found = false;
       for (OpenDay o in od) {
         if (o.locationId == l.id) {
@@ -352,13 +357,32 @@ class DatabaseHelper {
     return [];
   }
 
-  static Future<Location> getLocationToId({required int id}) async {
+  static Future<LocationWithOpen> getLocationToId(
+      {required int id, DateTime? date}) async {
     Isar db = await DatabaseHelper.db();
+    LocationWithOpen lwo = LocationWithOpen();
+    lwo.open = false;
     final locations = await db.locations.filter().idEqualTo(id).findAll();
     if (locations.length == 1) {
-      return locations.first;
+      lwo.location = locations.first;
+      if (date != null) {
+        lwo.date = date;
+      } else {
+        date = DateTime.now();
+      }
+      OpenDay? od = await db.openDays
+          .filter()
+          .locationIdEqualTo(id)
+          .and()
+          .dayEqualTo(DateFormat('yyyy-MM-dd').format(date))
+          .findFirst();
+      if (od != null) {
+        lwo.open = od.active;
+      }
+      return lwo;
     }
-    return Location();
+    lwo.location = Location();
+    return lwo;
   }
 
   static Future<void> saveVisited(
@@ -373,6 +397,13 @@ class DatabaseHelper {
     Isar db = await DatabaseHelper.db();
     await db.writeTxn((isar) async {
       await db.visitedLocations.put(vl);
+    });
+  }
+
+  static Future<void> removeVisited({required int visitedId}) async {
+    Isar db = await DatabaseHelper.db();
+    await db.writeTxn((isar) async {
+      await db.visitedLocations.delete(visitedId);
     });
   }
 

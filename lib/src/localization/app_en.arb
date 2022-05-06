@@ -18,6 +18,7 @@
   "filteracive": "Filter is active",
   "filter_day_active_text": "Only show locations which are open on the specified day",
   "cancel": "Cancel",
+  "ok": "OK",
   "favorites": "Favorites",
 
   "sortby": "Sort by...?",
@@ -42,5 +43,43 @@
   "tavernNear": "Tavern near",
   "groupsAccepted": "NÖ card accepted for groups",
   "openInWinter": "Open in the winter",
-  "topLocation": "Top location"
+  "topLocation": "Top location",
+
+  "notOpenToday": "Possibly not open today",
+  "possibleNotOpen": "Possibly not open on: {day}",
+  "@possibleNotOpen": {
+    "placeholders": {
+      "day": {
+        "type": "String",
+        "example": "2022-04-05"
+      }
+    }
+  },
+  "yearDisplay": "Year {year1}/{year2}",
+  "@yearDisplay": {
+    "placeholders": {
+      "year1": {
+        "type": "String",
+        "example": "2022"
+      },
+      "year2": {
+        "type": "String",
+        "example": "2023"
+      }
+    }
+  },
+  "map": "Map",
+  "readon": "read on",
+  "search": "Search",
+  "drawerAllLocations": "All Locations",
+  "drawerProvinces": "Provinces",
+  "drawerFavorits": "Favorites",
+  "drawerVisited": "Visited Locations",
+  "drawerNear": "Near Locations",
+  "drawerSettings": "Settings",
+
+  "settingsTitle": "Settings",
+  "noVisited": "It seems you haven't visited any locations yet...\n\nOr maybe you have forgotten to mark a location as visited ✔️ on the detail page?",
+
+  "visitedRemoveTitle": "Delete entry?"
 }

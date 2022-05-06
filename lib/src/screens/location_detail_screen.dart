@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:noefinderlein_flutter/src/model/model_location_with_open.dart';
 import '../database/tables/location.dart';
 import '../database/database_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,11 +15,17 @@ import '../widgets/location_detail_page/telephone_section.dart';
 import '../widgets/location_detail_page/mail_section.dart';
 import '../widgets/location_detail_page/webpage_section.dart';
 import '../widgets/location_detail_page/checkin_dialog.dart';
+import '../widgets/location_detail_page/properties_section.dart';
 import 'dart:math' as math;
 
+import '../localization/app_localizations_context.dart';
+import 'package:intl/intl.dart';
+
 class LocationDetailsScreen extends StatefulWidget {
-  const LocationDetailsScreen({Key? key, required this.id}) : super(key: key);
+  const LocationDetailsScreen({Key? key, required this.id, this.date})
+      : super(key: key);
   final int id;
+  final DateTime? date;
   static const routeName = '/location/';
 
   @override
@@ -27,12 +34,13 @@ class LocationDetailsScreen extends StatefulWidget {
 
 /// Displays detailed information about a SampleItem.
 class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
-  late Future<Location> _location;
+  late Future<LocationWithOpen> _location;
   @override
   void initState() {
     super.initState();
 
-    _location = DatabaseHelper.getLocationToId(id: widget.id);
+    _location =
+        DatabaseHelper.getLocationToId(id: widget.id, date: widget.date);
   }
 
   @override
@@ -41,7 +49,8 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
   }
 
   _runFuture() {
-    _location = DatabaseHelper.getLocationToId(id: widget.id);
+    _location =
+        DatabaseHelper.getLocationToId(id: widget.id, date: widget.date);
     setState(() {});
   }
 }
@@ -51,17 +60,18 @@ class ReRunnableFutureBuilder extends StatelessWidget {
       {Key? key, required this.location, required this.onRerun})
       : super(key: key);
 
-  final Future<Location> location;
+  final Future<LocationWithOpen> location;
   final Function onRerun;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: location,
-      builder: (BuildContext context, AsyncSnapshot<Location> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<LocationWithOpen> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return const Text('Press button to start.');
+            return const Center(child: CircularProgressIndicator());
           case ConnectionState.active:
           case ConnectionState.waiting:
             return const Center(child: CircularProgressIndicator());
@@ -69,25 +79,25 @@ class ReRunnableFutureBuilder extends StatelessWidget {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
-            final location = snapshot.data as Location;
-            return LocationDetailView(location: location, onRerun: onRerun);
+            final location = snapshot.data as LocationWithOpen;
+            return LocationDetailView(locationwO: location, onRerun: onRerun);
         }
       },
     );
   }
 }
 
-/// Displays detailed information about a SampleItem.
 class LocationDetailView extends StatelessWidget {
   const LocationDetailView(
-      {Key? key, required this.location, required this.onRerun})
+      {Key? key, required this.locationwO, required this.onRerun})
       : super(key: key);
 
-  final Location location;
+  final LocationWithOpen locationwO;
   final Function onRerun;
 
   @override
   Widget build(BuildContext context) {
+    final Location location = locationwO.location;
     Color color = Theme.of(context).colorScheme.secondary;
     return Scaffold(
       appBar: AppBar(
@@ -140,87 +150,94 @@ class LocationDetailView extends StatelessWidget {
               onPressed: () {},
             ),
           ]),
-      body: SingleChildScrollView(
-          child: Container(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                children: [
-                  TitleSection(location: location),
-                  const SizedBox(height: 10),
-                  DescriptionSection(location: location),
-                  const SizedBox(height: 10),
-                  MitDerCardSection(location: location),
-                  const SizedBox(height: 15),
-                  ButtonSection(location: location, bcol: [
-                    ButtonCol(
-                        color: color,
-                        icon: MdiIcons.phone,
-                        label: 'CALL',
-                        onPressed: () {
-                          _launchTel(location.telephone);
-                        }),
-                    ButtonCol(
-                        color: color,
-                        icon: MdiIcons.email,
-                        label: 'MAIL',
-                        onPressed: () {
-                          _launchMail(location.email);
-                        }),
-                    ButtonCol(
-                        color: color,
-                        icon: MdiIcons.earth,
-                        label: 'WEBPAGE',
-                        onPressed: () {
-                          _launchWeb(location.website);
-                        }),
-                    ButtonCol(
-                        color: color,
-                        icon: MdiIcons.navigation,
-                        label: 'NAVI',
-                        onPressed: () {
-                          _launchNav(location.latitude, location.longitude);
-                        }),
-                    ButtonCol(
-                        color: color,
-                        icon: location.favorit
-                            ? MdiIcons.star
-                            : MdiIcons.starOutline,
-                        label: 'FAV',
-                        onPressed: () {
-                          location.favorit
-                              ? _favUnfavLocation(location, false, onRerun)
-                              : _favUnfavLocation(location, true, onRerun);
-                        }),
-                  ]),
-                  const Divider(),
-                  const SizedBox(height: 8),
-                  NavigationSection(
-                      location: location,
-                      onPressed: () {
-                        _launchNav(location.latitude, location.longitude);
-                      }),
-                  const SizedBox(height: 8),
-                  OpenSection(location: location),
-                  const SizedBox(height: 8),
-                  TelephoneSection(
-                      location: location,
-                      onPressed: () {
-                        _launchTel(location.telephone);
-                      }),
-                  const SizedBox(height: 8),
-                  MailSection(
-                      location: location,
-                      onPressed: () {
-                        _launchMail(location.email);
-                      }),
-                  const SizedBox(height: 8),
-                  WebpageSection(
-                      location: location,
-                      onPressed: () {
-                        _launchWeb(location.website);
-                      })
-                ],
-              ))),
+      body: Column(children: [
+        if (!locationwO.open) notOpenBanner(context, locationwO),
+        Expanded(
+          child: SingleChildScrollView(
+              child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      TitleSection(location: location),
+                      const SizedBox(height: 10),
+                      DescriptionSection(location: location),
+                      const SizedBox(height: 5),
+                      PropertiesSection(location: location),
+                      const SizedBox(height: 10),
+                      MitDerCardSection(location: location),
+                      const SizedBox(height: 15),
+                      ButtonSection(location: location, bcol: [
+                        ButtonCol(
+                            color: color,
+                            icon: MdiIcons.phone,
+                            label: 'CALL',
+                            onPressed: () {
+                              _launchTel(location.telephone);
+                            }),
+                        ButtonCol(
+                            color: color,
+                            icon: MdiIcons.email,
+                            label: 'MAIL',
+                            onPressed: () {
+                              _launchMail(location.email);
+                            }),
+                        ButtonCol(
+                            color: color,
+                            icon: MdiIcons.earth,
+                            label: 'WEBPAGE',
+                            onPressed: () {
+                              _launchWeb(location.website);
+                            }),
+                        ButtonCol(
+                            color: color,
+                            icon: MdiIcons.navigation,
+                            label: 'NAVI',
+                            onPressed: () {
+                              _launchNav(location.latitude, location.longitude);
+                            }),
+                        ButtonCol(
+                            color: color,
+                            icon: location.favorit
+                                ? MdiIcons.star
+                                : MdiIcons.starOutline,
+                            label: 'FAV',
+                            onPressed: () {
+                              location.favorit
+                                  ? _favUnfavLocation(location, false, onRerun)
+                                  : _favUnfavLocation(location, true, onRerun);
+                            }),
+                      ]),
+                      const Divider(),
+                      const SizedBox(height: 8),
+                      NavigationSection(
+                          location: location,
+                          onPressed: () {
+                            _launchNav(location.latitude, location.longitude);
+                          }),
+                      const SizedBox(height: 8),
+                      OpenSection(location: location),
+                      const SizedBox(height: 8),
+                      TelephoneSection(
+                          location: location,
+                          onPressed: () {
+                            _launchTel(location.telephone);
+                          }),
+                      const SizedBox(height: 8),
+                      MailSection(
+                          location: location,
+                          onPressed: () {
+                            _launchMail(location.email);
+                          }),
+                      const SizedBox(height: 8),
+                      WebpageSection(
+                          location: location,
+                          onPressed: () {
+                            _launchWeb(location.website);
+                          })
+                    ],
+                  ))),
+        )
+      ]),
       floatingActionButton: ExpandableFab(
         distance: 112.0,
         initialOpen: false,
@@ -253,6 +270,26 @@ class LocationDetailView extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
+  }
+
+  Widget notOpenBanner(BuildContext context, LocationWithOpen locationwO) {
+    return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.only(top: 6, bottom: 6),
+        color: Colors.grey,
+        child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              const Icon(MdiIcons.alert),
+              const SizedBox(
+                width: 10,
+              ),
+              locationwO.date != null
+                  ? Text(context.loc.possibleNotOpen(
+                      DateFormat('yyyy-MM-dd').format(locationwO.date!)))
+                  : Text(context.loc.notOpenToday)
+            ]));
   }
 }
 
@@ -511,5 +548,6 @@ class ActionButton extends StatelessWidget {
   }
 }
 
-void _launchURL(url) async =>
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+void _launchURL(url) async => await canLaunchUrl(url)
+    ? await launchUrl(url)
+    : throw 'Could not launch $url';

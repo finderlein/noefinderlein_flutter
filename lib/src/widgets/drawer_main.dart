@@ -7,12 +7,17 @@ import '../screens/locations_list_screen.dart';
 import '../screens/regions_list_screen.dart';
 import '../screens/settings_screen.dart';
 
+import '../utilities/noefinderlein.dart';
+
+import '../localization/app_localizations_context.dart';
+
 class DrawerMain extends StatelessWidget {
   const DrawerMain({Key? key, required this.year}) : super(key: key);
 
   final int year;
   @override
   Widget build(BuildContext context) {
+    Noefinderlein glob = Noefinderlein();
     return Drawer(
         child: ListView(
             controller: ScrollController(initialScrollOffset: 0),
@@ -22,14 +27,24 @@ class DrawerMain extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
             ),
-            child: Column(children: [
-              Image.asset('assets/images/finderlein_funktionsgraphik.png'),
-              Text('Jahr xxxx/yyyy')
+            child: Stack(children: [
+              Column(children: [Expanded(child: funktionsGraphik(context))]),
+              Column(children: [
+                const Expanded(child: Center()),
+                SizedBox(
+                    height: 20,
+                    width: double.infinity,
+                    child: Text(
+                      context.loc.yearDisplay(
+                          glob.year.toString(), (glob.year + 1).toString()),
+                      textAlign: TextAlign.end,
+                    ))
+              ])
             ]),
           ),
           ListTile(
             leading: const Icon(MdiIcons.infinity),
-            title: const Text('Alle Ziele'),
+            title: Text(context.loc.drawerAllLocations),
             onTap: () {
               // LocationListScreenCall llc = LocationListScreenCall(year, 0);
               Navigator.pop(context);
@@ -40,7 +55,7 @@ class DrawerMain extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(MdiIcons.imageFilterHdr),
-            title: const Text('Regionen'),
+            title: Text(context.loc.drawerProvinces),
             onTap: () {
               Navigator.pop(context);
               Navigator.restorablePushNamed(
@@ -49,7 +64,7 @@ class DrawerMain extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(MdiIcons.star),
-            title: const Text('Favoriten'),
+            title: Text(context.loc.drawerFavorits),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -61,7 +76,7 @@ class DrawerMain extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(MdiIcons.check),
-            title: const Text('Besichtigte'),
+            title: Text(context.loc.drawerVisited),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -74,7 +89,7 @@ class DrawerMain extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(MdiIcons.navigation),
-            title: const Text('In der Nähe'),
+            title: Text(context.loc.drawerNear),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -85,7 +100,7 @@ class DrawerMain extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(MdiIcons.cog),
-            title: const Text('Einstellungen'),
+            title: Text(context.loc.drawerSettings),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -95,4 +110,27 @@ class DrawerMain extends StatelessWidget {
           ),
         ]));
   }
+}
+
+Widget funktionsGraphik(BuildContext context) {
+  var brightness = Theme.of(context).brightness;
+  bool isDarkMode = brightness == Brightness.dark;
+  ColorFilter cf = const ColorFilter.matrix(<double>[
+    0.8, 0.8, 0.9, 0, 0, //
+    0.8, 0.8, 0.9, 0, 0,
+    0.8, 0.8, 0.9, 0, 0,
+    0, 0, 0, 1, 0,
+  ]);
+  if (isDarkMode) {
+    return ColorFiltered(
+        colorFilter: cf,
+        child: Image.asset(
+          'assets/images/finderlein_funktionsgraphik.png',
+          fit: BoxFit.contain,
+        ));
+  }
+  return Image.asset(
+    'assets/images/finderlein_funktionsgraphik.png',
+    fit: BoxFit.contain,
+  );
 }

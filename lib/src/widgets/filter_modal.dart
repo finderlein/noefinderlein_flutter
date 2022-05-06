@@ -35,6 +35,7 @@ class FilterState extends State<Filter> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle ts = TextStyle(color: Theme.of(context).colorScheme.onSurface);
     if (fullpage) {
       return DefaultTabController(
           length: 3,
@@ -83,27 +84,30 @@ class FilterState extends State<Filter> {
                     [const Divider()] +
                     categoryFilter() +
                     [
-                      Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Row(
+                      SizedBox(
+                          width: double.infinity,
+                          child: Wrap(
+                            alignment: WrapAlignment.spaceEvenly,
                             children: [
-                              const Spacer(),
-                              TextButton(
-                                  onPressed: () {
-                                    filterE = FilterElements();
-                                    widget.callback(filterE);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(context.loc.resetFilter)),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    widget.callback(filterE);
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(context.loc.setFilter))
+                              Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        filterE = FilterElements();
+                                        widget.callback(filterE);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(context.loc.resetFilter,
+                                          style: ts))),
+                              Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        widget.callback(filterE);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(context.loc.setFilter,
+                                          style: ts)))
                             ],
                           ))
                     ]);
@@ -267,11 +271,11 @@ class FilterState extends State<Filter> {
             filterE.categories[category] = !filterE.categories[category];
           });
         },
-        tileColor: filterE.categories[category] ? Colors.black12 : null,
+        tileColor: !filterE.categories[category] ? Colors.black12 : null,
         title: Text(text),
         leading: CategoryIcon(
             category: (category + 1),
             size: 40,
-            bw: filterE.categories[category]));
+            bw: !filterE.categories[category]));
   }
 }

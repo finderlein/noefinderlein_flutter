@@ -15,7 +15,6 @@ class LocationsList extends StatelessWidget {
     developer.log('locationlist:',
         name: 'location_list.dart', error: locations.length);
     return ListView.builder(
-        shrinkWrap: true,
         padding: const EdgeInsets.all(0),
         itemCount: locations.length,
         physics: const BouncingScrollPhysics(),
@@ -26,7 +25,7 @@ class LocationsList extends StatelessWidget {
                 var id = item.location.id;
                 Navigator.restorablePushNamed(
                     context, LocationDetailsScreen.routeName,
-                    arguments: id);
+                    arguments: {'locationId': id, 'date': item.date});
               },
               child: LocationsListItem(
                 locationWo: item,

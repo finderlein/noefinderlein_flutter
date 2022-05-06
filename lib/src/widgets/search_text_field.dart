@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../localization/app_localizations_context.dart';
+
 class SearchTextField extends StatelessWidget {
   const SearchTextField({Key? key, required this.onChanged}) : super(key: key);
   final ValueChanged<String>? onChanged;
@@ -26,7 +28,8 @@ class SearchTextField extends StatelessWidget {
             //Borders when a TextField is in focus
             borderSide:
                 BorderSide(color: Theme.of(context).colorScheme.onPrimary)),
-        hintText: 'Search', //Text that is displayed when nothing is entered.
+        hintText: context
+            .loc.search, //Text that is displayed when nothing is entered.
         hintStyle: TextStyle(
           //Style of hintText
           color: Theme.of(context).colorScheme.onPrimary,

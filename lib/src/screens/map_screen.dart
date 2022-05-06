@@ -6,11 +6,15 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:noefinderlein_flutter/src/settings/settings_controller.dart';
 import 'package:noefinderlein_flutter/src/widgets/app_bar_main.dart';
+import 'package:noefinderlein_flutter/src/widgets/map_popup.dart';
 
 import '../database/database_helper.dart';
 import '../database/tables/location.dart';
 import 'dart:developer' as developer;
 import '../../auth/secrets.dart';
+
+import '../localization/app_localizations_context.dart';
+import '../model/model_marker_with_location.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen(
@@ -40,6 +44,8 @@ class _MapScreenState extends State<MapScreen> {
     _centerCurrentLocationStreamController = StreamController<double?>();
   }
 
+  final PopupController _popupLayerController = PopupController();
+
   @override
   void dispose() {
     _centerCurrentLocationStreamController.close();
@@ -50,7 +56,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarMain(
-          customTitle: 'Items',
+          customTitle: context.loc.map,
         ),
         body: FutureBuilder(
           future: _allmapLocations,
@@ -70,12 +76,13 @@ class _MapScreenState extends State<MapScreen> {
                 }
                 var brightness = Theme.of(context).brightness;
                 bool isDarkMode = brightness == Brightness.dark;
-                List<Marker> markers = <Marker>[];
-                for (Location element in snapshot.data!) {
-                  markers.add(Marker(
-                      point: LatLng(element.latitude, element.longitude),
+                List<MarkerLocation> markers = <MarkerLocation>[];
+                for (Location location in snapshot.data!) {
+                  markers.add(MarkerLocation(
+                      point: LatLng(location.latitude, location.longitude),
                       width: 50,
                       height: 50,
+                      location: location,
                       builder: (context) {
                         return Image.asset('assets/images/noe_marker.png');
                       }));
@@ -88,6 +95,7 @@ class _MapScreenState extends State<MapScreen> {
                       interactiveFlags:
                           InteractiveFlag.all & ~InteractiveFlag.rotate,
                       // Stop centering the location marker on the map if user interacted with the map.
+                      onTap: (_, __) => _popupLayerController.hideAllPopups(),
                       onPositionChanged:
                           (MapPosition position, bool hasGesture) {
                         if (hasGesture) {
@@ -147,6 +155,16 @@ class _MapScreenState extends State<MapScreen> {
                                     Theme.of(context).colorScheme.secondary,
                                 color: Colors.black12,
                                 borderStrokeWidth: 3),
+                            popupOptions: PopupOptions(
+                                popupSnap: PopupSnap.markerTop,
+                                popupController: _popupLayerController,
+                                popupBuilder: (_, marker) {
+                                  if (marker is MarkerLocation) {
+                                    return MapPopup(marker);
+                                  }
+                                  return const Card(
+                                      child: Text('Location not found'));
+                                }),
                             builder:
                                 (BuildContext context, List<Marker> markers) {
                               return Image.asset(

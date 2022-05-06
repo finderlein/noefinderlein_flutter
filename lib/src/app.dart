@@ -93,8 +93,10 @@ class MyApp extends StatelessWidget {
                 final String name = routeSettings.name as String;
 
                 if (name.startsWith(LocationDetailsScreen.routeName)) {
-                  final id = routeSettings.arguments as int;
-                  return LocationDetailsScreen(id: id);
+                  final arguments = routeSettings.arguments as Map;
+                  int locationId = arguments['locationId'];
+                  DateTime? date = arguments['date'];
+                  return LocationDetailsScreen(id: locationId, date: date);
                 }
                 developer.log('routeName',
                     name: 'app.dart', error: routeSettings.name);
@@ -125,6 +127,7 @@ class MyApp extends StatelessWidget {
                     return VisitedScreen(year: glob.year);
                   case '/':
                   case LocationListScreen.routeName:
+                  default:
                     if (routeSettings.arguments != null) {
                       final arguments = routeSettings.arguments as Map;
                       int regionId = arguments['regionId'];
@@ -143,9 +146,6 @@ class MyApp extends StatelessWidget {
                         regionId: 0,
                       );
                     }
-                  default:
-                    assert(false, 'Need to implement ${routeSettings.name}');
-                    return const Center();
                 }
               },
             );

@@ -96,27 +96,6 @@ class _LocationListScreenState extends State<LocationListScreen> {
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
           actions: [
-            IconButton(
-              icon: const Icon(MdiIcons.download),
-              onPressed: () {
-                Future.delayed(
-                    Duration.zero,
-                    () => showDownloader(context).then(
-                          (_) {
-                            developer.log('downloadcallback:',
-                                name: 'locations_list_screen.dart',
-                                error: 'now');
-                            if (Navigator.canPop(context)) {
-                              Navigator.pop(context);
-                            }
-                            Navigator.pushReplacementNamed(
-                              context,
-                              LocationListScreen.routeName,
-                            );
-                          },
-                        ));
-              },
-            ),
             !_search
                 ? IconButton(
                     icon: const Icon(MdiIcons.magnify),
@@ -138,6 +117,27 @@ class _LocationListScreenState extends State<LocationListScreen> {
                       });
                     },
                   ),
+            IconButton(
+              icon: const Icon(MdiIcons.download),
+              onPressed: () {
+                Future.delayed(
+                    Duration.zero,
+                    () => showDownloader(context).then(
+                          (_) {
+                            developer.log('downloadcallback:',
+                                name: 'locations_list_screen.dart',
+                                error: 'now');
+                            if (Navigator.canPop(context)) {
+                              Navigator.pop(context);
+                            }
+                            Navigator.pushReplacementNamed(
+                              context,
+                              LocationListScreen.routeName,
+                            );
+                          },
+                        ));
+              },
+            ),
             IconButton(
               icon: const Icon(MdiIcons.sortAlphabeticalVariant),
               onPressed: () => showDialog(
