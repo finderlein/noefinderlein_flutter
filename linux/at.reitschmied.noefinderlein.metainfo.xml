@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>at.reitschmied.noefinderlein</id>
+  
+  <name>NÖ Finderlein</name>
+  <summary>A companion app for the austrian Niederösterreich Card</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  
+  <supports>
+    <control>pointing</control>
+    <control>touch</control>
+    <control>tablet</control>
+  </supports>
+  
+  <description>
+    <p>
+      NÖ Finderlein The NÖ Finderlein is the inoffical compainon App to the so called &quot;Niederösterreich-CARD&quot;. It shows all destinations which can be visited with the Card in a well-arranged manner.
+    </p>
+    <p>
+      The main functions are: - quickly display all relevant information to all destinations - list all destinations by number according to the NÖ-Card - booklet - list destinationy by regioins - search for destinations - view the destinations in a map - list all destinations sorted by proximity to current location (GPS required) - call the navigation App directly from the app - filter according to destination type (monastery, castle and manor house,...) - define favorites - mark visited destinations
+    </p>
+  </description>
+  <content_rating type="oars-1.1" />
+  <launchable type="desktop-id">at.reitschmied.noefinderlein.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen3.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen4.png</image>
+    </screenshot>
+  </screenshots>
+</component>

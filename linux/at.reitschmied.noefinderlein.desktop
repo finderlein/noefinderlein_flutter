@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=NÖ Finderlein
+Comment=A companion app for the austrian Niederösterreich Card
+Categories=Utility;Documentation;
+
+Icon=at.reitschmied.noefinderlein
+Exec=noefinderlein_flutter
+Terminal=false

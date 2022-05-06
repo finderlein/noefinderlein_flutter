@@ -1,0 +1,57 @@
+{
+  "app-id": "at.reitschmied.noefinderlein",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "21.08",
+  "sdk": "org.freedesktop.Sdk",
+  "command": "noefinderlein_flutter",
+  "separate-locales": false,
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--socket=pulseaudio",
+    "--share=network"
+  ],
+  "modules": [
+    {
+      "name": "noefinderlein_flutter",
+      "buildsystem": "simple",
+      "only-arches": ["x86_64"],
+      "build-commands": [
+        "mkdir -p FlutterApp",
+        "tar -xf noefinderlein-linux-portable.tar.gz -C FlutterApp",
+        "cp -r FlutterApp /app/",
+        "chmod +x /app/FlutterApp/noefinderlein_flutter",
+        "mkdir -p /app/bin",
+        "ln -s /app/FlutterApp/noefinderlein_flutter /app/bin/noefinderlein_flutter",
+        "mkdir -p /app/share/metainfo",
+        "cp -r linux/at.reitschmied.noefinderlein.metainfo.xml /app/share/metainfo/",
+        "mkdir -p /app/share/icons/hicolor/scalable/apps",
+        "cp -r assets/images/finderlein_logo_bunt.svg /app/share/icons/hicolor/scalable/apps/at.reitschmied.noefinderlein.svg",
+        "mkdir -p /app/share/applications",
+        "cp -r linux/at.reitschmied.noefinderlein.desktop /app/share/applications/",
+        "mkdir -p /app/share/appdata",
+        "cp -r at.reitschmied.noefinderlein.metainfo.xml /app/share/appdata/"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "linux/at.reitschmied.noefinderlein.metainfo.xml"
+        },
+        {
+          "type": "file",
+          "path": "linux/at.reitschmied.noefinderlein.desktop"
+        },
+        {
+          "type": "file",
+          "path": "assets/images/icon.svg"
+        },
+        {
+          "type": "file",
+          "path": "noefinderlein-linux-portable.tar.gz"
+        }
+      ]
+    }
+  ]
+}
