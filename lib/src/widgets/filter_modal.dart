@@ -63,6 +63,7 @@ class FilterState extends State<Filter> {
           ));
     } else {
       return AlertDialog(
+          insetPadding: const EdgeInsets.all(20),
           scrollable: true,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -118,9 +119,10 @@ class FilterState extends State<Filter> {
   List<Widget> dayactive() {
     return [
       CheckboxListTile(
+        contentPadding: EdgeInsets.zero,
         title: Text(context.loc.filter_day_active_text),
         value: filterE.onlyShowOnDate,
-        controlAffinity: ListTileControlAffinity.leading,
+        // controlAffinity: ListTileControlAffinity.leading,
         onChanged: (bool? value) {
           if (value != null) {
             setState(() {
@@ -130,6 +132,7 @@ class FilterState extends State<Filter> {
         },
       ),
       ListTile(
+        contentPadding: EdgeInsets.zero,
         enabled: filterE.onlyShowOnDate,
         title: Text(DateFormat('yyyy-MM-dd').format(filterE.date)),
         leading: const Icon(MdiIcons.calendar),
@@ -168,6 +171,7 @@ class FilterState extends State<Filter> {
     return [
       // const Divider(),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.badWeather = !filterE.badWeather;
@@ -178,6 +182,7 @@ class FilterState extends State<Filter> {
           trailing: Text(
               filterE.badWeather ? context.loc.must : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.childFriendly = !filterE.childFriendly;
@@ -188,6 +193,7 @@ class FilterState extends State<Filter> {
           trailing: Text(
               filterE.childFriendly ? context.loc.must : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.strollerFriendly = !filterE.strollerFriendly;
@@ -199,6 +205,7 @@ class FilterState extends State<Filter> {
               ? context.loc.must
               : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.dogAllowed = !filterE.dogAllowed;
@@ -209,6 +216,7 @@ class FilterState extends State<Filter> {
           trailing: Text(
               filterE.dogAllowed ? context.loc.must : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.wheelchairFriendly = !filterE.wheelchairFriendly;
@@ -220,6 +228,7 @@ class FilterState extends State<Filter> {
               ? context.loc.must
               : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.tavernNear = !filterE.tavernNear;
@@ -230,6 +239,7 @@ class FilterState extends State<Filter> {
           trailing: Text(
               filterE.tavernNear ? context.loc.must : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.groupsAccepted = !filterE.groupsAccepted;
@@ -241,6 +251,7 @@ class FilterState extends State<Filter> {
               ? context.loc.must
               : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.openInWinter = !filterE.openInWinter;
@@ -251,6 +262,7 @@ class FilterState extends State<Filter> {
           trailing: Text(
               filterE.openInWinter ? context.loc.must : context.loc.dontcare)),
       ListTile(
+          contentPadding: EdgeInsets.zero,
           onTap: () {
             setState(() {
               filterE.topLocation = !filterE.topLocation;
@@ -266,6 +278,7 @@ class FilterState extends State<Filter> {
 
   Widget listTileCategory(BuildContext context, int category, String text) {
     return ListTile(
+        contentPadding: EdgeInsets.zero,
         onTap: () {
           setState(() {
             filterE.categories[category] = !filterE.categories[category];
