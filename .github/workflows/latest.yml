@@ -57,17 +57,45 @@ jobs:
             build/app/outputs/flutter-apk/*.apk
             build/app/outputs/bundle/release/*.aab
 
-  # macos:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: "2.13.0"
-  #     - run: flutter upgrade
-  #     - run: flutter pub get
-  #     - run: flutter test
-  #     - run: flutter build ios --release --no-codesign
+  macos:
+    runs-on: macos-latest
+    env:
+      MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: flutter upgrade
+      - run: flutter pub get
+      - name: Enable Macos
+        run: flutter config --enable-macos-desktop
+      - name: Build macOS app
+        run: flutter build macos --release --no-codesign
+      - name: Create a dmg
+        run: |
+          echo "Install create-dmg"
+          brew install create-dmg
+          cd $MACOS_APP_RELEASE_PATH
+          create-dmg \
+          --volname "noefinderlein_flutter" \
+          --window-pos 200 120 \
+          --window-size 800 529 \
+          --icon-size 130 \
+          --text-size 14 \
+          --icon "noefinderlein_flutter.app" 260 250 \
+          --hide-extension "noefinderlein_flutter.app" \
+          --app-drop-link 540 250 \
+          --hdiutil-quiet \
+          "noefinderlein_flutter.dmg" \
+          "noefinderlein_flutter.app"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: build/macos/Build/Products/Release/*.dmg
+      # - run: flutter build ios --release --no-codesign
 
   # web:
   #   runs-on: ubuntu-latest
