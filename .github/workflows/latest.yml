@@ -164,7 +164,7 @@ jobs:
   #     - name: Build AppImage
   #       uses: AppImageCrafters/build-appimage@master
   #       with:
-  #         recipe: linux/AppImageBuilder.yml
+  #         recipe: appimage/AppImageBuilder.yml
   #       env:
   #         UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
   #     - uses: actions/upload-artifact@v3
@@ -189,7 +189,7 @@ jobs:
   #         path: ./
   #     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
   #       with:
-  #         manifest-path: linux/at.reitschmied.noefinderlein.json
+  #         manifest-path: flatpak/at.reitschmied.noefinderlein.json
   #         cache-key: flatpak-builder-${{ github.sha }}
 
   # deploy:
