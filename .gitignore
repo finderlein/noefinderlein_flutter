@@ -53,3 +53,9 @@ appimage-builder-cache
 
 
 /lib/auth/secrets.dart
+
+#flatpak
+build-dir
+.flatpak-builder
+/*.tgz
+/*.tar.gz

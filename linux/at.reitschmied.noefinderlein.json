@@ -11,7 +11,10 @@
     "--socket=wayland",
     "--device=dri",
     "--socket=pulseaudio",
-    "--share=network"
+    "--share=network",
+    "--filesystem=xdg-config",
+    "--filesystem=xdg-cache",
+    "--metadata=X-DConf=migrate-path=/org/gnome/dictionary/"
   ],
   "modules": [
     {
@@ -26,30 +29,30 @@
         "mkdir -p /app/bin",
         "ln -s /app/FlutterApp/noefinderlein_flutter /app/bin/noefinderlein_flutter",
         "mkdir -p /app/share/metainfo",
-        "cp -r linux/at.reitschmied.noefinderlein.metainfo.xml /app/share/metainfo/",
+        "cp -r at.reitschmied.noefinderlein.metainfo.xml /app/share/metainfo/",
         "mkdir -p /app/share/icons/hicolor/scalable/apps",
-        "cp -r assets/images/finderlein_logo_bunt.svg /app/share/icons/hicolor/scalable/apps/at.reitschmied.noefinderlein.svg",
+        "cp -r finderlein_logo_bunt.svg /app/share/icons/hicolor/scalable/apps/at.reitschmied.noefinderlein.svg",
         "mkdir -p /app/share/applications",
-        "cp -r linux/at.reitschmied.noefinderlein.desktop /app/share/applications/",
+        "cp -r at.reitschmied.noefinderlein.desktop /app/share/applications/",
         "mkdir -p /app/share/appdata",
         "cp -r at.reitschmied.noefinderlein.metainfo.xml /app/share/appdata/"
       ],
       "sources": [
         {
           "type": "file",
-          "path": "linux/at.reitschmied.noefinderlein.metainfo.xml"
+          "path": "at.reitschmied.noefinderlein.metainfo.xml"
         },
         {
           "type": "file",
-          "path": "linux/at.reitschmied.noefinderlein.desktop"
+          "path": "at.reitschmied.noefinderlein.desktop"
         },
         {
           "type": "file",
-          "path": "assets/images/icon.svg"
+          "path": "../assets/images/finderlein_logo_bunt.svg"
         },
         {
           "type": "file",
-          "path": "noefinderlein-linux-portable.tar.gz"
+          "path": "../noefinderlein-linux-portable.tar.gz"
         }
       ]
     }
