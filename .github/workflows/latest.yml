@@ -5,10 +5,10 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,112 +16,112 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  # android:
-  #   # The type of runner that the job will run on
-  #   runs-on: ubuntu-latest
+  android:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
 
-  #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: |
-  #         echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
-  #         gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
-  #     - run: |
-  #         echo "noefinderlein_keystore=release.keystore" >> android/noefinderlein_keystore.txt
-  #         echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/noefinderlein_keystore.txt
-  #         echo "noefinderlein_alias=noefinderlein" >> android/noefinderlein_keystore.txt
-  #         echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/noefinderlein_keystore.txt
-  #     - run: mkdir lib/auth
-  #     - run: |
-  #         echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";" >> lib/auth/secrets.dart
-  #         echo "var mapUrl = \"${{ secrets.MAPURL }}\";" >> lib/auth/secrets.dart
-  #         echo "var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";" >> lib/auth/secrets.dart
-  #         echo "var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
-  #     - uses: actions/setup-java@v2
-  #       with:
-  #         distribution: "zulu"
-  #         java-version: "11"
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: "2.12.0-4.2.pre"
-  #         channel: "beta"
-  #     - run: flutter upgrade
-  #     - run: flutter pub get
-  #     - run: flutter test
-  #     - run: flutter build apk --split-per-abi
-  #     - run: flutter build appbundle
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: android
-  #         path: |
-  #           build/app/outputs/flutter-apk/*.apk
-  #           build/app/outputs/bundle/release/*.aab
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
+          gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
+      - run: |
+          echo "noefinderlein_keystore=release.keystore" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_alias=noefinderlein" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/noefinderlein_keystore.txt
+      - run: mkdir lib/auth
+      - run: |
+          echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrl = \"${{ secrets.MAPURL }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";" >> lib/auth/secrets.dart
+          echo "var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: "11"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: flutter upgrade
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --split-per-abi
+      - run: flutter build appbundle
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
 
-  # macos:
-  #   runs-on: macos-latest
-  #   env:
-  #     MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: mkdir lib/auth
-  #     - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: "2.12.0-4.2.pre"
-  #         channel: "beta"
-  #     - run: flutter upgrade
-  #     - run: flutter pub get
-  #     - name: Enable Macos
-  #       run: flutter config --enable-macos-desktop
-  #     - name: Build macOS app
-  #       run: flutter build macos --release
-  #     - name: Create a dmg
-  #       run: |
-  #         echo "Install create-dmg"
-  #         brew install create-dmg
-  #         cd $MACOS_APP_RELEASE_PATH
-  #         create-dmg \
-  #         --volname "noefinderlein_flutter" \
-  #         --window-pos 200 120 \
-  #         --window-size 800 529 \
-  #         --icon-size 130 \
-  #         --text-size 14 \
-  #         --icon "noefinderlein_flutter.app" 260 250 \
-  #         --hide-extension "noefinderlein_flutter.app" \
-  #         --app-drop-link 540 250 \
-  #         --hdiutil-quiet \
-  #         "noefinderlein_flutter.dmg" \
-  #         "noefinderlein_flutter.app"
+  macos:
+    runs-on: macos-latest
+    env:
+      MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib/auth
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: flutter upgrade
+      - run: flutter pub get
+      - name: Enable Macos
+        run: flutter config --enable-macos-desktop
+      - name: Build macOS app
+        run: flutter build macos --release
+      - name: Create a dmg
+        run: |
+          echo "Install create-dmg"
+          brew install create-dmg
+          cd $MACOS_APP_RELEASE_PATH
+          create-dmg \
+          --volname "noefinderlein_flutter" \
+          --window-pos 200 120 \
+          --window-size 800 529 \
+          --icon-size 130 \
+          --text-size 14 \
+          --icon "noefinderlein_flutter.app" 260 250 \
+          --hide-extension "noefinderlein_flutter.app" \
+          --app-drop-link 540 250 \
+          --hdiutil-quiet \
+          "noefinderlein_flutter.dmg" \
+          "noefinderlein_flutter.app"
 
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: macos
-  #         path: build/macos/Build/Products/Release/*.dmg
+      - uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: build/macos/Build/Products/Release/*.dmg
 
-  # ios:
-  #   runs-on: macos-latest
-  #   env:
-  #     MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: mkdir lib/auth
-  #     - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: "2.12.0-4.2.pre"
-  #         channel: "beta"
-  #     - run: flutter upgrade
-  #     - run: flutter pub get
-  #     - name: Enable iOS
-  #       run: flutter config --enable-ios
-  #     - name: Build iOS app
-  #       run: flutter build ios --release --no-codesign
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: ios
-  #         path: |
-  #           build/ios/iphoneos/*.app
-  #           build/ios/iphoneos/*.app.
+  ios:
+    runs-on: macos-latest
+    env:
+      MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib/auth
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: flutter upgrade
+      - run: flutter pub get
+      - name: Enable iOS
+        run: flutter config --enable-ios
+      - name: Build iOS app
+        run: flutter build ios --release --no-codesign
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ios
+          path: |
+            build/ios/iphoneos/*.app
+            build/ios/iphoneos/*.app.
 
   # web:
   #   runs-on: ubuntu-latest
@@ -153,37 +153,43 @@ jobs:
           channel: "beta"
       - run: flutter config --enable-windows-desktop
       - run: flutter build windows
+      - name: Zip Folder
+        run: zip -r windows.zip ./build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./windows.zip
 
-  # appimage:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: mkdir lib/auth
-  #     - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: "2.12.0-4.2.pre"
-  #         channel: "beta"
-  #     - run: |
-  #         sudo apt-get install -y ninja-build libgtk-3-dev
-  #     - run: flutter config --enable-linux-desktop
-  #     - run: flutter build linux
-  #     - run: |
-  #         tar -C build/linux/x64/release/bundle -cvf noefinderlein-linux-portable.tar.gz .
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: tgz
-  #         path: ./*.tar.gz
-  #     - name: Build AppImage
-  #       uses: AppImageCrafters/build-appimage@master
-  #       with:
-  #         recipe: appimage/AppImageBuilder.yml
-  #       env:
-  #         UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: appimage
-  #         path: ./*.AppImage
+  appimage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib/auth
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "2.12.0-4.2.pre"
+          channel: "beta"
+      - run: |
+          sudo apt-get install -y ninja-build libgtk-3-dev
+      - run: flutter config --enable-linux-desktop
+      - run: flutter build linux
+      - run: |
+          tar -C build/linux/x64/release/bundle -cvf noefinderlein-linux-portable.tar.gz .
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tgz
+          path: ./*.tar.gz
+      - name: Build AppImage
+        uses: AppImageCrafters/build-appimage@master
+        with:
+          recipe: appimage/AppImageBuilder.yml
+        env:
+          UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
+      - uses: actions/upload-artifact@v3
+        with:
+          name: appimage
+          path: ./*.AppImage
 
   # flatpak:
   #   needs: [appimage]
@@ -205,36 +211,65 @@ jobs:
   #         manifest-path: flatpak/at.reitschmied.noefinderlein.json
   #         cache-key: flatpak-builder-${{ github.sha }}
 
-  # deploy:
-  #   needs: [android, appimage]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: android
-  #         path: android
-  #     - name: Display structure of downloaded files
-  #       run: ls -R
-  #       working-directory: android
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: appimage
-  #         path: appimage
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: tgz
-  #         path: tgz
-  #     - name: Display structure of downloaded files
-  #       run: ls -R
-  #       working-directory: appimage
-  #     - uses: "marvinpinto/action-automatic-releases@latest"
-  #       with:
-  #         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-  #         automatic_release_tag: "latest"
-  #         prerelease: true
-  #         title: "Development Build"
-  #         files: |
-  #           android/**/*.apk
-  #           android/**/*.aab
-  #           appimage/*.AppImage
-  #           tgz/*.tgz
+  deploy:
+    needs: [android, macos, ios, windows, appimage]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: android
+          path: android
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: android
+      - uses: actions/download-artifact@v3
+        with:
+          name: macos
+          path: macos
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: macos
+      - uses: actions/download-artifact@v3
+        with:
+          name: ios
+          path: ios
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ios
+      - uses: actions/download-artifact@v3
+        with:
+          name: windows
+          path: windows
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: windows
+      - uses: actions/download-artifact@v3
+        with:
+          name: appimage
+          path: appimage
+      - uses: actions/download-artifact@v3
+        with:
+          name: tgz
+          path: tgz
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: appimage
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            android/**/*.apk
+            android/**/*.aab
+            macos/**/*.dmg
+            macos/*.dmg
+            ios/**/*.app
+            ios/**/*.app.
+            ios/*.app
+            ios/*.app.
+            windows/**/*.zip
+            windows/*.zip
+            appimage/*.AppImage
+            tgz/*.tgz
