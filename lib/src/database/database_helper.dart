@@ -46,7 +46,7 @@ class DatabaseHelper {
           CategorySchema,
           ProvinceSchema
         ],
-        directory: glob.supportDir.path,
+        directory: glob.getDirectory(),
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
     return isar;
@@ -58,6 +58,7 @@ class DatabaseHelper {
     if (db != null) {
       return db;
     }
+    
     final isar = await Isar.open(
         schemas: [
           LocationSchema,
@@ -68,7 +69,7 @@ class DatabaseHelper {
           CategorySchema,
           ProvinceSchema
         ],
-        directory: glob.supportDir.path,
+        directory: glob.getDirectory(),
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
     return isar;

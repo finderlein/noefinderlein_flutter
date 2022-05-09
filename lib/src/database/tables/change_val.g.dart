@@ -6,138 +6,138 @@ part of 'change_val.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetChangeValCollection on Isar {
-  IsarCollection<ChangeVal> get changeVals {
-    return getCollection('ChangeVal');
-  }
+  IsarCollection<ChangeVal> get changeVals => getCollection();
 }
 
-final ChangeValSchema = CollectionSchema(
+const ChangeValSchema = CollectionSchema(
   name: 'ChangeVal',
   schema:
       '{"name":"ChangeVal","idName":"year","properties":[{"name":"changeCount","type":"Long"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _ChangeValNativeAdapter(),
-  webAdapter: const _ChangeValWebAdapter(),
   idName: 'year',
   propertyIds: {'changeCount': 0},
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.year == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.year;
-    }
-  },
-  setId: (obj, id) => obj.year = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _changeValGetId,
+  setId: _changeValSetId,
+  getLinks: _changeValGetLinks,
+  attachLinks: _changeValAttachLinks,
+  serializeNative: _changeValSerializeNative,
+  deserializeNative: _changeValDeserializeNative,
+  deserializePropNative: _changeValDeserializePropNative,
+  serializeWeb: _changeValSerializeWeb,
+  deserializeWeb: _changeValDeserializeWeb,
+  deserializePropWeb: _changeValDeserializePropWeb,
+  version: 3,
 );
 
-class _ChangeValWebAdapter extends IsarWebTypeAdapter<ChangeVal> {
-  const _ChangeValWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<ChangeVal> collection, ChangeVal object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'changeCount', object.changeCount);
-    IsarNative.jsObjectSet(jsObj, 'year', object.year);
-    return jsObj;
+int? _changeValGetId(ChangeVal object) {
+  if (object.year == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.year;
   }
-
-  @override
-  ChangeVal deserialize(IsarCollection<ChangeVal> collection, dynamic jsObj) {
-    final object = ChangeVal();
-    object.changeCount =
-        IsarNative.jsObjectGet(jsObj, 'changeCount') ?? double.negativeInfinity;
-    object.year =
-        IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity;
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'changeCount':
-        return (IsarNative.jsObjectGet(jsObj, 'changeCount') ??
-            double.negativeInfinity) as P;
-      case 'year':
-        return (IsarNative.jsObjectGet(jsObj, 'year') ??
-            double.negativeInfinity) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, ChangeVal object) {}
 }
 
-class _ChangeValNativeAdapter extends IsarNativeTypeAdapter<ChangeVal> {
-  const _ChangeValNativeAdapter();
-
-  @override
-  void serialize(IsarCollection<ChangeVal> collection, IsarRawObject rawObj,
-      ChangeVal object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.changeCount;
-    final _changeCount = value0;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _changeCount);
-  }
-
-  @override
-  ChangeVal deserialize(IsarCollection<ChangeVal> collection, int id,
-      IsarBinaryReader reader, List<int> offsets) {
-    final object = ChangeVal();
-    object.changeCount = reader.readLong(offsets[0]);
-    object.year = id;
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readLong(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, ChangeVal object) {}
+void _changeValSetId(ChangeVal object, int id) {
+  object.year = id;
 }
+
+List<IsarLinkBase> _changeValGetLinks(ChangeVal object) {
+  return [];
+}
+
+void _changeValSerializeNative(
+    IsarCollection<ChangeVal> collection,
+    IsarRawObject rawObj,
+    ChangeVal object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.changeCount;
+  final _changeCount = value0;
+  final size = staticSize + dynamicSize;
+
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeLong(offsets[0], _changeCount);
+}
+
+ChangeVal _changeValDeserializeNative(IsarCollection<ChangeVal> collection,
+    int id, IsarBinaryReader reader, List<int> offsets) {
+  final object = ChangeVal();
+  object.changeCount = reader.readLong(offsets[0]);
+  object.year = id;
+  return object;
+}
+
+P _changeValDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readLong(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _changeValSerializeWeb(
+    IsarCollection<ChangeVal> collection, ChangeVal object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'changeCount', object.changeCount);
+  IsarNative.jsObjectSet(jsObj, 'year', object.year);
+  return jsObj;
+}
+
+ChangeVal _changeValDeserializeWeb(
+    IsarCollection<ChangeVal> collection, dynamic jsObj) {
+  final object = ChangeVal();
+  object.changeCount =
+      IsarNative.jsObjectGet(jsObj, 'changeCount') ?? double.negativeInfinity;
+  object.year =
+      IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity;
+  return object;
+}
+
+P _changeValDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'changeCount':
+      return (IsarNative.jsObjectGet(jsObj, 'changeCount') ??
+          double.negativeInfinity) as P;
+    case 'year':
+      return (IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity)
+          as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _changeValAttachLinks(IsarCollection col, int id, ChangeVal object) {}
 
 extension ChangeValQueryWhereSort
     on QueryBuilder<ChangeVal, ChangeVal, QWhere> {
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhere> anyYear() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension ChangeValQueryWhere
     on QueryBuilder<ChangeVal, ChangeVal, QWhereClause> {
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearEqualTo(int year) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [year],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: year,
       includeLower: true,
-      upper: [year],
+      upper: year,
       includeUpper: true,
     ));
   }
@@ -145,48 +145,33 @@ extension ChangeValQueryWhere
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearNotEqualTo(
       int year) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [year],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [year],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: year, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: year, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [year],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [year],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: year, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: year, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearGreaterThan(
-    int year, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [year],
-      includeLower: include,
-    ));
+      int year,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: year, includeLower: include),
+    );
   }
 
-  QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearLessThan(
-    int year, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [year],
-      includeUpper: include,
-    ));
+  QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearLessThan(int year,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: year, includeUpper: include),
+    );
   }
 
   QueryBuilder<ChangeVal, ChangeVal, QAfterWhereClause> yearBetween(
@@ -195,11 +180,10 @@ extension ChangeValQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerYear],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerYear,
       includeLower: includeLower,
-      upper: [upperYear],
+      upper: upperYear,
       includeUpper: includeUpper,
     ));
   }

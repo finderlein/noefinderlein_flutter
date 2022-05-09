@@ -6,182 +6,164 @@ part of 'region.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetRegionCollection on Isar {
-  IsarCollection<Region> get regions {
-    return getCollection('Region');
-  }
+  IsarCollection<Region> get regions => getCollection();
 }
 
-final RegionSchema = CollectionSchema(
+const RegionSchema = CollectionSchema(
   name: 'Region',
   schema:
       '{"name":"Region","idName":"id","properties":[{"name":"name","type":"String"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _RegionNativeAdapter(),
-  webAdapter: const _RegionWebAdapter(),
   idName: 'id',
   propertyIds: {'name': 0},
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.id == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.id;
-    }
-  },
-  setId: (obj, id) => obj.id = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _regionGetId,
+  setId: _regionSetId,
+  getLinks: _regionGetLinks,
+  attachLinks: _regionAttachLinks,
+  serializeNative: _regionSerializeNative,
+  deserializeNative: _regionDeserializeNative,
+  deserializePropNative: _regionDeserializePropNative,
+  serializeWeb: _regionSerializeWeb,
+  deserializeWeb: _regionDeserializeWeb,
+  deserializePropWeb: _regionDeserializePropWeb,
+  version: 3,
 );
 
-class _RegionWebAdapter extends IsarWebTypeAdapter<Region> {
-  const _RegionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<Region> collection, Region object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'id', object.id);
-    IsarNative.jsObjectSet(jsObj, 'name', object.name);
-    return jsObj;
+int? _regionGetId(Region object) {
+  if (object.id == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.id;
   }
-
-  @override
-  Region deserialize(IsarCollection<Region> collection, dynamic jsObj) {
-    final object = Region();
-    object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-    object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-            as P;
-      case 'name':
-        return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, Region object) {}
 }
 
-class _RegionNativeAdapter extends IsarNativeTypeAdapter<Region> {
-  const _RegionNativeAdapter();
-
-  @override
-  void serialize(IsarCollection<Region> collection, IsarRawObject rawObj,
-      Region object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.name;
-    final _name = IsarBinaryWriter.utf8Encoder.convert(value0);
-    dynamicSize += (_name.length) as int;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _name);
-  }
-
-  @override
-  Region deserialize(IsarCollection<Region> collection, int id,
-      IsarBinaryReader reader, List<int> offsets) {
-    final object = Region();
-    object.id = id;
-    object.name = reader.readString(offsets[0]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readString(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, Region object) {}
+void _regionSetId(Region object, int id) {
+  object.id = id;
 }
+
+List<IsarLinkBase> _regionGetLinks(Region object) {
+  return [];
+}
+
+void _regionSerializeNative(
+    IsarCollection<Region> collection,
+    IsarRawObject rawObj,
+    Region object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.name;
+  final _name = IsarBinaryWriter.utf8Encoder.convert(value0);
+  dynamicSize += (_name.length) as int;
+  final size = staticSize + dynamicSize;
+
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], _name);
+}
+
+Region _regionDeserializeNative(IsarCollection<Region> collection, int id,
+    IsarBinaryReader reader, List<int> offsets) {
+  final object = Region();
+  object.id = id;
+  object.name = reader.readString(offsets[0]);
+  return object;
+}
+
+P _regionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readString(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _regionSerializeWeb(IsarCollection<Region> collection, Region object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'name', object.name);
+  return jsObj;
+}
+
+Region _regionDeserializeWeb(IsarCollection<Region> collection, dynamic jsObj) {
+  final object = Region();
+  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
+  return object;
+}
+
+P _regionDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'id':
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
+          as P;
+    case 'name':
+      return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _regionAttachLinks(IsarCollection col, int id, Region object) {}
 
 extension RegionQueryWhereSort on QueryBuilder<Region, Region, QWhere> {
   QueryBuilder<Region, Region, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension RegionQueryWhere on QueryBuilder<Region, Region, QWhereClause> {
   QueryBuilder<Region, Region, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [id],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: id,
       includeLower: true,
-      upper: [id],
+      upper: id,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<Region, Region, QAfterWhereClause> idNotEqualTo(int id) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [id],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [id],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [id],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [id],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      );
     }
   }
 
-  QueryBuilder<Region, Region, QAfterWhereClause> idGreaterThan(
-    int id, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [id],
-      includeLower: include,
-    ));
+  QueryBuilder<Region, Region, QAfterWhereClause> idGreaterThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: id, includeLower: include),
+    );
   }
 
-  QueryBuilder<Region, Region, QAfterWhereClause> idLessThan(
-    int id, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [id],
-      includeUpper: include,
-    ));
+  QueryBuilder<Region, Region, QAfterWhereClause> idLessThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: id, includeUpper: include),
+    );
   }
 
   QueryBuilder<Region, Region, QAfterWhereClause> idBetween(
@@ -190,11 +172,10 @@ extension RegionQueryWhere on QueryBuilder<Region, Region, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerId],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerId,
       includeLower: includeLower,
-      upper: [upperId],
+      upper: upperId,
       includeUpper: includeUpper,
     ));
   }

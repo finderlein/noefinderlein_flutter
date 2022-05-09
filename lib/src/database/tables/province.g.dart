@@ -6,182 +6,166 @@ part of 'province.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetProvinceCollection on Isar {
-  IsarCollection<Province> get provinces {
-    return getCollection('Province');
-  }
+  IsarCollection<Province> get provinces => getCollection();
 }
 
-final ProvinceSchema = CollectionSchema(
+const ProvinceSchema = CollectionSchema(
   name: 'Province',
   schema:
       '{"name":"Province","idName":"id","properties":[{"name":"name","type":"String"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _ProvinceNativeAdapter(),
-  webAdapter: const _ProvinceWebAdapter(),
   idName: 'id',
   propertyIds: {'name': 0},
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.id == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.id;
-    }
-  },
-  setId: (obj, id) => obj.id = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _provinceGetId,
+  setId: _provinceSetId,
+  getLinks: _provinceGetLinks,
+  attachLinks: _provinceAttachLinks,
+  serializeNative: _provinceSerializeNative,
+  deserializeNative: _provinceDeserializeNative,
+  deserializePropNative: _provinceDeserializePropNative,
+  serializeWeb: _provinceSerializeWeb,
+  deserializeWeb: _provinceDeserializeWeb,
+  deserializePropWeb: _provinceDeserializePropWeb,
+  version: 3,
 );
 
-class _ProvinceWebAdapter extends IsarWebTypeAdapter<Province> {
-  const _ProvinceWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<Province> collection, Province object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'id', object.id);
-    IsarNative.jsObjectSet(jsObj, 'name', object.name);
-    return jsObj;
+int? _provinceGetId(Province object) {
+  if (object.id == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.id;
   }
-
-  @override
-  Province deserialize(IsarCollection<Province> collection, dynamic jsObj) {
-    final object = Province();
-    object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-    object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-            as P;
-      case 'name':
-        return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, Province object) {}
 }
 
-class _ProvinceNativeAdapter extends IsarNativeTypeAdapter<Province> {
-  const _ProvinceNativeAdapter();
-
-  @override
-  void serialize(IsarCollection<Province> collection, IsarRawObject rawObj,
-      Province object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.name;
-    final _name = IsarBinaryWriter.utf8Encoder.convert(value0);
-    dynamicSize += (_name.length) as int;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _name);
-  }
-
-  @override
-  Province deserialize(IsarCollection<Province> collection, int id,
-      IsarBinaryReader reader, List<int> offsets) {
-    final object = Province();
-    object.id = id;
-    object.name = reader.readString(offsets[0]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readString(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, Province object) {}
+void _provinceSetId(Province object, int id) {
+  object.id = id;
 }
+
+List<IsarLinkBase> _provinceGetLinks(Province object) {
+  return [];
+}
+
+void _provinceSerializeNative(
+    IsarCollection<Province> collection,
+    IsarRawObject rawObj,
+    Province object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.name;
+  final _name = IsarBinaryWriter.utf8Encoder.convert(value0);
+  dynamicSize += (_name.length) as int;
+  final size = staticSize + dynamicSize;
+
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], _name);
+}
+
+Province _provinceDeserializeNative(IsarCollection<Province> collection, int id,
+    IsarBinaryReader reader, List<int> offsets) {
+  final object = Province();
+  object.id = id;
+  object.name = reader.readString(offsets[0]);
+  return object;
+}
+
+P _provinceDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readString(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _provinceSerializeWeb(
+    IsarCollection<Province> collection, Province object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'name', object.name);
+  return jsObj;
+}
+
+Province _provinceDeserializeWeb(
+    IsarCollection<Province> collection, dynamic jsObj) {
+  final object = Province();
+  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
+  return object;
+}
+
+P _provinceDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'id':
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
+          as P;
+    case 'name':
+      return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _provinceAttachLinks(IsarCollection col, int id, Province object) {}
 
 extension ProvinceQueryWhereSort on QueryBuilder<Province, Province, QWhere> {
   QueryBuilder<Province, Province, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension ProvinceQueryWhere on QueryBuilder<Province, Province, QWhereClause> {
   QueryBuilder<Province, Province, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [id],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: id,
       includeLower: true,
-      upper: [id],
+      upper: id,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<Province, Province, QAfterWhereClause> idNotEqualTo(int id) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [id],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [id],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [id],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [id],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      );
     }
   }
 
-  QueryBuilder<Province, Province, QAfterWhereClause> idGreaterThan(
-    int id, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [id],
-      includeLower: include,
-    ));
+  QueryBuilder<Province, Province, QAfterWhereClause> idGreaterThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: id, includeLower: include),
+    );
   }
 
-  QueryBuilder<Province, Province, QAfterWhereClause> idLessThan(
-    int id, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [id],
-      includeUpper: include,
-    ));
+  QueryBuilder<Province, Province, QAfterWhereClause> idLessThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: id, includeUpper: include),
+    );
   }
 
   QueryBuilder<Province, Province, QAfterWhereClause> idBetween(
@@ -190,11 +174,10 @@ extension ProvinceQueryWhere on QueryBuilder<Province, Province, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerId],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerId,
       includeLower: includeLower,
-      upper: [upperId],
+      upper: upperId,
       includeUpper: includeUpper,
     ));
   }

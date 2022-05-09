@@ -6,20 +6,16 @@ part of 'location.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetLocationCollection on Isar {
-  IsarCollection<Location> get locations {
-    return getCollection('Location');
-  }
+  IsarCollection<Location> get locations => getCollection();
 }
 
-final LocationSchema = CollectionSchema(
+const LocationSchema = CollectionSchema(
   name: 'Location',
   schema:
       '{"name":"Location","idName":"id","properties":[{"name":"addressCity","type":"String"},{"name":"addressStreet","type":"String"},{"name":"addressZip","type":"String"},{"name":"apiId","type":"Long"},{"name":"badWeather","type":"Bool"},{"name":"bookletNumber","type":"Long"},{"name":"category","type":"Long"},{"name":"changeIndex","type":"Long"},{"name":"changedDate","type":"String"},{"name":"childFriendly","type":"Bool"},{"name":"description","type":"String"},{"name":"dogAllowed","type":"Bool"},{"name":"email","type":"String"},{"name":"entryText","type":"String"},{"name":"favorit","type":"Bool"},{"name":"fax","type":"String"},{"name":"groupsAccepted","type":"Bool"},{"name":"hint","type":"String"},{"name":"latitude","type":"Double"},{"name":"longitude","type":"Double"},{"name":"name","type":"String"},{"name":"openInWinter","type":"Bool"},{"name":"openText","type":"String"},{"name":"province","type":"Long"},{"name":"region","type":"Long"},{"name":"savingsAdult","type":"String"},{"name":"savingsChild","type":"String"},{"name":"searchString","type":"String"},{"name":"strollerFriendly","type":"Bool"},{"name":"tavernNear","type":"Bool"},{"name":"telephone","type":"String"},{"name":"topLocation","type":"Bool"},{"name":"travelDirections","type":"String"},{"name":"website","type":"String"},{"name":"websiteId","type":"Long"},{"name":"wheelchairFriendly","type":"Bool"},{"name":"year","type":"Long"}],"indexes":[{"name":"year","unique":false,"properties":[{"name":"year","type":"Value","caseSensitive":false}]}],"links":[]}',
-  nativeAdapter: const _LocationNativeAdapter(),
-  webAdapter: const _LocationWebAdapter(),
   idName: 'id',
   propertyIds: {
     'addressCity': 0,
@@ -62,577 +58,564 @@ final LocationSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {'year': 0},
-  indexTypes: {
+  indexValueTypes: {
     'year': [
-      NativeIndexType.long,
+      IndexValueType.long,
     ]
   },
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.id == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.id;
-    }
-  },
-  setId: (obj, id) => obj.id = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _locationGetId,
+  setId: _locationSetId,
+  getLinks: _locationGetLinks,
+  attachLinks: _locationAttachLinks,
+  serializeNative: _locationSerializeNative,
+  deserializeNative: _locationDeserializeNative,
+  deserializePropNative: _locationDeserializePropNative,
+  serializeWeb: _locationSerializeWeb,
+  deserializeWeb: _locationDeserializeWeb,
+  deserializePropWeb: _locationDeserializePropWeb,
+  version: 3,
 );
 
-class _LocationWebAdapter extends IsarWebTypeAdapter<Location> {
-  const _LocationWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<Location> collection, Location object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'addressCity', object.addressCity);
-    IsarNative.jsObjectSet(jsObj, 'addressStreet', object.addressStreet);
-    IsarNative.jsObjectSet(jsObj, 'addressZip', object.addressZip);
-    IsarNative.jsObjectSet(jsObj, 'apiId', object.apiId);
-    IsarNative.jsObjectSet(jsObj, 'badWeather', object.badWeather);
-    IsarNative.jsObjectSet(jsObj, 'bookletNumber', object.bookletNumber);
-    IsarNative.jsObjectSet(jsObj, 'category', object.category);
-    IsarNative.jsObjectSet(jsObj, 'changeIndex', object.changeIndex);
-    IsarNative.jsObjectSet(jsObj, 'changedDate', object.changedDate);
-    IsarNative.jsObjectSet(jsObj, 'childFriendly', object.childFriendly);
-    IsarNative.jsObjectSet(jsObj, 'description', object.description);
-    IsarNative.jsObjectSet(jsObj, 'dogAllowed', object.dogAllowed);
-    IsarNative.jsObjectSet(jsObj, 'email', object.email);
-    IsarNative.jsObjectSet(jsObj, 'entryText', object.entryText);
-    IsarNative.jsObjectSet(jsObj, 'favorit', object.favorit);
-    IsarNative.jsObjectSet(jsObj, 'fax', object.fax);
-    IsarNative.jsObjectSet(jsObj, 'groupsAccepted', object.groupsAccepted);
-    IsarNative.jsObjectSet(jsObj, 'hint', object.hint);
-    IsarNative.jsObjectSet(jsObj, 'id', object.id);
-    IsarNative.jsObjectSet(jsObj, 'latitude', object.latitude);
-    IsarNative.jsObjectSet(jsObj, 'longitude', object.longitude);
-    IsarNative.jsObjectSet(jsObj, 'name', object.name);
-    IsarNative.jsObjectSet(jsObj, 'openInWinter', object.openInWinter);
-    IsarNative.jsObjectSet(jsObj, 'openText', object.openText);
-    IsarNative.jsObjectSet(jsObj, 'province', object.province);
-    IsarNative.jsObjectSet(jsObj, 'region', object.region);
-    IsarNative.jsObjectSet(jsObj, 'savingsAdult', object.savingsAdult);
-    IsarNative.jsObjectSet(jsObj, 'savingsChild', object.savingsChild);
-    IsarNative.jsObjectSet(jsObj, 'searchString', object.searchString);
-    IsarNative.jsObjectSet(jsObj, 'strollerFriendly', object.strollerFriendly);
-    IsarNative.jsObjectSet(jsObj, 'tavernNear', object.tavernNear);
-    IsarNative.jsObjectSet(jsObj, 'telephone', object.telephone);
-    IsarNative.jsObjectSet(jsObj, 'topLocation', object.topLocation);
-    IsarNative.jsObjectSet(jsObj, 'travelDirections', object.travelDirections);
-    IsarNative.jsObjectSet(jsObj, 'website', object.website);
-    IsarNative.jsObjectSet(jsObj, 'websiteId', object.websiteId);
-    IsarNative.jsObjectSet(
-        jsObj, 'wheelchairFriendly', object.wheelchairFriendly);
-    IsarNative.jsObjectSet(jsObj, 'year', object.year);
-    return jsObj;
+int? _locationGetId(Location object) {
+  if (object.id == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.id;
   }
-
-  @override
-  Location deserialize(IsarCollection<Location> collection, dynamic jsObj) {
-    final object = Location();
-    object.addressCity = IsarNative.jsObjectGet(jsObj, 'addressCity') ?? '';
-    object.addressStreet = IsarNative.jsObjectGet(jsObj, 'addressStreet') ?? '';
-    object.addressZip = IsarNative.jsObjectGet(jsObj, 'addressZip') ?? '';
-    object.apiId =
-        IsarNative.jsObjectGet(jsObj, 'apiId') ?? double.negativeInfinity;
-    object.badWeather = IsarNative.jsObjectGet(jsObj, 'badWeather') ?? false;
-    object.bookletNumber = IsarNative.jsObjectGet(jsObj, 'bookletNumber') ??
-        double.negativeInfinity;
-    object.category =
-        IsarNative.jsObjectGet(jsObj, 'category') ?? double.negativeInfinity;
-    object.changeIndex =
-        IsarNative.jsObjectGet(jsObj, 'changeIndex') ?? double.negativeInfinity;
-    object.changedDate = IsarNative.jsObjectGet(jsObj, 'changedDate') ?? '';
-    object.childFriendly =
-        IsarNative.jsObjectGet(jsObj, 'childFriendly') ?? false;
-    object.description = IsarNative.jsObjectGet(jsObj, 'description') ?? '';
-    object.dogAllowed = IsarNative.jsObjectGet(jsObj, 'dogAllowed') ?? false;
-    object.email = IsarNative.jsObjectGet(jsObj, 'email') ?? '';
-    object.entryText = IsarNative.jsObjectGet(jsObj, 'entryText') ?? '';
-    object.favorit = IsarNative.jsObjectGet(jsObj, 'favorit') ?? false;
-    object.fax = IsarNative.jsObjectGet(jsObj, 'fax') ?? '';
-    object.groupsAccepted =
-        IsarNative.jsObjectGet(jsObj, 'groupsAccepted') ?? false;
-    object.hint = IsarNative.jsObjectGet(jsObj, 'hint') ?? '';
-    object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
-    object.latitude =
-        IsarNative.jsObjectGet(jsObj, 'latitude') ?? double.negativeInfinity;
-    object.longitude =
-        IsarNative.jsObjectGet(jsObj, 'longitude') ?? double.negativeInfinity;
-    object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
-    object.openInWinter =
-        IsarNative.jsObjectGet(jsObj, 'openInWinter') ?? false;
-    object.openText = IsarNative.jsObjectGet(jsObj, 'openText') ?? '';
-    object.province =
-        IsarNative.jsObjectGet(jsObj, 'province') ?? double.negativeInfinity;
-    object.region =
-        IsarNative.jsObjectGet(jsObj, 'region') ?? double.negativeInfinity;
-    object.savingsAdult = IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '';
-    object.savingsChild = IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '';
-    object.searchString = IsarNative.jsObjectGet(jsObj, 'searchString') ?? '';
-    object.strollerFriendly =
-        IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false;
-    object.tavernNear = IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false;
-    object.telephone = IsarNative.jsObjectGet(jsObj, 'telephone') ?? '';
-    object.topLocation = IsarNative.jsObjectGet(jsObj, 'topLocation') ?? false;
-    object.travelDirections =
-        IsarNative.jsObjectGet(jsObj, 'travelDirections') ?? '';
-    object.website = IsarNative.jsObjectGet(jsObj, 'website') ?? '';
-    object.websiteId =
-        IsarNative.jsObjectGet(jsObj, 'websiteId') ?? double.negativeInfinity;
-    object.wheelchairFriendly =
-        IsarNative.jsObjectGet(jsObj, 'wheelchairFriendly') ?? false;
-    object.year =
-        IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity;
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'addressCity':
-        return (IsarNative.jsObjectGet(jsObj, 'addressCity') ?? '') as P;
-      case 'addressStreet':
-        return (IsarNative.jsObjectGet(jsObj, 'addressStreet') ?? '') as P;
-      case 'addressZip':
-        return (IsarNative.jsObjectGet(jsObj, 'addressZip') ?? '') as P;
-      case 'apiId':
-        return (IsarNative.jsObjectGet(jsObj, 'apiId') ??
-            double.negativeInfinity) as P;
-      case 'badWeather':
-        return (IsarNative.jsObjectGet(jsObj, 'badWeather') ?? false) as P;
-      case 'bookletNumber':
-        return (IsarNative.jsObjectGet(jsObj, 'bookletNumber') ??
-            double.negativeInfinity) as P;
-      case 'category':
-        return (IsarNative.jsObjectGet(jsObj, 'category') ??
-            double.negativeInfinity) as P;
-      case 'changeIndex':
-        return (IsarNative.jsObjectGet(jsObj, 'changeIndex') ??
-            double.negativeInfinity) as P;
-      case 'changedDate':
-        return (IsarNative.jsObjectGet(jsObj, 'changedDate') ?? '') as P;
-      case 'childFriendly':
-        return (IsarNative.jsObjectGet(jsObj, 'childFriendly') ?? false) as P;
-      case 'description':
-        return (IsarNative.jsObjectGet(jsObj, 'description') ?? '') as P;
-      case 'dogAllowed':
-        return (IsarNative.jsObjectGet(jsObj, 'dogAllowed') ?? false) as P;
-      case 'email':
-        return (IsarNative.jsObjectGet(jsObj, 'email') ?? '') as P;
-      case 'entryText':
-        return (IsarNative.jsObjectGet(jsObj, 'entryText') ?? '') as P;
-      case 'favorit':
-        return (IsarNative.jsObjectGet(jsObj, 'favorit') ?? false) as P;
-      case 'fax':
-        return (IsarNative.jsObjectGet(jsObj, 'fax') ?? '') as P;
-      case 'groupsAccepted':
-        return (IsarNative.jsObjectGet(jsObj, 'groupsAccepted') ?? false) as P;
-      case 'hint':
-        return (IsarNative.jsObjectGet(jsObj, 'hint') ?? '') as P;
-      case 'id':
-        return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
-            as P;
-      case 'latitude':
-        return (IsarNative.jsObjectGet(jsObj, 'latitude') ??
-            double.negativeInfinity) as P;
-      case 'longitude':
-        return (IsarNative.jsObjectGet(jsObj, 'longitude') ??
-            double.negativeInfinity) as P;
-      case 'name':
-        return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
-      case 'openInWinter':
-        return (IsarNative.jsObjectGet(jsObj, 'openInWinter') ?? false) as P;
-      case 'openText':
-        return (IsarNative.jsObjectGet(jsObj, 'openText') ?? '') as P;
-      case 'province':
-        return (IsarNative.jsObjectGet(jsObj, 'province') ??
-            double.negativeInfinity) as P;
-      case 'region':
-        return (IsarNative.jsObjectGet(jsObj, 'region') ??
-            double.negativeInfinity) as P;
-      case 'savingsAdult':
-        return (IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '') as P;
-      case 'savingsChild':
-        return (IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '') as P;
-      case 'searchString':
-        return (IsarNative.jsObjectGet(jsObj, 'searchString') ?? '') as P;
-      case 'strollerFriendly':
-        return (IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false)
-            as P;
-      case 'tavernNear':
-        return (IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false) as P;
-      case 'telephone':
-        return (IsarNative.jsObjectGet(jsObj, 'telephone') ?? '') as P;
-      case 'topLocation':
-        return (IsarNative.jsObjectGet(jsObj, 'topLocation') ?? false) as P;
-      case 'travelDirections':
-        return (IsarNative.jsObjectGet(jsObj, 'travelDirections') ?? '') as P;
-      case 'website':
-        return (IsarNative.jsObjectGet(jsObj, 'website') ?? '') as P;
-      case 'websiteId':
-        return (IsarNative.jsObjectGet(jsObj, 'websiteId') ??
-            double.negativeInfinity) as P;
-      case 'wheelchairFriendly':
-        return (IsarNative.jsObjectGet(jsObj, 'wheelchairFriendly') ?? false)
-            as P;
-      case 'year':
-        return (IsarNative.jsObjectGet(jsObj, 'year') ??
-            double.negativeInfinity) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, Location object) {}
 }
 
-class _LocationNativeAdapter extends IsarNativeTypeAdapter<Location> {
-  const _LocationNativeAdapter();
-
-  @override
-  void serialize(IsarCollection<Location> collection, IsarRawObject rawObj,
-      Location object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.addressCity;
-    final _addressCity = IsarBinaryWriter.utf8Encoder.convert(value0);
-    dynamicSize += (_addressCity.length) as int;
-    final value1 = object.addressStreet;
-    final _addressStreet = IsarBinaryWriter.utf8Encoder.convert(value1);
-    dynamicSize += (_addressStreet.length) as int;
-    final value2 = object.addressZip;
-    final _addressZip = IsarBinaryWriter.utf8Encoder.convert(value2);
-    dynamicSize += (_addressZip.length) as int;
-    final value3 = object.apiId;
-    final _apiId = value3;
-    final value4 = object.badWeather;
-    final _badWeather = value4;
-    final value5 = object.bookletNumber;
-    final _bookletNumber = value5;
-    final value6 = object.category;
-    final _category = value6;
-    final value7 = object.changeIndex;
-    final _changeIndex = value7;
-    final value8 = object.changedDate;
-    final _changedDate = IsarBinaryWriter.utf8Encoder.convert(value8);
-    dynamicSize += (_changedDate.length) as int;
-    final value9 = object.childFriendly;
-    final _childFriendly = value9;
-    final value10 = object.description;
-    final _description = IsarBinaryWriter.utf8Encoder.convert(value10);
-    dynamicSize += (_description.length) as int;
-    final value11 = object.dogAllowed;
-    final _dogAllowed = value11;
-    final value12 = object.email;
-    final _email = IsarBinaryWriter.utf8Encoder.convert(value12);
-    dynamicSize += (_email.length) as int;
-    final value13 = object.entryText;
-    final _entryText = IsarBinaryWriter.utf8Encoder.convert(value13);
-    dynamicSize += (_entryText.length) as int;
-    final value14 = object.favorit;
-    final _favorit = value14;
-    final value15 = object.fax;
-    final _fax = IsarBinaryWriter.utf8Encoder.convert(value15);
-    dynamicSize += (_fax.length) as int;
-    final value16 = object.groupsAccepted;
-    final _groupsAccepted = value16;
-    final value17 = object.hint;
-    final _hint = IsarBinaryWriter.utf8Encoder.convert(value17);
-    dynamicSize += (_hint.length) as int;
-    final value18 = object.latitude;
-    final _latitude = value18;
-    final value19 = object.longitude;
-    final _longitude = value19;
-    final value20 = object.name;
-    final _name = IsarBinaryWriter.utf8Encoder.convert(value20);
-    dynamicSize += (_name.length) as int;
-    final value21 = object.openInWinter;
-    final _openInWinter = value21;
-    final value22 = object.openText;
-    final _openText = IsarBinaryWriter.utf8Encoder.convert(value22);
-    dynamicSize += (_openText.length) as int;
-    final value23 = object.province;
-    final _province = value23;
-    final value24 = object.region;
-    final _region = value24;
-    final value25 = object.savingsAdult;
-    final _savingsAdult = IsarBinaryWriter.utf8Encoder.convert(value25);
-    dynamicSize += (_savingsAdult.length) as int;
-    final value26 = object.savingsChild;
-    final _savingsChild = IsarBinaryWriter.utf8Encoder.convert(value26);
-    dynamicSize += (_savingsChild.length) as int;
-    final value27 = object.searchString;
-    final _searchString = IsarBinaryWriter.utf8Encoder.convert(value27);
-    dynamicSize += (_searchString.length) as int;
-    final value28 = object.strollerFriendly;
-    final _strollerFriendly = value28;
-    final value29 = object.tavernNear;
-    final _tavernNear = value29;
-    final value30 = object.telephone;
-    final _telephone = IsarBinaryWriter.utf8Encoder.convert(value30);
-    dynamicSize += (_telephone.length) as int;
-    final value31 = object.topLocation;
-    final _topLocation = value31;
-    final value32 = object.travelDirections;
-    final _travelDirections = IsarBinaryWriter.utf8Encoder.convert(value32);
-    dynamicSize += (_travelDirections.length) as int;
-    final value33 = object.website;
-    final _website = IsarBinaryWriter.utf8Encoder.convert(value33);
-    dynamicSize += (_website.length) as int;
-    final value34 = object.websiteId;
-    final _websiteId = value34;
-    final value35 = object.wheelchairFriendly;
-    final _wheelchairFriendly = value35;
-    final value36 = object.year;
-    final _year = value36;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _addressCity);
-    writer.writeBytes(offsets[1], _addressStreet);
-    writer.writeBytes(offsets[2], _addressZip);
-    writer.writeLong(offsets[3], _apiId);
-    writer.writeBool(offsets[4], _badWeather);
-    writer.writeLong(offsets[5], _bookletNumber);
-    writer.writeLong(offsets[6], _category);
-    writer.writeLong(offsets[7], _changeIndex);
-    writer.writeBytes(offsets[8], _changedDate);
-    writer.writeBool(offsets[9], _childFriendly);
-    writer.writeBytes(offsets[10], _description);
-    writer.writeBool(offsets[11], _dogAllowed);
-    writer.writeBytes(offsets[12], _email);
-    writer.writeBytes(offsets[13], _entryText);
-    writer.writeBool(offsets[14], _favorit);
-    writer.writeBytes(offsets[15], _fax);
-    writer.writeBool(offsets[16], _groupsAccepted);
-    writer.writeBytes(offsets[17], _hint);
-    writer.writeDouble(offsets[18], _latitude);
-    writer.writeDouble(offsets[19], _longitude);
-    writer.writeBytes(offsets[20], _name);
-    writer.writeBool(offsets[21], _openInWinter);
-    writer.writeBytes(offsets[22], _openText);
-    writer.writeLong(offsets[23], _province);
-    writer.writeLong(offsets[24], _region);
-    writer.writeBytes(offsets[25], _savingsAdult);
-    writer.writeBytes(offsets[26], _savingsChild);
-    writer.writeBytes(offsets[27], _searchString);
-    writer.writeBool(offsets[28], _strollerFriendly);
-    writer.writeBool(offsets[29], _tavernNear);
-    writer.writeBytes(offsets[30], _telephone);
-    writer.writeBool(offsets[31], _topLocation);
-    writer.writeBytes(offsets[32], _travelDirections);
-    writer.writeBytes(offsets[33], _website);
-    writer.writeLong(offsets[34], _websiteId);
-    writer.writeBool(offsets[35], _wheelchairFriendly);
-    writer.writeLong(offsets[36], _year);
-  }
-
-  @override
-  Location deserialize(IsarCollection<Location> collection, int id,
-      IsarBinaryReader reader, List<int> offsets) {
-    final object = Location();
-    object.addressCity = reader.readString(offsets[0]);
-    object.addressStreet = reader.readString(offsets[1]);
-    object.addressZip = reader.readString(offsets[2]);
-    object.apiId = reader.readLong(offsets[3]);
-    object.badWeather = reader.readBool(offsets[4]);
-    object.bookletNumber = reader.readLong(offsets[5]);
-    object.category = reader.readLong(offsets[6]);
-    object.changeIndex = reader.readLong(offsets[7]);
-    object.changedDate = reader.readString(offsets[8]);
-    object.childFriendly = reader.readBool(offsets[9]);
-    object.description = reader.readString(offsets[10]);
-    object.dogAllowed = reader.readBool(offsets[11]);
-    object.email = reader.readString(offsets[12]);
-    object.entryText = reader.readString(offsets[13]);
-    object.favorit = reader.readBool(offsets[14]);
-    object.fax = reader.readString(offsets[15]);
-    object.groupsAccepted = reader.readBool(offsets[16]);
-    object.hint = reader.readString(offsets[17]);
-    object.id = id;
-    object.latitude = reader.readDouble(offsets[18]);
-    object.longitude = reader.readDouble(offsets[19]);
-    object.name = reader.readString(offsets[20]);
-    object.openInWinter = reader.readBool(offsets[21]);
-    object.openText = reader.readString(offsets[22]);
-    object.province = reader.readLong(offsets[23]);
-    object.region = reader.readLong(offsets[24]);
-    object.savingsAdult = reader.readString(offsets[25]);
-    object.savingsChild = reader.readString(offsets[26]);
-    object.searchString = reader.readString(offsets[27]);
-    object.strollerFriendly = reader.readBool(offsets[28]);
-    object.tavernNear = reader.readBool(offsets[29]);
-    object.telephone = reader.readString(offsets[30]);
-    object.topLocation = reader.readBool(offsets[31]);
-    object.travelDirections = reader.readString(offsets[32]);
-    object.website = reader.readString(offsets[33]);
-    object.websiteId = reader.readLong(offsets[34]);
-    object.wheelchairFriendly = reader.readBool(offsets[35]);
-    object.year = reader.readLong(offsets[36]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readString(offset)) as P;
-      case 1:
-        return (reader.readString(offset)) as P;
-      case 2:
-        return (reader.readString(offset)) as P;
-      case 3:
-        return (reader.readLong(offset)) as P;
-      case 4:
-        return (reader.readBool(offset)) as P;
-      case 5:
-        return (reader.readLong(offset)) as P;
-      case 6:
-        return (reader.readLong(offset)) as P;
-      case 7:
-        return (reader.readLong(offset)) as P;
-      case 8:
-        return (reader.readString(offset)) as P;
-      case 9:
-        return (reader.readBool(offset)) as P;
-      case 10:
-        return (reader.readString(offset)) as P;
-      case 11:
-        return (reader.readBool(offset)) as P;
-      case 12:
-        return (reader.readString(offset)) as P;
-      case 13:
-        return (reader.readString(offset)) as P;
-      case 14:
-        return (reader.readBool(offset)) as P;
-      case 15:
-        return (reader.readString(offset)) as P;
-      case 16:
-        return (reader.readBool(offset)) as P;
-      case 17:
-        return (reader.readString(offset)) as P;
-      case 18:
-        return (reader.readDouble(offset)) as P;
-      case 19:
-        return (reader.readDouble(offset)) as P;
-      case 20:
-        return (reader.readString(offset)) as P;
-      case 21:
-        return (reader.readBool(offset)) as P;
-      case 22:
-        return (reader.readString(offset)) as P;
-      case 23:
-        return (reader.readLong(offset)) as P;
-      case 24:
-        return (reader.readLong(offset)) as P;
-      case 25:
-        return (reader.readString(offset)) as P;
-      case 26:
-        return (reader.readString(offset)) as P;
-      case 27:
-        return (reader.readString(offset)) as P;
-      case 28:
-        return (reader.readBool(offset)) as P;
-      case 29:
-        return (reader.readBool(offset)) as P;
-      case 30:
-        return (reader.readString(offset)) as P;
-      case 31:
-        return (reader.readBool(offset)) as P;
-      case 32:
-        return (reader.readString(offset)) as P;
-      case 33:
-        return (reader.readString(offset)) as P;
-      case 34:
-        return (reader.readLong(offset)) as P;
-      case 35:
-        return (reader.readBool(offset)) as P;
-      case 36:
-        return (reader.readLong(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, Location object) {}
+void _locationSetId(Location object, int id) {
+  object.id = id;
 }
+
+List<IsarLinkBase> _locationGetLinks(Location object) {
+  return [];
+}
+
+void _locationSerializeNative(
+    IsarCollection<Location> collection,
+    IsarRawObject rawObj,
+    Location object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.addressCity;
+  final _addressCity = IsarBinaryWriter.utf8Encoder.convert(value0);
+  dynamicSize += (_addressCity.length) as int;
+  final value1 = object.addressStreet;
+  final _addressStreet = IsarBinaryWriter.utf8Encoder.convert(value1);
+  dynamicSize += (_addressStreet.length) as int;
+  final value2 = object.addressZip;
+  final _addressZip = IsarBinaryWriter.utf8Encoder.convert(value2);
+  dynamicSize += (_addressZip.length) as int;
+  final value3 = object.apiId;
+  final _apiId = value3;
+  final value4 = object.badWeather;
+  final _badWeather = value4;
+  final value5 = object.bookletNumber;
+  final _bookletNumber = value5;
+  final value6 = object.category;
+  final _category = value6;
+  final value7 = object.changeIndex;
+  final _changeIndex = value7;
+  final value8 = object.changedDate;
+  final _changedDate = IsarBinaryWriter.utf8Encoder.convert(value8);
+  dynamicSize += (_changedDate.length) as int;
+  final value9 = object.childFriendly;
+  final _childFriendly = value9;
+  final value10 = object.description;
+  final _description = IsarBinaryWriter.utf8Encoder.convert(value10);
+  dynamicSize += (_description.length) as int;
+  final value11 = object.dogAllowed;
+  final _dogAllowed = value11;
+  final value12 = object.email;
+  final _email = IsarBinaryWriter.utf8Encoder.convert(value12);
+  dynamicSize += (_email.length) as int;
+  final value13 = object.entryText;
+  final _entryText = IsarBinaryWriter.utf8Encoder.convert(value13);
+  dynamicSize += (_entryText.length) as int;
+  final value14 = object.favorit;
+  final _favorit = value14;
+  final value15 = object.fax;
+  final _fax = IsarBinaryWriter.utf8Encoder.convert(value15);
+  dynamicSize += (_fax.length) as int;
+  final value16 = object.groupsAccepted;
+  final _groupsAccepted = value16;
+  final value17 = object.hint;
+  final _hint = IsarBinaryWriter.utf8Encoder.convert(value17);
+  dynamicSize += (_hint.length) as int;
+  final value18 = object.latitude;
+  final _latitude = value18;
+  final value19 = object.longitude;
+  final _longitude = value19;
+  final value20 = object.name;
+  final _name = IsarBinaryWriter.utf8Encoder.convert(value20);
+  dynamicSize += (_name.length) as int;
+  final value21 = object.openInWinter;
+  final _openInWinter = value21;
+  final value22 = object.openText;
+  final _openText = IsarBinaryWriter.utf8Encoder.convert(value22);
+  dynamicSize += (_openText.length) as int;
+  final value23 = object.province;
+  final _province = value23;
+  final value24 = object.region;
+  final _region = value24;
+  final value25 = object.savingsAdult;
+  final _savingsAdult = IsarBinaryWriter.utf8Encoder.convert(value25);
+  dynamicSize += (_savingsAdult.length) as int;
+  final value26 = object.savingsChild;
+  final _savingsChild = IsarBinaryWriter.utf8Encoder.convert(value26);
+  dynamicSize += (_savingsChild.length) as int;
+  final value27 = object.searchString;
+  final _searchString = IsarBinaryWriter.utf8Encoder.convert(value27);
+  dynamicSize += (_searchString.length) as int;
+  final value28 = object.strollerFriendly;
+  final _strollerFriendly = value28;
+  final value29 = object.tavernNear;
+  final _tavernNear = value29;
+  final value30 = object.telephone;
+  final _telephone = IsarBinaryWriter.utf8Encoder.convert(value30);
+  dynamicSize += (_telephone.length) as int;
+  final value31 = object.topLocation;
+  final _topLocation = value31;
+  final value32 = object.travelDirections;
+  final _travelDirections = IsarBinaryWriter.utf8Encoder.convert(value32);
+  dynamicSize += (_travelDirections.length) as int;
+  final value33 = object.website;
+  final _website = IsarBinaryWriter.utf8Encoder.convert(value33);
+  dynamicSize += (_website.length) as int;
+  final value34 = object.websiteId;
+  final _websiteId = value34;
+  final value35 = object.wheelchairFriendly;
+  final _wheelchairFriendly = value35;
+  final value36 = object.year;
+  final _year = value36;
+  final size = staticSize + dynamicSize;
+
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], _addressCity);
+  writer.writeBytes(offsets[1], _addressStreet);
+  writer.writeBytes(offsets[2], _addressZip);
+  writer.writeLong(offsets[3], _apiId);
+  writer.writeBool(offsets[4], _badWeather);
+  writer.writeLong(offsets[5], _bookletNumber);
+  writer.writeLong(offsets[6], _category);
+  writer.writeLong(offsets[7], _changeIndex);
+  writer.writeBytes(offsets[8], _changedDate);
+  writer.writeBool(offsets[9], _childFriendly);
+  writer.writeBytes(offsets[10], _description);
+  writer.writeBool(offsets[11], _dogAllowed);
+  writer.writeBytes(offsets[12], _email);
+  writer.writeBytes(offsets[13], _entryText);
+  writer.writeBool(offsets[14], _favorit);
+  writer.writeBytes(offsets[15], _fax);
+  writer.writeBool(offsets[16], _groupsAccepted);
+  writer.writeBytes(offsets[17], _hint);
+  writer.writeDouble(offsets[18], _latitude);
+  writer.writeDouble(offsets[19], _longitude);
+  writer.writeBytes(offsets[20], _name);
+  writer.writeBool(offsets[21], _openInWinter);
+  writer.writeBytes(offsets[22], _openText);
+  writer.writeLong(offsets[23], _province);
+  writer.writeLong(offsets[24], _region);
+  writer.writeBytes(offsets[25], _savingsAdult);
+  writer.writeBytes(offsets[26], _savingsChild);
+  writer.writeBytes(offsets[27], _searchString);
+  writer.writeBool(offsets[28], _strollerFriendly);
+  writer.writeBool(offsets[29], _tavernNear);
+  writer.writeBytes(offsets[30], _telephone);
+  writer.writeBool(offsets[31], _topLocation);
+  writer.writeBytes(offsets[32], _travelDirections);
+  writer.writeBytes(offsets[33], _website);
+  writer.writeLong(offsets[34], _websiteId);
+  writer.writeBool(offsets[35], _wheelchairFriendly);
+  writer.writeLong(offsets[36], _year);
+}
+
+Location _locationDeserializeNative(IsarCollection<Location> collection, int id,
+    IsarBinaryReader reader, List<int> offsets) {
+  final object = Location();
+  object.addressCity = reader.readString(offsets[0]);
+  object.addressStreet = reader.readString(offsets[1]);
+  object.addressZip = reader.readString(offsets[2]);
+  object.apiId = reader.readLong(offsets[3]);
+  object.badWeather = reader.readBool(offsets[4]);
+  object.bookletNumber = reader.readLong(offsets[5]);
+  object.category = reader.readLong(offsets[6]);
+  object.changeIndex = reader.readLong(offsets[7]);
+  object.changedDate = reader.readString(offsets[8]);
+  object.childFriendly = reader.readBool(offsets[9]);
+  object.description = reader.readString(offsets[10]);
+  object.dogAllowed = reader.readBool(offsets[11]);
+  object.email = reader.readString(offsets[12]);
+  object.entryText = reader.readString(offsets[13]);
+  object.favorit = reader.readBool(offsets[14]);
+  object.fax = reader.readString(offsets[15]);
+  object.groupsAccepted = reader.readBool(offsets[16]);
+  object.hint = reader.readString(offsets[17]);
+  object.id = id;
+  object.latitude = reader.readDouble(offsets[18]);
+  object.longitude = reader.readDouble(offsets[19]);
+  object.name = reader.readString(offsets[20]);
+  object.openInWinter = reader.readBool(offsets[21]);
+  object.openText = reader.readString(offsets[22]);
+  object.province = reader.readLong(offsets[23]);
+  object.region = reader.readLong(offsets[24]);
+  object.savingsAdult = reader.readString(offsets[25]);
+  object.savingsChild = reader.readString(offsets[26]);
+  object.searchString = reader.readString(offsets[27]);
+  object.strollerFriendly = reader.readBool(offsets[28]);
+  object.tavernNear = reader.readBool(offsets[29]);
+  object.telephone = reader.readString(offsets[30]);
+  object.topLocation = reader.readBool(offsets[31]);
+  object.travelDirections = reader.readString(offsets[32]);
+  object.website = reader.readString(offsets[33]);
+  object.websiteId = reader.readLong(offsets[34]);
+  object.wheelchairFriendly = reader.readBool(offsets[35]);
+  object.year = reader.readLong(offsets[36]);
+  return object;
+}
+
+P _locationDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
+    case 6:
+      return (reader.readLong(offset)) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
+      return (reader.readString(offset)) as P;
+    case 9:
+      return (reader.readBool(offset)) as P;
+    case 10:
+      return (reader.readString(offset)) as P;
+    case 11:
+      return (reader.readBool(offset)) as P;
+    case 12:
+      return (reader.readString(offset)) as P;
+    case 13:
+      return (reader.readString(offset)) as P;
+    case 14:
+      return (reader.readBool(offset)) as P;
+    case 15:
+      return (reader.readString(offset)) as P;
+    case 16:
+      return (reader.readBool(offset)) as P;
+    case 17:
+      return (reader.readString(offset)) as P;
+    case 18:
+      return (reader.readDouble(offset)) as P;
+    case 19:
+      return (reader.readDouble(offset)) as P;
+    case 20:
+      return (reader.readString(offset)) as P;
+    case 21:
+      return (reader.readBool(offset)) as P;
+    case 22:
+      return (reader.readString(offset)) as P;
+    case 23:
+      return (reader.readLong(offset)) as P;
+    case 24:
+      return (reader.readLong(offset)) as P;
+    case 25:
+      return (reader.readString(offset)) as P;
+    case 26:
+      return (reader.readString(offset)) as P;
+    case 27:
+      return (reader.readString(offset)) as P;
+    case 28:
+      return (reader.readBool(offset)) as P;
+    case 29:
+      return (reader.readBool(offset)) as P;
+    case 30:
+      return (reader.readString(offset)) as P;
+    case 31:
+      return (reader.readBool(offset)) as P;
+    case 32:
+      return (reader.readString(offset)) as P;
+    case 33:
+      return (reader.readString(offset)) as P;
+    case 34:
+      return (reader.readLong(offset)) as P;
+    case 35:
+      return (reader.readBool(offset)) as P;
+    case 36:
+      return (reader.readLong(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _locationSerializeWeb(
+    IsarCollection<Location> collection, Location object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'addressCity', object.addressCity);
+  IsarNative.jsObjectSet(jsObj, 'addressStreet', object.addressStreet);
+  IsarNative.jsObjectSet(jsObj, 'addressZip', object.addressZip);
+  IsarNative.jsObjectSet(jsObj, 'apiId', object.apiId);
+  IsarNative.jsObjectSet(jsObj, 'badWeather', object.badWeather);
+  IsarNative.jsObjectSet(jsObj, 'bookletNumber', object.bookletNumber);
+  IsarNative.jsObjectSet(jsObj, 'category', object.category);
+  IsarNative.jsObjectSet(jsObj, 'changeIndex', object.changeIndex);
+  IsarNative.jsObjectSet(jsObj, 'changedDate', object.changedDate);
+  IsarNative.jsObjectSet(jsObj, 'childFriendly', object.childFriendly);
+  IsarNative.jsObjectSet(jsObj, 'description', object.description);
+  IsarNative.jsObjectSet(jsObj, 'dogAllowed', object.dogAllowed);
+  IsarNative.jsObjectSet(jsObj, 'email', object.email);
+  IsarNative.jsObjectSet(jsObj, 'entryText', object.entryText);
+  IsarNative.jsObjectSet(jsObj, 'favorit', object.favorit);
+  IsarNative.jsObjectSet(jsObj, 'fax', object.fax);
+  IsarNative.jsObjectSet(jsObj, 'groupsAccepted', object.groupsAccepted);
+  IsarNative.jsObjectSet(jsObj, 'hint', object.hint);
+  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'latitude', object.latitude);
+  IsarNative.jsObjectSet(jsObj, 'longitude', object.longitude);
+  IsarNative.jsObjectSet(jsObj, 'name', object.name);
+  IsarNative.jsObjectSet(jsObj, 'openInWinter', object.openInWinter);
+  IsarNative.jsObjectSet(jsObj, 'openText', object.openText);
+  IsarNative.jsObjectSet(jsObj, 'province', object.province);
+  IsarNative.jsObjectSet(jsObj, 'region', object.region);
+  IsarNative.jsObjectSet(jsObj, 'savingsAdult', object.savingsAdult);
+  IsarNative.jsObjectSet(jsObj, 'savingsChild', object.savingsChild);
+  IsarNative.jsObjectSet(jsObj, 'searchString', object.searchString);
+  IsarNative.jsObjectSet(jsObj, 'strollerFriendly', object.strollerFriendly);
+  IsarNative.jsObjectSet(jsObj, 'tavernNear', object.tavernNear);
+  IsarNative.jsObjectSet(jsObj, 'telephone', object.telephone);
+  IsarNative.jsObjectSet(jsObj, 'topLocation', object.topLocation);
+  IsarNative.jsObjectSet(jsObj, 'travelDirections', object.travelDirections);
+  IsarNative.jsObjectSet(jsObj, 'website', object.website);
+  IsarNative.jsObjectSet(jsObj, 'websiteId', object.websiteId);
+  IsarNative.jsObjectSet(
+      jsObj, 'wheelchairFriendly', object.wheelchairFriendly);
+  IsarNative.jsObjectSet(jsObj, 'year', object.year);
+  return jsObj;
+}
+
+Location _locationDeserializeWeb(
+    IsarCollection<Location> collection, dynamic jsObj) {
+  final object = Location();
+  object.addressCity = IsarNative.jsObjectGet(jsObj, 'addressCity') ?? '';
+  object.addressStreet = IsarNative.jsObjectGet(jsObj, 'addressStreet') ?? '';
+  object.addressZip = IsarNative.jsObjectGet(jsObj, 'addressZip') ?? '';
+  object.apiId =
+      IsarNative.jsObjectGet(jsObj, 'apiId') ?? double.negativeInfinity;
+  object.badWeather = IsarNative.jsObjectGet(jsObj, 'badWeather') ?? false;
+  object.bookletNumber =
+      IsarNative.jsObjectGet(jsObj, 'bookletNumber') ?? double.negativeInfinity;
+  object.category =
+      IsarNative.jsObjectGet(jsObj, 'category') ?? double.negativeInfinity;
+  object.changeIndex =
+      IsarNative.jsObjectGet(jsObj, 'changeIndex') ?? double.negativeInfinity;
+  object.changedDate = IsarNative.jsObjectGet(jsObj, 'changedDate') ?? '';
+  object.childFriendly =
+      IsarNative.jsObjectGet(jsObj, 'childFriendly') ?? false;
+  object.description = IsarNative.jsObjectGet(jsObj, 'description') ?? '';
+  object.dogAllowed = IsarNative.jsObjectGet(jsObj, 'dogAllowed') ?? false;
+  object.email = IsarNative.jsObjectGet(jsObj, 'email') ?? '';
+  object.entryText = IsarNative.jsObjectGet(jsObj, 'entryText') ?? '';
+  object.favorit = IsarNative.jsObjectGet(jsObj, 'favorit') ?? false;
+  object.fax = IsarNative.jsObjectGet(jsObj, 'fax') ?? '';
+  object.groupsAccepted =
+      IsarNative.jsObjectGet(jsObj, 'groupsAccepted') ?? false;
+  object.hint = IsarNative.jsObjectGet(jsObj, 'hint') ?? '';
+  object.id = IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity;
+  object.latitude =
+      IsarNative.jsObjectGet(jsObj, 'latitude') ?? double.negativeInfinity;
+  object.longitude =
+      IsarNative.jsObjectGet(jsObj, 'longitude') ?? double.negativeInfinity;
+  object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
+  object.openInWinter = IsarNative.jsObjectGet(jsObj, 'openInWinter') ?? false;
+  object.openText = IsarNative.jsObjectGet(jsObj, 'openText') ?? '';
+  object.province =
+      IsarNative.jsObjectGet(jsObj, 'province') ?? double.negativeInfinity;
+  object.region =
+      IsarNative.jsObjectGet(jsObj, 'region') ?? double.negativeInfinity;
+  object.savingsAdult = IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '';
+  object.savingsChild = IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '';
+  object.searchString = IsarNative.jsObjectGet(jsObj, 'searchString') ?? '';
+  object.strollerFriendly =
+      IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false;
+  object.tavernNear = IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false;
+  object.telephone = IsarNative.jsObjectGet(jsObj, 'telephone') ?? '';
+  object.topLocation = IsarNative.jsObjectGet(jsObj, 'topLocation') ?? false;
+  object.travelDirections =
+      IsarNative.jsObjectGet(jsObj, 'travelDirections') ?? '';
+  object.website = IsarNative.jsObjectGet(jsObj, 'website') ?? '';
+  object.websiteId =
+      IsarNative.jsObjectGet(jsObj, 'websiteId') ?? double.negativeInfinity;
+  object.wheelchairFriendly =
+      IsarNative.jsObjectGet(jsObj, 'wheelchairFriendly') ?? false;
+  object.year =
+      IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity;
+  return object;
+}
+
+P _locationDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'addressCity':
+      return (IsarNative.jsObjectGet(jsObj, 'addressCity') ?? '') as P;
+    case 'addressStreet':
+      return (IsarNative.jsObjectGet(jsObj, 'addressStreet') ?? '') as P;
+    case 'addressZip':
+      return (IsarNative.jsObjectGet(jsObj, 'addressZip') ?? '') as P;
+    case 'apiId':
+      return (IsarNative.jsObjectGet(jsObj, 'apiId') ?? double.negativeInfinity)
+          as P;
+    case 'badWeather':
+      return (IsarNative.jsObjectGet(jsObj, 'badWeather') ?? false) as P;
+    case 'bookletNumber':
+      return (IsarNative.jsObjectGet(jsObj, 'bookletNumber') ??
+          double.negativeInfinity) as P;
+    case 'category':
+      return (IsarNative.jsObjectGet(jsObj, 'category') ??
+          double.negativeInfinity) as P;
+    case 'changeIndex':
+      return (IsarNative.jsObjectGet(jsObj, 'changeIndex') ??
+          double.negativeInfinity) as P;
+    case 'changedDate':
+      return (IsarNative.jsObjectGet(jsObj, 'changedDate') ?? '') as P;
+    case 'childFriendly':
+      return (IsarNative.jsObjectGet(jsObj, 'childFriendly') ?? false) as P;
+    case 'description':
+      return (IsarNative.jsObjectGet(jsObj, 'description') ?? '') as P;
+    case 'dogAllowed':
+      return (IsarNative.jsObjectGet(jsObj, 'dogAllowed') ?? false) as P;
+    case 'email':
+      return (IsarNative.jsObjectGet(jsObj, 'email') ?? '') as P;
+    case 'entryText':
+      return (IsarNative.jsObjectGet(jsObj, 'entryText') ?? '') as P;
+    case 'favorit':
+      return (IsarNative.jsObjectGet(jsObj, 'favorit') ?? false) as P;
+    case 'fax':
+      return (IsarNative.jsObjectGet(jsObj, 'fax') ?? '') as P;
+    case 'groupsAccepted':
+      return (IsarNative.jsObjectGet(jsObj, 'groupsAccepted') ?? false) as P;
+    case 'hint':
+      return (IsarNative.jsObjectGet(jsObj, 'hint') ?? '') as P;
+    case 'id':
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
+          as P;
+    case 'latitude':
+      return (IsarNative.jsObjectGet(jsObj, 'latitude') ??
+          double.negativeInfinity) as P;
+    case 'longitude':
+      return (IsarNative.jsObjectGet(jsObj, 'longitude') ??
+          double.negativeInfinity) as P;
+    case 'name':
+      return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
+    case 'openInWinter':
+      return (IsarNative.jsObjectGet(jsObj, 'openInWinter') ?? false) as P;
+    case 'openText':
+      return (IsarNative.jsObjectGet(jsObj, 'openText') ?? '') as P;
+    case 'province':
+      return (IsarNative.jsObjectGet(jsObj, 'province') ??
+          double.negativeInfinity) as P;
+    case 'region':
+      return (IsarNative.jsObjectGet(jsObj, 'region') ??
+          double.negativeInfinity) as P;
+    case 'savingsAdult':
+      return (IsarNative.jsObjectGet(jsObj, 'savingsAdult') ?? '') as P;
+    case 'savingsChild':
+      return (IsarNative.jsObjectGet(jsObj, 'savingsChild') ?? '') as P;
+    case 'searchString':
+      return (IsarNative.jsObjectGet(jsObj, 'searchString') ?? '') as P;
+    case 'strollerFriendly':
+      return (IsarNative.jsObjectGet(jsObj, 'strollerFriendly') ?? false) as P;
+    case 'tavernNear':
+      return (IsarNative.jsObjectGet(jsObj, 'tavernNear') ?? false) as P;
+    case 'telephone':
+      return (IsarNative.jsObjectGet(jsObj, 'telephone') ?? '') as P;
+    case 'topLocation':
+      return (IsarNative.jsObjectGet(jsObj, 'topLocation') ?? false) as P;
+    case 'travelDirections':
+      return (IsarNative.jsObjectGet(jsObj, 'travelDirections') ?? '') as P;
+    case 'website':
+      return (IsarNative.jsObjectGet(jsObj, 'website') ?? '') as P;
+    case 'websiteId':
+      return (IsarNative.jsObjectGet(jsObj, 'websiteId') ??
+          double.negativeInfinity) as P;
+    case 'wheelchairFriendly':
+      return (IsarNative.jsObjectGet(jsObj, 'wheelchairFriendly') ?? false)
+          as P;
+    case 'year':
+      return (IsarNative.jsObjectGet(jsObj, 'year') ?? double.negativeInfinity)
+          as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _locationAttachLinks(IsarCollection col, int id, Location object) {}
 
 extension LocationQueryWhereSort on QueryBuilder<Location, Location, QWhere> {
   QueryBuilder<Location, Location, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 
   QueryBuilder<Location, Location, QAfterWhere> anyYear() {
-    return addWhereClauseInternal(const WhereClause(indexName: 'year'));
+    return addWhereClauseInternal(
+        const IndexWhereClause.any(indexName: 'year'));
   }
 }
 
 extension LocationQueryWhere on QueryBuilder<Location, Location, QWhereClause> {
   QueryBuilder<Location, Location, QAfterWhereClause> idEqualTo(int id) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [id],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: id,
       includeLower: true,
-      upper: [id],
+      upper: id,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<Location, Location, QAfterWhereClause> idNotEqualTo(int id) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [id],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [id],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [id],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [id],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: id, includeUpper: false),
+      );
     }
   }
 
-  QueryBuilder<Location, Location, QAfterWhereClause> idGreaterThan(
-    int id, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [id],
-      includeLower: include,
-    ));
+  QueryBuilder<Location, Location, QAfterWhereClause> idGreaterThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: id, includeLower: include),
+    );
   }
 
-  QueryBuilder<Location, Location, QAfterWhereClause> idLessThan(
-    int id, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [id],
-      includeUpper: include,
-    ));
+  QueryBuilder<Location, Location, QAfterWhereClause> idLessThan(int id,
+      {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: id, includeUpper: include),
+    );
   }
 
   QueryBuilder<Location, Location, QAfterWhereClause> idBetween(
@@ -641,42 +624,38 @@ extension LocationQueryWhere on QueryBuilder<Location, Location, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerId],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerId,
       includeLower: includeLower,
-      upper: [upperId],
+      upper: upperId,
       includeUpper: includeUpper,
     ));
   }
 
   QueryBuilder<Location, Location, QAfterWhereClause> yearEqualTo(int year) {
-    return addWhereClauseInternal(WhereClause(
+    return addWhereClauseInternal(IndexWhereClause.equalTo(
       indexName: 'year',
-      lower: [year],
-      includeLower: true,
-      upper: [year],
-      includeUpper: true,
+      value: [year],
     ));
   }
 
   QueryBuilder<Location, Location, QAfterWhereClause> yearNotEqualTo(int year) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
+      return addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'year',
         upper: [year],
         includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
+      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
         indexName: 'year',
         lower: [year],
         includeLower: false,
       ));
     } else {
-      return addWhereClauseInternal(WhereClause(
+      return addWhereClauseInternal(IndexWhereClause.greaterThan(
         indexName: 'year',
         lower: [year],
         includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
+      )).addWhereClauseInternal(IndexWhereClause.lessThan(
         indexName: 'year',
         upper: [year],
         includeUpper: false,
@@ -688,7 +667,7 @@ extension LocationQueryWhere on QueryBuilder<Location, Location, QWhereClause> {
     int year, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(WhereClause(
+    return addWhereClauseInternal(IndexWhereClause.greaterThan(
       indexName: 'year',
       lower: [year],
       includeLower: include,
@@ -699,7 +678,7 @@ extension LocationQueryWhere on QueryBuilder<Location, Location, QWhereClause> {
     int year, {
     bool include = false,
   }) {
-    return addWhereClauseInternal(WhereClause(
+    return addWhereClauseInternal(IndexWhereClause.lessThan(
       indexName: 'year',
       upper: [year],
       includeUpper: include,
@@ -712,7 +691,7 @@ extension LocationQueryWhere on QueryBuilder<Location, Location, QWhereClause> {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
+    return addWhereClauseInternal(IndexWhereClause.between(
       indexName: 'year',
       lower: [lowerYear],
       includeLower: includeLower,

@@ -6,20 +6,16 @@ part of 'visited_location.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetVisitedLocationCollection on Isar {
-  IsarCollection<VisitedLocation> get visitedLocations {
-    return getCollection('VisitedLocation');
-  }
+  IsarCollection<VisitedLocation> get visitedLocations => getCollection();
 }
 
-final VisitedLocationSchema = CollectionSchema(
+const VisitedLocationSchema = CollectionSchema(
   name: 'VisitedLocation',
   schema:
       '{"name":"VisitedLocation","idName":"visitedId","properties":[{"name":"visitedLocationId","type":"Long"},{"name":"visitedLoggedDay","type":"String"},{"name":"visitedSaved","type":"Double"},{"name":"visitedYear","type":"Long"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _VisitedLocationNativeAdapter(),
-  webAdapter: const _VisitedLocationWebAdapter(),
   idName: 'visitedId',
   propertyIds: {
     'visitedLocationId': 0,
@@ -29,155 +25,155 @@ final VisitedLocationSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.visitedId == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.visitedId;
-    }
-  },
-  setId: (obj, id) => obj.visitedId = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _visitedLocationGetId,
+  setId: _visitedLocationSetId,
+  getLinks: _visitedLocationGetLinks,
+  attachLinks: _visitedLocationAttachLinks,
+  serializeNative: _visitedLocationSerializeNative,
+  deserializeNative: _visitedLocationDeserializeNative,
+  deserializePropNative: _visitedLocationDeserializePropNative,
+  serializeWeb: _visitedLocationSerializeWeb,
+  deserializeWeb: _visitedLocationDeserializeWeb,
+  deserializePropWeb: _visitedLocationDeserializePropWeb,
+  version: 3,
 );
 
-class _VisitedLocationWebAdapter extends IsarWebTypeAdapter<VisitedLocation> {
-  const _VisitedLocationWebAdapter();
-
-  @override
-  Object serialize(
-      IsarCollection<VisitedLocation> collection, VisitedLocation object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'visitedId', object.visitedId);
-    IsarNative.jsObjectSet(
-        jsObj, 'visitedLocationId', object.visitedLocationId);
-    IsarNative.jsObjectSet(jsObj, 'visitedLoggedDay', object.visitedLoggedDay);
-    IsarNative.jsObjectSet(jsObj, 'visitedSaved', object.visitedSaved);
-    IsarNative.jsObjectSet(jsObj, 'visitedYear', object.visitedYear);
-    return jsObj;
+int? _visitedLocationGetId(VisitedLocation object) {
+  if (object.visitedId == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.visitedId;
   }
-
-  @override
-  VisitedLocation deserialize(
-      IsarCollection<VisitedLocation> collection, dynamic jsObj) {
-    final object = VisitedLocation();
-    object.visitedId =
-        IsarNative.jsObjectGet(jsObj, 'visitedId') ?? double.negativeInfinity;
-    object.visitedLocationId =
-        IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
-            double.negativeInfinity;
-    object.visitedLoggedDay =
-        IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '';
-    object.visitedSaved = IsarNative.jsObjectGet(jsObj, 'visitedSaved') ??
-        double.negativeInfinity;
-    object.visitedYear =
-        IsarNative.jsObjectGet(jsObj, 'visitedYear') ?? double.negativeInfinity;
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'visitedId':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedId') ??
-            double.negativeInfinity) as P;
-      case 'visitedLocationId':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
-            double.negativeInfinity) as P;
-      case 'visitedLoggedDay':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '') as P;
-      case 'visitedSaved':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedSaved') ??
-            double.negativeInfinity) as P;
-      case 'visitedYear':
-        return (IsarNative.jsObjectGet(jsObj, 'visitedYear') ??
-            double.negativeInfinity) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, VisitedLocation object) {}
 }
 
-class _VisitedLocationNativeAdapter
-    extends IsarNativeTypeAdapter<VisitedLocation> {
-  const _VisitedLocationNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<VisitedLocation> collection,
-      IsarRawObject rawObj,
-      VisitedLocation object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.visitedLocationId;
-    final _visitedLocationId = value0;
-    final value1 = object.visitedLoggedDay;
-    final _visitedLoggedDay = IsarBinaryWriter.utf8Encoder.convert(value1);
-    dynamicSize += (_visitedLoggedDay.length) as int;
-    final value2 = object.visitedSaved;
-    final _visitedSaved = value2;
-    final value3 = object.visitedYear;
-    final _visitedYear = value3;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _visitedLocationId);
-    writer.writeBytes(offsets[1], _visitedLoggedDay);
-    writer.writeDouble(offsets[2], _visitedSaved);
-    writer.writeLong(offsets[3], _visitedYear);
-  }
-
-  @override
-  VisitedLocation deserialize(IsarCollection<VisitedLocation> collection,
-      int id, IsarBinaryReader reader, List<int> offsets) {
-    final object = VisitedLocation();
-    object.visitedId = id;
-    object.visitedLocationId = reader.readLong(offsets[0]);
-    object.visitedLoggedDay = reader.readString(offsets[1]);
-    object.visitedSaved = reader.readDouble(offsets[2]);
-    object.visitedYear = reader.readLong(offsets[3]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readLong(offset)) as P;
-      case 1:
-        return (reader.readString(offset)) as P;
-      case 2:
-        return (reader.readDouble(offset)) as P;
-      case 3:
-        return (reader.readLong(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, VisitedLocation object) {}
+void _visitedLocationSetId(VisitedLocation object, int id) {
+  object.visitedId = id;
 }
+
+List<IsarLinkBase> _visitedLocationGetLinks(VisitedLocation object) {
+  return [];
+}
+
+void _visitedLocationSerializeNative(
+    IsarCollection<VisitedLocation> collection,
+    IsarRawObject rawObj,
+    VisitedLocation object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.visitedLocationId;
+  final _visitedLocationId = value0;
+  final value1 = object.visitedLoggedDay;
+  final _visitedLoggedDay = IsarBinaryWriter.utf8Encoder.convert(value1);
+  dynamicSize += (_visitedLoggedDay.length) as int;
+  final value2 = object.visitedSaved;
+  final _visitedSaved = value2;
+  final value3 = object.visitedYear;
+  final _visitedYear = value3;
+  final size = staticSize + dynamicSize;
+
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeLong(offsets[0], _visitedLocationId);
+  writer.writeBytes(offsets[1], _visitedLoggedDay);
+  writer.writeDouble(offsets[2], _visitedSaved);
+  writer.writeLong(offsets[3], _visitedYear);
+}
+
+VisitedLocation _visitedLocationDeserializeNative(
+    IsarCollection<VisitedLocation> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = VisitedLocation();
+  object.visitedId = id;
+  object.visitedLocationId = reader.readLong(offsets[0]);
+  object.visitedLoggedDay = reader.readString(offsets[1]);
+  object.visitedSaved = reader.readDouble(offsets[2]);
+  object.visitedYear = reader.readLong(offsets[3]);
+  return object;
+}
+
+P _visitedLocationDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readLong(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readDouble(offset)) as P;
+    case 3:
+      return (reader.readLong(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _visitedLocationSerializeWeb(
+    IsarCollection<VisitedLocation> collection, VisitedLocation object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'visitedId', object.visitedId);
+  IsarNative.jsObjectSet(jsObj, 'visitedLocationId', object.visitedLocationId);
+  IsarNative.jsObjectSet(jsObj, 'visitedLoggedDay', object.visitedLoggedDay);
+  IsarNative.jsObjectSet(jsObj, 'visitedSaved', object.visitedSaved);
+  IsarNative.jsObjectSet(jsObj, 'visitedYear', object.visitedYear);
+  return jsObj;
+}
+
+VisitedLocation _visitedLocationDeserializeWeb(
+    IsarCollection<VisitedLocation> collection, dynamic jsObj) {
+  final object = VisitedLocation();
+  object.visitedId =
+      IsarNative.jsObjectGet(jsObj, 'visitedId') ?? double.negativeInfinity;
+  object.visitedLocationId =
+      IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
+          double.negativeInfinity;
+  object.visitedLoggedDay =
+      IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '';
+  object.visitedSaved =
+      IsarNative.jsObjectGet(jsObj, 'visitedSaved') ?? double.negativeInfinity;
+  object.visitedYear =
+      IsarNative.jsObjectGet(jsObj, 'visitedYear') ?? double.negativeInfinity;
+  return object;
+}
+
+P _visitedLocationDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'visitedId':
+      return (IsarNative.jsObjectGet(jsObj, 'visitedId') ??
+          double.negativeInfinity) as P;
+    case 'visitedLocationId':
+      return (IsarNative.jsObjectGet(jsObj, 'visitedLocationId') ??
+          double.negativeInfinity) as P;
+    case 'visitedLoggedDay':
+      return (IsarNative.jsObjectGet(jsObj, 'visitedLoggedDay') ?? '') as P;
+    case 'visitedSaved':
+      return (IsarNative.jsObjectGet(jsObj, 'visitedSaved') ??
+          double.negativeInfinity) as P;
+    case 'visitedYear':
+      return (IsarNative.jsObjectGet(jsObj, 'visitedYear') ??
+          double.negativeInfinity) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _visitedLocationAttachLinks(
+    IsarCollection col, int id, VisitedLocation object) {}
 
 extension VisitedLocationQueryWhereSort
     on QueryBuilder<VisitedLocation, VisitedLocation, QWhere> {
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterWhere> anyVisitedId() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
@@ -185,11 +181,10 @@ extension VisitedLocationQueryWhere
     on QueryBuilder<VisitedLocation, VisitedLocation, QWhereClause> {
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterWhereClause>
       visitedIdEqualTo(int visitedId) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [visitedId],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: visitedId,
       includeLower: true,
-      upper: [visitedId],
+      upper: visitedId,
       includeUpper: true,
     ));
   }
@@ -197,50 +192,32 @@ extension VisitedLocationQueryWhere
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterWhereClause>
       visitedIdNotEqualTo(int visitedId) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [visitedId],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [visitedId],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: visitedId, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: visitedId, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [visitedId],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [visitedId],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: visitedId, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: visitedId, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterWhereClause>
-      visitedIdGreaterThan(
-    int visitedId, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [visitedId],
-      includeLower: include,
-    ));
+      visitedIdGreaterThan(int visitedId, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: visitedId, includeLower: include),
+    );
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterWhereClause>
-      visitedIdLessThan(
-    int visitedId, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [visitedId],
-      includeUpper: include,
-    ));
+      visitedIdLessThan(int visitedId, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: visitedId, includeUpper: include),
+    );
   }
 
   QueryBuilder<VisitedLocation, VisitedLocation, QAfterWhereClause>
@@ -250,11 +227,10 @@ extension VisitedLocationQueryWhere
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerVisitedId],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerVisitedId,
       includeLower: includeLower,
-      upper: [upperVisitedId],
+      upper: upperVisitedId,
       includeUpper: includeUpper,
     ));
   }
