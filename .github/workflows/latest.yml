@@ -143,9 +143,9 @@ jobs:
       - run: mkdir lib\auth
       - run: |
           echo var mapAccessToken = "${{ secrets.MAPACCESSTOKEN }}"; > lib/auth/secrets.dart
-          var mapUrl = "${{ secrets.MAPURL }}"; >> lib/auth/secrets.dart
-          var mapUrlDark = "${{ secrets.MAPURLDARK }}"; >> lib/auth/secrets.dart
-          var dataApi = "${{ secrets.DATAAPI }}"; >> lib/auth/secrets.dart
+          echo var mapUrl = "${{ secrets.MAPURL }}"; >> lib/auth/secrets.dart
+          echo var mapUrlDark = "${{ secrets.MAPURLDARK }}"; >> lib/auth/secrets.dart
+          echo var dataApi = "${{ secrets.DATAAPI }}"; >> lib/auth/secrets.dart
 
       - uses: subosito/flutter-action@v2
         with:
