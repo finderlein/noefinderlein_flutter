@@ -5,7 +5,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import '../../database/tables/location.dart';
 import '../../model/model_location_with_open.dart';
-import '../../utilities/categoryIcon.dart';
+import '../../utilities/category_icon.dart';
 
 class LocationsListItem extends StatelessWidget {
   const LocationsListItem({Key? key, required this.locationWo})

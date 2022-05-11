@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noefinderlein_flutter/src/screens/locations_list_screen.dart';
+// import 'package:noefinderlein_flutter/src/screens/locations_list_screen.dart';
 import '../utilities/data_downloader.dart';
 // import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 // import '../pages/locations_list_page.dart';
@@ -76,7 +76,7 @@ class DownloaderState extends State<Downloader> {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
+              WidgetsBinding.instance?.addPostFrameCallback((_) {
                 // Navigator.popUntil(
                 //     context, ModalRoute.withName(LocationListScreen.routeName));
                 Navigator.pop(context);
@@ -105,7 +105,7 @@ class DownloaderState extends State<Downloader> {
             }
             return ProgressBars(barData: dp);
         }
-        return Container(); // unreachable
+        // return Container(); // unreachable
       },
     );
 

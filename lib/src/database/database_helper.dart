@@ -7,7 +7,7 @@ import 'package:isar/isar.dart';
 import '../model/model_filter.dart';
 import '../model/model_location_with_open.dart';
 import '../model/model_location_with_position.dart';
-import '../model/model_position_item.dart';
+// import '../model/model_position_item.dart';
 import '../model/model_visited_with_location.dart';
 import './tables/location.dart';
 import './tables/change_val.dart';
@@ -58,7 +58,7 @@ class DatabaseHelper {
     if (db != null) {
       return db;
     }
-    
+
     final isar = await Isar.open(
         schemas: [
           LocationSchema,
@@ -328,7 +328,10 @@ class DatabaseHelper {
     try {
       locations =
           await db.locations.filter().yearEqualTo(year).sortById().findAll();
-    } catch (error) {}
+    } catch (error) {
+      developer.log('getStringAktDates',
+          name: 'database_helper.dart', error: 'catch');
+    }
     String returnJson = '{"year":${year.toString()}';
     if (locations.isNotEmpty) {
       List<String> stringArray = locations

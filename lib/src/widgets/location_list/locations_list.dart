@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
 import '../../model/model_location_with_open.dart';
 import 'locations_list_item.dart';
-import '../../database/tables/location.dart';
+// import '../../database/tables/location.dart';
 import '../../screens/location_detail_screen.dart';
 
 class LocationsList extends StatelessWidget {

@@ -31,6 +31,9 @@ class Noefinderlein {
         await getApplicationSupportDirectory(); // path_provider package
   }
 
+  String getDirectory() {
+    return supportDir.path;
+  }
   // bool getDark() {
   //   return settingsController.themeMode;
   // }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:noefinderlein_flutter/src/widgets/locations_near_list/locations_near_list.dart';
 import 'dart:io' show Platform;
 import 'dart:developer' as developer;

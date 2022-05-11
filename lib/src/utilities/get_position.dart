@@ -1,6 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 
-import '../database/database_helper.dart';
+// import '../database/database_helper.dart';
 import '../model/model_position_item.dart';
 
 class GetPosition {

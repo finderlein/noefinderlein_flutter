@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:noefinderlein_flutter/src/database/tables/visited_location.dart';
+// import 'package:flutter/services.dart';
+// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+// import 'package:noefinderlein_flutter/src/database/tables/visited_location.dart';
 
 import '../database/database_helper.dart';
 import '../model/model_visited_with_location.dart';
@@ -38,7 +38,7 @@ class VisitedScreenState extends State<VisitedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: DrawerMain(year: widget.year),
-        appBar: AppBarMain(
+        appBar: const AppBarMain(
           customTitle: 'Visited',
         ),
         bottomSheet: FutureBuilder(
