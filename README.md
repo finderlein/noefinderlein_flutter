@@ -55,6 +55,11 @@ To support additional languages, please visit the tutorial on
 [Internationalizing Flutter
 apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
 
+To generate the translation files run:
+```
+flutter gen-l10n
+```
+
 ### Database
 
 Rebuilding the database table files can be done with

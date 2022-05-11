@@ -38,7 +38,7 @@ dev_dependencies:
   flutter_lints: 2.0.1
   isar_generator: 2.5.0
   build_runner: ^2.1.8
-  #analyzer: ^4.0.0
+  analyzer: ^3.0.0
 
 flutter:
   uses-material-design: true
