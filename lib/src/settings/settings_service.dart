@@ -20,12 +20,24 @@ class SettingsService {
     }
     return ThemeMode.system;
   }
-
+  Future<bool> migrationDone() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool? migrationDone = prefs.getBool('migrationDone');
+    if (migrationDone != null) {
+      return migrationDone;
+    }
+    return false;
+  }
   /// Persists the user's preferred ThemeMode to local or remote storage.
   Future<void> updateThemeMode(ThemeMode theme) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('theme', theme.index);
     // Use the shared_preferences package to persist settings locally or the
     // http package to persist settings over the network.
+  }
+
+  Future<void> updateMigrationDone(bool migrationDone) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('migrationDone', migrationDone);
   }
 }

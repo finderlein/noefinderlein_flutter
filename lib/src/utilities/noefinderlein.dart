@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:noefinderlein_flutter/src/settings/settings_controller.dart';
 import 'package:path_provider/path_provider.dart';
@@ -27,8 +28,17 @@ class Noefinderlein {
   }
 
   init() async {
-    supportDir =
-        await getApplicationSupportDirectory(); // path_provider package
+    if (!kIsWeb) {
+      supportDir =
+          await getApplicationSupportDirectory(); // path_provider package
+    }
+  }
+
+  String? getDirectory() {
+    if (!kIsWeb) {
+      return supportDir.path;
+    }
+    return null;
   }
 
   // bool getDark() {
