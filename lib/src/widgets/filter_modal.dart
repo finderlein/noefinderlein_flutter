@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../model/model_filter.dart';
-import '../utilities/categoryIcon.dart';
+import '../utilities/category_icon.dart';
 import 'package:intl/intl.dart';
 import '../localization/app_localizations_context.dart';
 

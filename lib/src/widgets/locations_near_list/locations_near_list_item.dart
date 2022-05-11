@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../model/model_location_with_position.dart';
-import '../../utilities/categoryIcon.dart';
+import '../../utilities/category_icon.dart';
 
 class LocationsNearListItem extends StatelessWidget {
   const LocationsNearListItem({Key? key, required this.location})

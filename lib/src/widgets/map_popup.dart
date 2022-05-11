@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+// import 'package:flutter_map/flutter_map.dart';
 import 'package:noefinderlein_flutter/src/screens/location_detail_screen.dart';
 
-import '../database/tables/location.dart';
+// import '../database/tables/location.dart';
 import '../model/model_marker_with_location.dart';
 
 import '../localization/app_localizations_context.dart';
-import '../screens/map_screen.dart';
+// import '../screens/map_screen.dart';
 
 class MapPopup extends StatefulWidget {
   const MapPopup(this.marker, {Key? key}) : super(key: key);

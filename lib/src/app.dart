@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';

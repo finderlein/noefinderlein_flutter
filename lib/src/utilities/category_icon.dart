@@ -81,6 +81,6 @@ class CategoryIcon extends StatelessWidget {
     } else {
       return img;
     }
-    return const Center();
+    // return const Center();
   }
 }

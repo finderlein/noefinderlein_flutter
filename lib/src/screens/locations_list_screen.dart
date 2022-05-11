@@ -4,7 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'dart:developer' as developer;
 import '../database/database_helper.dart';
-import '../database/tables/location.dart';
+// import '../database/tables/location.dart';
 import '../model/model_filter.dart';
 import '../model/model_location_with_open.dart';
 import '../widgets/filter_modal.dart';
