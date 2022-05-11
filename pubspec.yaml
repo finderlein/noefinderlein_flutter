@@ -16,28 +16,29 @@ dependencies:
     sdk: flutter
   isar: 2.5.0
   isar_flutter_libs: 2.5.0 # contains the binaries
-  path_provider: ^2.0.0
+  path_provider: 2.0.10
   path: ^1.8.0
   http:
+  sqflite:
   # flutter_animation_progress_bar:
   material_design_icons_flutter: 5.0.6595
-  url_launcher: ^6.0.20
+  url_launcher: 6.1.1
   maps_launcher: ^2.0.1
   flutter_map: ^0.14.0
   flutter_map_marker_cluster: any
   latlong2: ^0.8.1
   flutter_map_location_marker: any
-  shared_preferences: ^2.0.13
-  geolocator: ^8.2.0
+  shared_preferences: 2.0.14
+  geolocator: 8.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints:
+  flutter_lints: 2.0.1
   isar_generator: 2.5.0
   build_runner: ^2.1.8
-  analyzer: ^3.0.0
+  #analyzer: ^4.0.0
 
 flutter:
   uses-material-design: true
