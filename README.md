@@ -12,8 +12,8 @@ This is a [Flutter](https://flutter.dev/) Project
 
 ### Getting Started
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
+For help getting started with NÖ Finderlein development, view the
+[Flutter online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
 A File called `/lib/auth/secrets.dart` is needed with the following declared variables:
@@ -54,6 +54,14 @@ the `lib/src/localization` directory.
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter
 apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+
+### Database
+
+Rebuilding the database table files can be done with
+
+```
+flutter pub run build_runner build
+```
 
 ## Status
 
