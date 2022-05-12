@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="at.reitschmied.noefinderlein_flutter">
+    package="at.finderlein.noe">
    <application
         android:label="NÖ Finderlein"
         android:name="${applicationName}"

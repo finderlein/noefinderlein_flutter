@@ -1,5 +1,5 @@
 {
-  "app-id": "at.reitschmied.noefinderlein",
+  "app-id": "at.finderlein.noe",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "21.08",
   "sdk": "org.freedesktop.Sdk",
@@ -29,22 +29,22 @@
         "mkdir -p /app/bin",
         "ln -s /app/FlutterApp/noefinderlein_flutter /app/bin/noefinderlein_flutter",
         "mkdir -p /app/share/metainfo",
-        "cp -r at.reitschmied.noefinderlein.metainfo.xml /app/share/metainfo/",
+        "cp -r at.finderlein.noe.metainfo.xml /app/share/metainfo/",
         "mkdir -p /app/share/icons/hicolor/scalable/apps",
-        "cp -r finderlein_logo_bunt.svg /app/share/icons/hicolor/scalable/apps/at.reitschmied.noefinderlein.svg",
+        "cp -r finderlein_logo_bunt.svg /app/share/icons/hicolor/scalable/apps/at.finderlein.noe.svg",
         "mkdir -p /app/share/applications",
-        "cp -r at.reitschmied.noefinderlein.desktop /app/share/applications/",
+        "cp -r at.finderlein.noe.desktop /app/share/applications/",
         "mkdir -p /app/share/appdata",
-        "cp -r at.reitschmied.noefinderlein.metainfo.xml /app/share/appdata/"
+        "cp -r at.finderlein.noe.metainfo.xml /app/share/appdata/"
       ],
       "sources": [
         {
           "type": "file",
-          "path": "at.reitschmied.noefinderlein.metainfo.xml"
+          "path": "at.finderlein.noe.metainfo.xml"
         },
         {
           "type": "file",
-          "path": "at.reitschmied.noefinderlein.desktop"
+          "path": "at.finderlein.noe.desktop"
         },
         {
           "type": "file",

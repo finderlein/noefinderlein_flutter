@@ -8,7 +8,7 @@
 PRODUCT_NAME = noefinderlein_flutter
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = at.reitschmied.noefinderleinFlutter
+PRODUCT_BUNDLE_IDENTIFIER = at.finderlein.noe
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 at.reitschmied. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 at.finderlein. All rights reserved.

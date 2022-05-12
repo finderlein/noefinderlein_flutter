@@ -6,6 +6,6 @@ Name=NÖ Finderlein
 Comment=A companion app for the austrian Niederösterreich Card
 Categories=Utility;Documentation;
 
-Icon=at.reitschmied.noefinderlein
+Icon=at.finderlein.noe
 Exec=noefinderlein_flutter
 Terminal=false

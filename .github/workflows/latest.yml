@@ -208,7 +208,7 @@ jobs:
   #         path: ./
   #     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
   #       with:
-  #         manifest-path: flatpak/at.reitschmied.noefinderlein.json
+  #         manifest-path: flatpak/at.finderlein.noe.json
   #         cache-key: flatpak-builder-${{ github.sha }}
 
   deploy:

@@ -1,4 +1,4 @@
-package at.reitschmied.noefinderlein_flutter
+package at.finderlein.noe
 
 import io.flutter.embedding.android.FlutterActivity
 

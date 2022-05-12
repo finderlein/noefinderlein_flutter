@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>at.reitschmied.noefinderlein</id>
+  <id>at.finderlein.noe</id>
   
   <name>NÖ Finderlein</name>
   <summary>A companion app for the austrian Niederösterreich Card</summary>
@@ -23,7 +23,7 @@
     </p>
   </description>
   <content_rating type="oars-1.1" />
-  <launchable type="desktop-id">at.reitschmied.noefinderlein.desktop</launchable>
+  <launchable type="desktop-id">at.finderlein.noe.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen1.png</image>
