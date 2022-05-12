@@ -76,7 +76,7 @@ class DownloaderState extends State<Downloader> {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              WidgetsBinding.instance?.addPostFrameCallback((_) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
                 // Navigator.popUntil(
                 //     context, ModalRoute.withName(LocationListScreen.routeName));
                 Navigator.pop(context);

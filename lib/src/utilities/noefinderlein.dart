@@ -41,9 +41,6 @@ class Noefinderlein {
     return null;
   }
 
-  String getDirectory() {
-    return supportDir.path;
-  }
   // bool getDark() {
   //   return settingsController.themeMode;
   // }

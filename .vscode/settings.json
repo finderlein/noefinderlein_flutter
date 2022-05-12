@@ -1,5 +1,8 @@
 {
   "editor.defaultFormatter": "Dart-Code.dart-code",
   "editor.formatOnSave": true,
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

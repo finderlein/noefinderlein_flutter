@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:noefinderlein_flutter/src/screens/cards_screen.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
@@ -18,6 +19,8 @@ import 'screens/regions_list_screen.dart';
 // import './widgets/downloader_modal.dart';
 import 'themes/noefinderlein.dart';
 import 'utilities/noefinderlein.dart';
+
+import './localization/app_localizations_context.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -76,8 +79,7 @@ class MyApp extends StatelessWidget {
           //
           // The appTitle is defined in .arb files found in the localization
           // directory.
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context).appTitle,
+          onGenerateTitle: (BuildContext context) => context.loc.appTitle,
 
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
@@ -92,9 +94,9 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
-                if (Platform.isAndroid && !settingsController.migrationDone) {
-                  return const AndroidMigrationScreen();
-                }
+                // if (Platform.isAndroid && !settingsController.migrationDone) {
+                //   return const AndroidMigrationScreen();
+                // }
                 final String name = routeSettings.name as String;
 
                 if (name.startsWith(LocationDetailsScreen.routeName)) {
@@ -106,6 +108,8 @@ class MyApp extends StatelessWidget {
                 developer.log('routeName',
                     name: 'app.dart', error: routeSettings.name);
                 switch (routeSettings.name) {
+                  case CardsScreen.routeName:
+                    return const CardsScreen();
                   case RegionsListScreen.routeName:
                     return RegionsListScreen(year: glob.year);
                   case SettingsScreen.routeName:

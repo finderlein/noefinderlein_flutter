@@ -4,6 +4,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 // import 'package:noefinderlein_flutter/src/widgets/location_detail_page/title_section.dart';
 import '../../database/tables/location.dart';
 
+import '../../localization/app_localizations_context.dart';
+
 class MitDerCardSection extends StatelessWidget {
   const MitDerCardSection({Key? key, required this.location}) : super(key: key);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:noefinderlein_flutter/src/model/model_location_with_open.dart';
 import '../database/tables/location.dart';
@@ -19,7 +20,6 @@ import '../widgets/location_detail_page/properties_section.dart';
 import 'dart:math' as math;
 
 import '../localization/app_localizations_context.dart';
-import 'package:intl/intl.dart';
 
 class LocationDetailsScreen extends StatefulWidget {
   const LocationDetailsScreen({Key? key, required this.id, this.date})
