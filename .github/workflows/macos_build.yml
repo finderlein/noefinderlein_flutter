@@ -23,6 +23,8 @@ jobs:
 
       - run: flutter upgrade
       - run: flutter pub get
+      - name: generate isar files
+        run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Enable Macos
         run: flutter config --enable-macos-desktop
       - name: Build macOS app

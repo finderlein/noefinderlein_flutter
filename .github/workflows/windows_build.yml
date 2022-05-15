@@ -20,6 +20,9 @@ jobs:
       - name: Setup flutter
         uses: ./.github/actions/flutter-version
 
+      - name: generate isar files
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+        
       - run: flutter config --enable-windows-desktop
       - run: flutter build windows
       - name: Zip Folder
