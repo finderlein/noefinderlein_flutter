@@ -1,0 +1,29 @@
+name: 🍏 iOS Build
+on:
+  workflow_call:
+
+jobs:
+  ios:
+    runs-on: macos-latest
+    env:
+      MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib/auth
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+
+      - name: Setup flutter
+        uses: ./.github/actions/flutter-version
+
+      - run: flutter upgrade
+      - run: flutter pub get
+      - name: Enable iOS
+        run: flutter config --enable-ios
+      - name: Build iOS app
+        run: flutter build ios --release --no-codesign
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ios
+          path: |
+            build/ios/iphoneos/*.app
+            build/ios/iphoneos/*.app.

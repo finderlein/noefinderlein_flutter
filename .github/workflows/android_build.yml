@@ -1,0 +1,46 @@
+name: 🤖 Android Build
+on:
+  workflow_call:
+
+jobs:
+  # This workflow contains a single job called "build"
+  android:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
+          gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
+      - run: |
+          echo "noefinderlein_keystore=release.keystore" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_alias=upload" >> android/noefinderlein_keystore.txt
+          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/noefinderlein_keystore.txt
+      - run: mkdir lib/auth
+      - run: |
+          echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrl = \"${{ secrets.MAPURL }}\";" >> lib/auth/secrets.dart
+          echo "var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";" >> lib/auth/secrets.dart
+          echo "var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: "11"
+
+      - name: Setup flutter
+        uses: ./.github/actions/flutter-version
+
+      - run: flutter upgrade
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --split-per-abi
+      - run: flutter build appbundle
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab

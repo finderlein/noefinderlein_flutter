@@ -1,0 +1,17 @@
+name: Flutter version
+description: Install Specific Flutter version
+inputs:
+  flutter-version:
+    description: The flutter version.
+    default: "2.13.0-0.4.pre"
+  flutter-sdk-channel:
+    description: The flutter sdk chanel (stable/beta/master).
+    default: "beta"
+runs:
+  using: "composite"
+  steps:
+    - name: Install Flutter version
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: "${{ inputs.flutter-version }}"
+        channel: "${{ inputs.flutter-sdk-channel }}"

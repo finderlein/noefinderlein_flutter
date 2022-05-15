@@ -1,0 +1,27 @@
+name: 🏁 Windows Build
+on:
+  workflow_call:
+  
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib\auth
+      - run: |
+          echo "var mapAccessToken = ""${{ secrets.MAPACCESSTOKEN }}"";" > lib/auth/secrets.dart
+          echo "var mapUrl = ""${{ secrets.MAPURL }}"";" >> lib/auth/secrets.dart
+          echo "var mapUrlDark = ""${{ secrets.MAPURLDARK }}"";" >> lib/auth/secrets.dart
+          echo "var dataApi = ""${{ secrets.DATAAPI }}"";" >> lib/auth/secrets.dart
+
+      - name: Setup flutter
+        uses: ./.github/actions/flutter-version
+
+      - run: flutter config --enable-windows-desktop
+      - run: flutter build windows
+      - name: Zip Folder
+        run: Compress-Archive -Path 'build\*' -DestinationPath 'windows.zip'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./windows.zip

@@ -1,0 +1,35 @@
+name: 🐧 Windows Build
+on:
+  workflow_call:
+  
+jobs:
+  appimage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir lib/auth
+      - run: echo "var mapAccessToken = \"${{ secrets.MAPACCESSTOKEN }}\";var mapUrl = \"${{ secrets.MAPURL }}\";var mapUrlDark = \"${{ secrets.MAPURLDARK }}\";var dataApi = \"${{ secrets.DATAAPI }}\";" >> lib/auth/secrets.dart
+
+      - name: Setup flutter
+        uses: ./.github/actions/flutter-version
+
+      - run: |
+          sudo apt-get install -y ninja-build libgtk-3-dev
+      - run: flutter config --enable-linux-desktop
+      - run: flutter build linux
+      - run: |
+          tar -C build/linux/x64/release/bundle -cvf noefinderlein-linux-portable.tar.gz .
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tgz
+          path: ./*.tar.gz
+      - name: Build AppImage
+        uses: AppImageCrafters/build-appimage@master
+        with:
+          recipe: appimage/AppImageBuilder.yml
+        env:
+          UPDATE_INFO: gh-releases-zsync|AppImageCrafters|appimage-demo-qt5|latest|*x86_64.AppImage.zsync
+      - uses: actions/upload-artifact@v3
+        with:
+          name: appimage
+          path: ./*.AppImage
