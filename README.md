@@ -1,5 +1,7 @@
 # NÖ Finderlein <img height="40" src="https://raw.githubusercontent.com/derqurps/noefinderlein-flutter/master/assets/images/3.0x/finderlein_logo_bunt.png">
 
+[![release](https://github.com/derqurps/noefinderlein_flutter/actions/workflows/release.yml/badge.svg)](https://github.com/derqurps/noefinderlein_flutter/actions/workflows/release.yml)
+
 The NÖ Finderlein is a inofficial companion App for the Niederösterreich-Card for people who would like to have all important information for the associated destinations at their fingertip.
 
 It additionaly provides an easy way to keep track of the visited locations and can show the destinations sorted by the distance from the current position.
