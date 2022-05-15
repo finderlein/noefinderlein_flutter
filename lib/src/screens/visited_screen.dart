@@ -38,8 +38,8 @@ class VisitedScreenState extends State<VisitedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: DrawerMain(year: widget.year),
-        appBar: const AppBarMain(
-          customTitle: 'Visited',
+        appBar: AppBarMain(
+          customTitle: context.loc.visitedScreenTitle,
         ),
         bottomSheet: FutureBuilder(
           future: _allVisitedLocations,

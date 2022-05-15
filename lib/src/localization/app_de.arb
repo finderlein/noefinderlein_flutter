@@ -19,6 +19,7 @@
   "filter_day_active_text": "Nur die Ziele anzeigen die am gewählten Tag offen haben",
   "cancel": "Abbrechen",
   "ok": "OK",
+  "disclaimerButtonAgree": "Einverstanden",
   "favorites": "Favorites",
   "sortby": "Sortiere nach...?",
   "name": "Name",
@@ -80,5 +81,59 @@
   "includedInCard": "Mit der Card",
   "savings": "Ersparnis",
   "adultCard": "Erwachsenen-CARD",
-  "childCard": "Jugend-CARD"
+  "childCard": "Jugend-CARD",
+
+  "noCard": "Keine gespeicherte Karte gefunden. Bitte fügen Sie eine Karte hinzu.",
+  "mycardsTitle": "Meine Karten",
+  "downloadError": "Es gab einen Error beim downloaden. Vielleicht besteht keine Internetverbindung?\n\nDer Error war: {error}",
+  "@downloadError": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Error bla"
+      }
+    }
+  },
+  "visitedScreenTitle": "Besichtigt",
+  "systemTheme": "System Layout",
+  "lightTheme": "Helles Layout",
+  "darkTheme": "Dunkles Layout",
+
+  "regionenScreenTitle": "Regionen",
+  "nearScreenTitle": "Ziele nach Nähe",
+
+  "positionNotFound": "Die aktuelle Position konnte nicht ermittelt werden. Bitte versuchen Sie die Standorteinstellungen für diese App zu erlauben und schalten Sie die Standortermittlung ein.\n\n{log}",
+  "@positionNotFound": {
+    "placeholders": {
+      "log": {
+        "type": "String",
+        "example": "Log bla"
+      }
+    }
+  },
+  "textClear": "Löschen",
+
+  "openLocationSettings": "Standorteinstellungen öffnen",
+  "openAppSettings": "App Einstellungen öffnen",
+  "reqTempFullAcc": "Temporär die höchste Genauigkeit abfragen",
+  "getLocAcc": "Zeige die Standortgenauigkeit an",
+  "saveVisitedMessage": "€ {amount} für Datum {date} gespeichert",
+  "@saveVisitedMessage": {
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "15"
+      },
+      "date": {
+        "type": "String",
+        "example": "2022-05-15"
+      }
+    }
+  },
+  "detailCall": "ANRUFEN",
+  "detailMail": "MAILEN",
+  "detailWeb": "WEBSEITE",
+  "detailNav": "NAVIGATION",
+  "detailFav": "FAVORIT",
+  "disclaimer": "Der Programmierer dieser App übernimmt keine Garantie auf die Richtigkeit der verwendeten Daten. Falls Sie fortfahren diese APP zu nutzen, bestätigen Sie, dass Ihnen das bewusst ist."
 }

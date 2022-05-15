@@ -122,8 +122,8 @@ class LocationDetailView extends StatelessWidget {
                                   date: date,
                                   location: location);
                               final snackBar = SnackBar(
-                                content: Text(
-                                    'Saved amount € $amount on Date $date'),
+                                content: Text(context.loc.saveVisitedMessage(
+                                    amount.toString(), date)),
                               );
 
                               // Find the ScaffoldMessenger in the widget tree
@@ -170,28 +170,28 @@ class LocationDetailView extends StatelessWidget {
                         ButtonCol(
                             color: color,
                             icon: MdiIcons.phone,
-                            label: 'CALL',
+                            label: context.loc.detailCall,
                             onPressed: () {
                               _launchTel(location.telephone);
                             }),
                         ButtonCol(
                             color: color,
                             icon: MdiIcons.email,
-                            label: 'MAIL',
+                            label: context.loc.detailMail,
                             onPressed: () {
                               _launchMail(location.email);
                             }),
                         ButtonCol(
                             color: color,
                             icon: MdiIcons.earth,
-                            label: 'WEBPAGE',
+                            label: context.loc.detailWeb,
                             onPressed: () {
                               _launchWeb(location.website);
                             }),
                         ButtonCol(
                             color: color,
                             icon: MdiIcons.navigation,
-                            label: 'NAVI',
+                            label: context.loc.detailNav,
                             onPressed: () {
                               _launchNav(location.latitude, location.longitude);
                             }),
@@ -200,7 +200,7 @@ class LocationDetailView extends StatelessWidget {
                             icon: location.favorit
                                 ? MdiIcons.star
                                 : MdiIcons.starOutline,
-                            label: 'FAV',
+                            label: context.loc.detailFav,
                             onPressed: () {
                               location.favorit
                                   ? _favUnfavLocation(location, false, onRerun)

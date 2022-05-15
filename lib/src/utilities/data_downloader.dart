@@ -47,7 +47,7 @@ class DataDownloader {
     d.max = 400;
     yield d;
     // CurrentIds yearData = noefinderleinAPI.loadChanges(year).execute().body();
-    final loadChangesResponse = await http.get(
+    await http.get(
         Uri.parse('${apiUrl}Changevals/getCurrentIds?year=${year.toString()}'));
 
     bool updateneeded =

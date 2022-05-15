@@ -19,6 +19,7 @@
   "filter_day_active_text": "Only show locations which are open on the specified day",
   "cancel": "Cancel",
   "ok": "OK",
+  "disclaimerButtonAgree": "Agree",
   "favorites": "Favorites",
   "sortby": "Sort by...?",
   "name": "Name",
@@ -80,5 +81,55 @@
   "includedInCard": "Included in the CARD",
   "savings": "Savings",
   "adultCard": "Adult-CARD",
-  "childCard": "Child-CARD"
+  "childCard": "Child-CARD",
+  "noCard": "There was no saved Card found, please add a Card first.",
+  "mycardsTitle": "My Cards",
+  "downloadError": "There was an error downloading. Maybe there is no internet-connection?\n\nThe error was: {error}",
+  "@downloadError": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Error bla"
+      }
+    }
+  },
+  "visitedScreenTitle": "Visited",
+  "systemTheme": "System Theme",
+  "lightTheme": "Light Theme",
+  "darkTheme": "Dark Theme",
+  "regionenScreenTitle": "Provinces",
+  "nearScreenTitle": "Near locations",
+  "positionNotFound": "The current position could not be found. Try to activiate the location settings for this app and globaly on this device.\n\n{log}",
+  "@positionNotFound": {
+    "placeholders": {
+      "log": {
+        "type": "String",
+        "example": "Log bla"
+      }
+    }
+  },
+  "textClear": "Clear",
+  "openLocationSettings": "Open Location Settings",
+  "openAppSettings": "Open App Settings",
+  "reqTempFullAcc": "Request Temporary Full Accuracy",
+  "getLocAcc": "Get Location Accuracy",
+  "saveVisitedMessage": "Saved amount € {amount} on Date {date}",
+  "@saveVisitedMessage": {
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "15"
+      },
+      "date": {
+        "type": "String",
+        "example": "2022-05-15"
+      }
+    }
+  },
+  "detailCall": "CALL",
+  "detailMail": "MAIL",
+  "detailWeb": "WEBPAGE",
+  "detailNav": "NAVI",
+  "detailFav": "FAV",
+  "disclaimer": "The developer of this app does not guarantee the completeness and the correctness of the showed data. If you continue to use this app, you confirm that you are aware of this."
 }

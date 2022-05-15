@@ -3,6 +3,7 @@ import '../database/tables/region.dart';
 import '../database/database_helper.dart';
 import '../widgets/drawer_main.dart';
 import '../screens/locations_list_screen.dart';
+import '../localization/app_localizations_context.dart';
 
 class RegionsListScreen extends StatefulWidget {
   const RegionsListScreen({Key? key, required this.year}) : super(key: key);
@@ -27,7 +28,7 @@ class RegionsListScreenState extends State<RegionsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Regionen'),
+          title: Text(context.loc.regionenScreenTitle),
         ),
         drawer: DrawerMain(year: widget.year),
         body: FutureBuilder(

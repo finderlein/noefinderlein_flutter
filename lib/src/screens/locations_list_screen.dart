@@ -38,7 +38,7 @@ class LocationListScreen extends StatefulWidget {
 /// Displays a list of SampleItems.
 class _LocationListScreenState extends State<LocationListScreen> {
   late Future<List<LocationWithOpen>> _allmenuLocations;
-  String customTitle = 'Alle Ziele';
+  String customTitle = '';
   bool _search = false;
   String searchString = '';
   List<int> currentIds = [];

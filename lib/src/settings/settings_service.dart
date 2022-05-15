@@ -20,6 +20,7 @@ class SettingsService {
     }
     return ThemeMode.system;
   }
+
   Future<bool> migrationDone() async {
     final prefs = await SharedPreferences.getInstance();
     final bool? migrationDone = prefs.getBool('migrationDone');
@@ -28,6 +29,18 @@ class SettingsService {
     }
     return false;
   }
+
+  Future<bool> disclaimerRead() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? disclaimer = prefs.getInt('disclaimer');
+    if (disclaimer != null) {
+      if (disclaimer > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// Persists the user's preferred ThemeMode to local or remote storage.
   Future<void> updateThemeMode(ThemeMode theme) async {
     final prefs = await SharedPreferences.getInstance();
@@ -39,5 +52,10 @@ class SettingsService {
   Future<void> updateMigrationDone(bool migrationDone) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('migrationDone', migrationDone);
+  }
+
+  Future<void> updateDisclaimer(int disclaimer) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('disclaimer', disclaimer);
   }
 }

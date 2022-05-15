@@ -11,6 +11,7 @@ import '../model/model_location_with_position.dart';
 import '../model/model_position_item.dart';
 import '../utilities/get_position.dart';
 import '../widgets/drawer_main.dart';
+import '../localization/app_localizations_context.dart';
 
 class NearScreen extends StatefulWidget {
   const NearScreen({
@@ -72,28 +73,28 @@ class _NearScreenState extends State<NearScreen> {
       },
       itemBuilder: (context) => [
         if (Platform.isIOS)
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 1,
-            child: Text("Get Location Accuracy"),
+            child: Text(context.loc.getLocAcc),
           ),
         if (Platform.isIOS)
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 2,
-            child: Text("Request Temporary Full Accuracy"),
+            child: Text(context.loc.reqTempFullAcc),
           ),
         if (!Platform.isLinux)
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 3,
-            child: Text("Open App Settings"),
+            child: Text(context.loc.openAppSettings),
           ),
         if (Platform.isAndroid || Platform.isWindows)
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 4,
-            child: Text("Open Location Settings"),
+            child: Text(context.loc.openLocationSettings),
           ),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: 5,
-          child: Text("Clear"),
+          child: Text(context.loc.textClear),
         ),
       ],
     );
@@ -104,7 +105,7 @@ class _NearScreenState extends State<NearScreen> {
     return Scaffold(
         drawer: DrawerMain(year: widget.year),
         appBar: AppBar(
-          title: const Text('Ziele nach Nähe'),
+          title: Text(context.loc.nearScreenTitle),
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
           actions: [
@@ -157,12 +158,11 @@ class _NearScreenState extends State<NearScreen> {
                     String log = '';
                     for (PositionItem pi in gp.positionItems) {
                       if (pi.displayValue != null && pi.displayValue != '') {
-                        log += pi.displayValue! + '\n';
+                        log += '${pi.displayValue!}\n';
                       }
                     }
                     return Center(
-                        child: Text(
-                            'The current position could not be found. Try to activiate the location settings for this app and globaly on this device.\n\n$log'));
+                        child: Text(context.loc.positionNotFound(log)));
                   }
                 }
                 return Text('Result: ${snapshot.data}');

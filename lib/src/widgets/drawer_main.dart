@@ -3,7 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';
 
-import '../screens/cards_screen.dart';
+// import '../screens/cards_screen.dart';
 import '../screens/locations_list_screen.dart';
 import '../screens/regions_list_screen.dart';
 import '../screens/settings_screen.dart';
@@ -98,17 +98,17 @@ class DrawerMain extends StatelessWidget {
               Navigator.restorablePushNamed(context, NearScreen.routeName);
             },
           ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(MdiIcons.cog),
-            title: Text(context.loc.drawerCards),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.pop(context);
-              Navigator.restorablePushNamed(context, CardsScreen.routeName);
-            },
-          ),
+          // const Divider(),
+          // ListTile(
+          //   leading: const Icon(MdiIcons.cardAccountDetailsOutline),
+          //   title: Text(context.loc.drawerCards),
+          //   onTap: () {
+          //     // Update the state of the app.
+          //     // ...
+          //     Navigator.pop(context);
+          //     Navigator.restorablePushNamed(context, CardsScreen.routeName);
+          //   },
+          // ),
           const Divider(),
           ListTile(
             leading: const Icon(MdiIcons.cog),

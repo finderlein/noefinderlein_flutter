@@ -6,6 +6,8 @@ import '../utilities/data_downloader.dart';
 import '../model/model_downloader_progress.dart';
 import 'dart:developer' as developer;
 
+import '../localization/app_localizations_context.dart';
+
 class Downloader extends StatefulWidget {
   const Downloader({Key? key, required this.year}) : super(key: key);
   final int year;
@@ -91,7 +93,7 @@ class DownloaderState extends State<Downloader> {
                   final snackBar = SnackBar(
                     backgroundColor: Theme.of(context).colorScheme.error,
                     content: Text(
-                      "There was an error downloading. Maybe there is no internet-connection?\n\nThe error was: ${d.error}",
+                      context.loc.downloadError(d.error),
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onError),
                     ),

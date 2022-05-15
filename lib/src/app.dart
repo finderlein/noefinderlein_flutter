@@ -1,18 +1,18 @@
 // import 'dart:ffi';
 import 'dart:developer' as developer;
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:noefinderlein_flutter/src/screens/cards_screen.dart';
+// import 'package:noefinderlein_flutter/src/screens/cards_screen.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';
 
 // import 'database/tables/location.dart';
+import 'screens/disclaimer_screen.dart';
 import 'screens/locations_list_screen.dart';
 import 'screens/location_detail_screen.dart';
-import 'screens/migration_screen.dart';
 import 'settings/settings_controller.dart';
 import 'screens/settings_screen.dart';
 import 'screens/regions_list_screen.dart';
@@ -94,10 +94,10 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
-                // if (Platform.isAndroid && !settingsController.migrationDone) {
-                //   return const AndroidMigrationScreen();
-                // }
                 final String name = routeSettings.name as String;
+                if (settingsController.disclaimerRead) {
+                  return const DisclaimerScreen();
+                }
 
                 if (name.startsWith(LocationDetailsScreen.routeName)) {
                   final arguments = routeSettings.arguments as Map;
@@ -108,8 +108,8 @@ class MyApp extends StatelessWidget {
                 developer.log('routeName',
                     name: 'app.dart', error: routeSettings.name);
                 switch (routeSettings.name) {
-                  case CardsScreen.routeName:
-                    return const CardsScreen();
+                  // case CardsScreen.routeName:
+                  //   return const CardsScreen();
                   case RegionsListScreen.routeName:
                     return RegionsListScreen(year: glob.year);
                   case SettingsScreen.routeName:

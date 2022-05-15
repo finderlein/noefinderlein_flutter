@@ -16,10 +16,12 @@ class SettingsController with ChangeNotifier {
   // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
   late bool _migrationDone;
+  late bool _disclaimer;
 
   // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
   bool get migrationDone => _migrationDone;
+  bool get disclaimerRead => _disclaimer;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
@@ -27,6 +29,7 @@ class SettingsController with ChangeNotifier {
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
     _migrationDone = await _settingsService.migrationDone();
+    _disclaimer = await _settingsService.disclaimerRead();
 
     // Important! Inform listeners a change has occurred.
     notifyListeners();
@@ -49,11 +52,20 @@ class SettingsController with ChangeNotifier {
     // SettingService.
     await _settingsService.updateThemeMode(newThemeMode);
   }
+
   Future<void> updateMigrationDone(bool? migrationDone) async {
     if (migrationDone == null) return;
     if (migrationDone == _migrationDone) return;
     _migrationDone = migrationDone;
     notifyListeners();
     await _settingsService.updateMigrationDone(migrationDone);
+  }
+
+  Future<void> updateDisclaimer(int? disclaimer) async {
+    if (disclaimer == null) return;
+
+    await _settingsService.updateDisclaimer(disclaimer);
+    _disclaimer = await _settingsService.disclaimerRead();
+    notifyListeners();
   }
 }

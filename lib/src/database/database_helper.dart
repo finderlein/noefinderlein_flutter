@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:geolocator/geolocator.dart';
 import 'package:isar/isar.dart';
+import 'package:noefinderlein_flutter/src/database/tables/noecard.dart';
 // import 'package:path_provider/path_provider.dart';
 
 import '../model/model_filter.dart';
@@ -44,7 +45,8 @@ class DatabaseHelper {
           VisitedLocationSchema,
           RegionSchema,
           CategorySchema,
-          ProvinceSchema
+          ProvinceSchema,
+          NoecardSchema
         ],
         directory: glob.getDirectory(),
         inspector: true, // if you want to enable the inspector for debug builds
@@ -67,7 +69,8 @@ class DatabaseHelper {
           VisitedLocationSchema,
           RegionSchema,
           CategorySchema,
-          ProvinceSchema
+          ProvinceSchema,
+          NoecardSchema
         ],
         directory: glob.getDirectory(),
         inspector: true, // if you want to enable the inspector for debug builds
@@ -260,9 +263,9 @@ class DatabaseHelper {
             .toInt();
         if (newlp.distance > 3000) {
           newlp.distanceWithUnit =
-              (newlp.distance / 1000).toStringAsFixed(1) + ' km';
+              "${(newlp.distance / 1000).toStringAsFixed(1)} km";
         } else {
-          newlp.distanceWithUnit = newlp.distance.toString() + ' m';
+          newlp.distanceWithUnit = '${newlp.distance} m';
         }
         newlp.bearing = Geolocator.bearingBetween(positions.last.latitude,
                 positions.last.longitude, l.latitude, l.longitude)
@@ -497,5 +500,13 @@ class DatabaseHelper {
     await db.writeTxn((isar) async {
       await db.locations.putAll(updateList);
     });
+  }
+
+  static Future<List<Noecard>> getAllCards() async {
+    // List<Noecard> retList = <Noecard>[];
+    Isar db = await DatabaseHelper.db();
+    final cards = db.noecards.where().findAll();
+
+    return cards;
   }
 }
