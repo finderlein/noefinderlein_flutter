@@ -4,7 +4,7 @@ description: Noe Finderlein in Flutter
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 1.0.0+100
+version: 2.0.0+200
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -19,7 +19,7 @@ dependencies:
   path_provider: 2.0.10
   path: ^1.8.0
   http:
-  sqflite:
+  # sqflite:
   # flutter_animation_progress_bar:
   material_design_icons_flutter: 5.0.6595
   url_launcher: 6.1.1
@@ -31,6 +31,8 @@ dependencies:
   shared_preferences: 2.0.14
   geolocator: 8.2.1
   intl: 0.17.0
+  # qr_flutter: ^4.0.0
+  # mobile_scanner: ^1.0.0
 
 dev_dependencies:
   flutter_test:
