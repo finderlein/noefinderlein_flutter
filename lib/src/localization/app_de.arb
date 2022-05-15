@@ -74,8 +74,9 @@
   "drawerVisited": "Besichtigte",
   "drawerNear": "In der Nähe",
   "drawerSettings": "Einstellungen",
-  "drawerDownload": "Daten aktualisieren",
+  "settingsDownload": "App neustarten und den daten download nochmals starten",
   "drawerCards": "Meine Karten",
+  "drawerAbout": "Über",
   "settingsTitle": "Einstellungen",
   "noVisited": "Es schaut so aus als ob Sie noch kein Ziel besucht haben...\n\nOder vielleicht haben Sie vergessen das Ziel auf der Detailseite auf besichtigt ✔️ zu setzen?",
   "visitedRemoveTitle": "Eintrag löschen?",
@@ -136,5 +137,8 @@
   "detailWeb": "WEBSEITE",
   "detailNav": "NAVIGATION",
   "detailFav": "FAVORIT",
-  "disclaimer": "Der Programmierer dieser App übernimmt keine Garantie auf die Richtigkeit der verwendeten Daten. Falls Sie fortfahren diese APP zu nutzen, bestätigen Sie, dass Ihnen das bewusst ist."
+  "disclaimer": "Der Programmierer dieser App übernimmt keine Garantie auf die Richtigkeit der verwendeten Daten. Falls Sie fortfahren diese APP zu nutzen, bestätigen Sie, dass Ihnen das bewusst ist.",
+  "drawerFinderleinWebsite": "finderlein.at",
+  "drawerGithub": "Hilf auf Github mit",
+  "drawerLicenses": "Lizenzen"
 }

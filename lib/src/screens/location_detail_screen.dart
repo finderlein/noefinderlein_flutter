@@ -294,39 +294,42 @@ class LocationDetailView extends StatelessWidget {
 }
 
 void _launchTel(String tel) async {
+  Uri telLaunchUri;
   if (tel.startsWith('tel')) {
-    _launchURL(tel);
+    telLaunchUri = Uri.parse(tel);
   } else {
-    final Uri telLaunchUri = Uri(
+    telLaunchUri = Uri(
       scheme: 'tel',
       path: tel,
     );
-    _launchURL(telLaunchUri.toString());
   }
+  _launchURL(telLaunchUri);
 }
 
 void _launchMail(String email) async {
+  Uri emailLaunchUri;
   if (email.startsWith('mailto')) {
-    _launchURL(email);
+    emailLaunchUri = Uri.parse(email);
   } else {
-    final Uri emailLaunchUri = Uri(
+    emailLaunchUri = Uri(
       scheme: 'mailto',
       path: email,
     );
-    _launchURL(emailLaunchUri.toString());
   }
+  _launchURL(emailLaunchUri);
 }
 
 void _launchWeb(String http) async {
+  Uri webLaunchUri;
   if (http.startsWith('http')) {
-    _launchURL(http);
+    webLaunchUri = Uri.parse(http);
   } else {
-    final Uri webLaunchUri = Uri(
+    webLaunchUri = Uri(
       scheme: 'https',
       path: http,
     );
-    _launchURL(webLaunchUri.toString());
   }
+  _launchURL(webLaunchUri);
 }
 
 void _launchNav(double lat, double lon) async {

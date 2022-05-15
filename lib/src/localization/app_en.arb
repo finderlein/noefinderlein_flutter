@@ -74,8 +74,9 @@
   "drawerVisited": "Visited Locations",
   "drawerNear": "Near Locations",
   "drawerSettings": "Settings",
-  "drawerDownload": "Update Data",
+  "settingsDownload": "Restart app and start download again",
   "drawerCards": "My Cards",
+  "drawerAbout": "About",
   "settingsTitle": "Settings",
   "noVisited": "It seems you haven't visited any locations yet...\n\nOr maybe you have forgotten to mark a location as visited ✔️ on the detail page?",
   "visitedRemoveTitle": "Delete entry?",
@@ -132,5 +133,8 @@
   "detailWeb": "WEBPAGE",
   "detailNav": "NAVI",
   "detailFav": "FAV",
-  "disclaimer": "The developer of this app does not guarantee the completeness and the correctness of the showed data. If you continue to use this app, you confirm that you are aware of this."
+  "disclaimer": "The developer of this app does not guarantee the completeness and the correctness of the showed data. If you continue to use this app, you confirm that you are aware of this.",
+  "drawerFinderleinWebsite": "finderlein.at",
+  "drawerGithub": "Contribute on Github",
+  "drawerLicenses": "Licenses"
 }

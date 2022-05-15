@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 // import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:noefinderlein_flutter/src/screens/about_screen.dart';
 // import 'package:noefinderlein_flutter/src/screens/cards_screen.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
@@ -111,6 +112,8 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   // case CardsScreen.routeName:
                   //   return const CardsScreen();
+                  case AboutScreen.routeName:
+                    return const AboutScreen();
                   case RegionsListScreen.routeName:
                     return RegionsListScreen(year: glob.year);
                   case SettingsScreen.routeName:

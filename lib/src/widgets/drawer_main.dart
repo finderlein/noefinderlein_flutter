@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:developer' as developer;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:noefinderlein_flutter/src/screens/near_screen.dart';
 import 'package:noefinderlein_flutter/src/screens/visited_screen.dart';
 
 // import '../screens/cards_screen.dart';
+import '../screens/about_screen.dart';
 import '../screens/locations_list_screen.dart';
 import '../screens/regions_list_screen.dart';
 import '../screens/settings_screen.dart';
@@ -12,7 +12,6 @@ import '../screens/settings_screen.dart';
 import '../utilities/noefinderlein.dart';
 
 import '../localization/app_localizations_context.dart';
-import 'downloader_modal.dart';
 
 class DrawerMain extends StatelessWidget {
   const DrawerMain({Key? key, required this.year}) : super(key: key);
@@ -123,40 +122,14 @@ class DrawerMain extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(MdiIcons.download),
-            title: Text(context.loc.drawerDownload),
+            leading: const Icon(MdiIcons.information),
+            title: Text(context.loc.drawerAbout),
             onTap: () {
-              Future.delayed(
-                  Duration.zero,
-                  () => showDownloader(context).then(
-                        (_) {
-                          developer.log('showDownloader_done:',
-                              name: 'drawer_main.dart', error: 'now');
-                          if (Navigator.canPop(context)) {
-                            Navigator.pop(context);
-                          }
-                          Navigator.pushReplacementNamed(
-                            context,
-                            LocationListScreen.routeName,
-                          );
-                        },
-                      ));
+              Navigator.pop(context);
+              Navigator.restorablePushNamed(context, AboutScreen.routeName);
             },
           ),
         ]));
-  }
-
-  Future<void> showDownloader(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-            scrollable: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            title: Text(context.loc.downloadingTitle(year.toString())),
-            content: Builder(builder: (context) {
-              return Downloader(year: year);
-            })));
   }
 }
 
