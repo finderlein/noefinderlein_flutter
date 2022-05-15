@@ -34,7 +34,7 @@ class SettingsService {
     final prefs = await SharedPreferences.getInstance();
     final int? disclaimer = prefs.getInt('disclaimer');
     if (disclaimer != null) {
-      if (disclaimer > 0) {
+      if (disclaimer > 1) {
         return true;
       }
     }

@@ -74,6 +74,7 @@
   "drawerVisited": "Visited Locations",
   "drawerNear": "Near Locations",
   "drawerSettings": "Settings",
+  "drawerDownload": "Update Data",
   "drawerCards": "My Cards",
   "settingsTitle": "Settings",
   "noVisited": "It seems you haven't visited any locations yet...\n\nOr maybe you have forgotten to mark a location as visited ✔️ on the detail page?",

@@ -95,8 +95,9 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 final String name = routeSettings.name as String;
-                if (settingsController.disclaimerRead) {
-                  return const DisclaimerScreen();
+                if (!settingsController.disclaimerRead) {
+                  return DisclaimerScreen(
+                      settingsController: settingsController);
                 }
 
                 if (name.startsWith(LocationDetailsScreen.routeName)) {
