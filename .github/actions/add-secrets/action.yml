@@ -19,8 +19,10 @@ runs:
   using: 'composite'
   steps:
     - name: create lib/auth directory
+      shell: bash
       run: mkdir lib/auth
     - name: add secrets.dart file
+      shell: bash
       run: |
         echo "var mapAccessToken = \"${{ inputs.mapaccesstoken }}\";" >> lib/auth/secrets.dart
         echo "var mapUrl = \"${{ inputs.mapurl }}\";" >> lib/auth/secrets.dart
