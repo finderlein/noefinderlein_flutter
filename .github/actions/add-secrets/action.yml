@@ -1,0 +1,28 @@
+name: add secrets
+description: Adds a secrets.dart file to lib/auth
+
+inputs:
+  mapaccesstoken:
+    description: 'A map access token'
+    required: true
+  mapurl:
+    description: 'url to the map'
+    required: true
+  mapurldark:
+    description: 'url to the dark map'
+    required: true
+  dataapi:
+    description: 'Url to the data api'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: create lib/auth directory
+      run: mkdir lib/auth
+    - name: add secrets.dart file
+      run: |
+        echo "var mapAccessToken = \"${{ inputs.mapaccesstoken }}\";" >> lib/auth/secrets.dart
+        echo "var mapUrl = \"${{ inputs.mapurl }}\";" >> lib/auth/secrets.dart
+        echo "var mapUrlDark = \"${{ inputs.mapurldark }}\";" >> lib/auth/secrets.dart
+        echo "var dataApi = \"${{ inputs.dataapi }}\";" >> lib/auth/secrets.dart

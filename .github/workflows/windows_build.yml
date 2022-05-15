@@ -1,18 +1,21 @@
 name: 🏁 Windows Build
 on:
   workflow_call:
-  
+
 jobs:
-  windows:
+  windows_build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir lib\auth
-      - run: |
-          echo "var mapAccessToken = ""${{ secrets.MAPACCESSTOKEN }}"";" > lib/auth/secrets.dart
-          echo "var mapUrl = ""${{ secrets.MAPURL }}"";" >> lib/auth/secrets.dart
-          echo "var mapUrlDark = ""${{ secrets.MAPURLDARK }}"";" >> lib/auth/secrets.dart
-          echo "var dataApi = ""${{ secrets.DATAAPI }}"";" >> lib/auth/secrets.dart
+
+      - name: Setup secrets
+        uses: ./.github/actions/add-secrets
+        with:
+          mapaccesstoken: ${{ secrets.MAPACCESSTOKEN }}
+          mapurl: ${{ secrets.MAPURL }}
+          mapurldark: ${{ secrets.MAPURLDARK }}
+          dataapi: ${{ secrets.DATAAPI }}
+        
 
       - name: Setup flutter
         uses: ./.github/actions/flutter-version
