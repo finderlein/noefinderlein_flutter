@@ -1,0 +1,16 @@
+NÖ Finderlein
+The NÖ Finderlein is the inoffical compainon App to the so called "Niederösterreich-CARD". It shows all destinations which can be visited with the Card in a well-arranged manner.
+
+The main functions are:
+ - quickly display all relevant information to all destinations
+ - list destinationy by regioins
+ - search for destinations
+ - view the destinations in a map
+ - list all destinations sorted by proximity to current location (GPS required)
+ - call the navigation App directly from the app
+ - filter according to destination type (monastery, castle and manor house,...)
+ - define favorites
+ - mark visited destinations
+ - display today open locations
+
+Therefore the NÖ Finderlein is the ideal companion for people who are abroad and want to quickly look-up some Niederösterreich-Card related information.

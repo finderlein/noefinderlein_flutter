@@ -1,0 +1,17 @@
+NÖ Finderlein
+Das NÖ Finderlein ist eine inoffizielle Niederösterreich-CARD App die die Ziele der Niederösterreich CARD übersichtlich darstellt und bei Bedarf neuere Daten aus dem Internet nach lädt.
+
+Die Hauptfunktionen sind:
+ - nachschlagen aller wichtiger Informationen zu allen Zielen
+ - auflisten aller Ziele (nach der Nummer im zugehörigen NÖ-CARD - Buch)
+ - auflisten der Ziele nach Region
+ - suchen nach konkreten Zielen
+ - darstellen der Ziele in einer Karte
+ - auflisten der Ziele nach der Nähe zum aktuellen Standort
+ - navigieren zum Ziel (über Google Maps Navigation)
+ - filtern nach Typ (Stifte, Burgen und Schlösser,...)
+ - Favoriten definieren
+ - besuchte Ziele abhaken und ersparte Summe berechnen
+
+
+Mit dem NÖ Finderlein kann man somit sehr schnell Informationen der NÖ Card nachschlagen und das Buch zu Hause lassen.
