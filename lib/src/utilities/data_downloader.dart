@@ -15,7 +15,7 @@ import '../database/database_helper.dart';
 
 import '../model/model_downloader_progress.dart';
 
-import '../../auth/secrets.dart';
+import '../../auth/api.dart';
 
 class DataDownloader {
   final String apiUrl = dataApi;
