@@ -51,7 +51,11 @@ jobs:
   deploy:
     needs: [android, macos, ios, windows, linux]
     runs-on: ubuntu-latest
-    permissions: read-all|write-all
+    permissions:
+      contents: write
+      deployments: write
+      packages: write
+      repository-projects: write
     steps:
       - name: Get the version
         id: get_version
