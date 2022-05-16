@@ -51,6 +51,7 @@ jobs:
   deploy:
     needs: [android, macos, ios, windows, linux]
     runs-on: ubuntu-latest
+    permissions: read-all|write-all
     steps:
       - name: Get the version
         id: get_version
