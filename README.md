@@ -1,4 +1,4 @@
-# NÖ Finderlein <img height="40" src="https://raw.githubusercontent.com/finderlein/noefinderlein-flutter/master/assets/images/3.0x/finderlein_logo_bunt.png">
+# NÖ Finderlein <img height="40" src="assets/images/finderlein_logo_bunt.svg">
 
 [![release](https://github.com/finderlein/noefinderlein_flutter/actions/workflows/release.yml/badge.svg)](https://github.com/finderlein/noefinderlein_flutter/actions/workflows/release.yml)
 
