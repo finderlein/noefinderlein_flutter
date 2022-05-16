@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="at.finderlein.noe">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
         android:label="NÖ Finderlein"
         android:name="${applicationName}"

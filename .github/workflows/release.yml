@@ -16,15 +16,15 @@ on:
 jobs:
 
   android:
-    uses: derqurps/noefinderlein_flutter/.github/workflows/android_build.yml@main
+    uses: finderlein/noefinderlein_flutter/.github/workflows/android_build.yml@main
     secrets: inherit
 
   macos:
-    uses: derqurps/noefinderlein_flutter/.github/workflows/macos_build.yml@main
+    uses: finderlein/noefinderlein_flutter/.github/workflows/macos_build.yml@main
     secrets: inherit
 
   ios:
-    uses: derqurps/noefinderlein_flutter/.github/workflows/ios_build.yml@main
+    uses: finderlein/noefinderlein_flutter/.github/workflows/ios_build.yml@main
     secrets: inherit
 
   # web:
@@ -41,11 +41,11 @@ jobs:
   #     - run: flutter build web
 
   windows:
-    uses: derqurps/noefinderlein_flutter/.github/workflows/windows_build.yml@main
+    uses: finderlein/noefinderlein_flutter/.github/workflows/windows_build.yml@main
     secrets: inherit
 
   linux:
-    uses: derqurps/noefinderlein_flutter/.github/workflows/linux_build.yml@main
+    uses: finderlein/noefinderlein_flutter/.github/workflows/linux_build.yml@main
     secrets: inherit
 
   deploy:

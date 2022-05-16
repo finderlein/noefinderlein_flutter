@@ -25,15 +25,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-def keystorePropertiesFile = rootProject.file("noefinderlein_keystore.txt")
-
-// Initialize a new Properties() object called keystoreProperties.
-def keystoreProperties = new Properties()
-
-// Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-
 android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -63,12 +54,36 @@ android {
 
     signingConfigs {
         release {
-            storeFile rootProject.file(keystoreProperties['noefinderlein_keystore'])
-            storePassword keystoreProperties['noefinderlein_keystore_pw']
-            keyAlias keystoreProperties['noefinderlein_alias']
-            keyPassword keystoreProperties['noefinderlein_alias_pw']
+            def keystorePropertiesFile = rootProject.file("key.properties")
+            def keystoreProperties = new Properties()
+
+            if (!keystorePropertiesFile.exists()) return;
+
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
+
+    // flavorDimensions "deploy"
+
+    // productFlavors {
+    //     fdroid {
+    //         dimension "deploy"
+    //         signingConfig signingConfigs.debug
+    //     }
+    // }
+
+    // android.applicationVariants.all { variant ->
+    //     if (variant.flavorName == "fdroid") {
+    //         variant.outputs.all { output ->
+    //             output.outputFileName = "app-fdroid-release.apk"
+    //         }
+    //     }
+    // }
 
     buildTypes {
         release {
@@ -83,6 +98,7 @@ android {
             versionNameSuffix "-debug"
         }
     }
+    namespace 'at.finderlein.noe'
 }
 
 flutter {

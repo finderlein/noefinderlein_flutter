@@ -102,18 +102,18 @@ class _AboutScreenState extends State<AboutScreen> {
         item(
             title: 'SOURCE CODE',
             text:
-                'This projects source code is hostet on GitHub: https://github.com/derqurps/noefinderlein_flutter',
+                'This projects source code is hostet on GitHub: https://github.com/finderlein/noefinderlein_flutter',
             url: Uri(
                 scheme: 'https',
-                path: "github.com/derqurps/noefinderlein_flutter")),
+                path: "github.com/finderlein/noefinderlein_flutter")),
         item(
             title: 'ISSUES',
             text:
-                'You can report bugs, enhancement proposals and feature requests at the GitHub issue tracker: https://github.com/derqurps/noefinderlein_flutter/issues/new/choose',
+                'You can report bugs, enhancement proposals and feature requests at the GitHub issue tracker: https://github.com/finderlein/noefinderlein_flutter/issues/new/choose',
             url: Uri(
                 scheme: 'https',
                 path:
-                    "github.com/derqurps/noefinderlein_flutter/issues/new/choose")),
+                    "github.com/finderlein/noefinderlein_flutter/issues/new/choose")),
         // item(
         //     title: 'TRANSLATE',
         //     text:
@@ -134,7 +134,7 @@ class _AboutScreenState extends State<AboutScreen> {
           child: ElevatedButton(
               onPressed: () {
                 Uri url = Uri.parse(
-                    'https://github.com/derqurps/noefinderlein_flutter/blob/main/LICENSE');
+                    'https://github.com/finderlein/noefinderlein_flutter/blob/main/LICENSE');
                 _launchURL(url);
               },
               child: const Text('VIEW LICENSE'))),

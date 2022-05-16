@@ -1,6 +1,6 @@
-# NÖ Finderlein <img height="40" src="https://raw.githubusercontent.com/derqurps/noefinderlein-flutter/master/assets/images/3.0x/finderlein_logo_bunt.png">
+# NÖ Finderlein <img height="40" src="https://raw.githubusercontent.com/finderlein/noefinderlein-flutter/master/assets/images/3.0x/finderlein_logo_bunt.png">
 
-[![release](https://github.com/derqurps/noefinderlein_flutter/actions/workflows/release.yml/badge.svg)](https://github.com/derqurps/noefinderlein_flutter/actions/workflows/release.yml)
+[![release](https://github.com/finderlein/noefinderlein_flutter/actions/workflows/release.yml/badge.svg)](https://github.com/finderlein/noefinderlein_flutter/actions/workflows/release.yml)
 
 The NÖ Finderlein is a inofficial companion App for the Niederösterreich-Card for people who would like to have all important information for the associated destinations at their fingertip.
 
@@ -25,18 +25,18 @@ var mapAccessToken = "<mapbox api key>";
 var mapUrl = "https://api.mapbox.com/styles/v1/.....";
 var mapUrlDark = "https://api.mapbox.com/styles/v1/.....";
 
-var dataApi = "https://noecard.reitschmied.at/apiv2/";
+var dataApi = "https://noe.finderlein.at/apiv2/";
 ```
 
 #### Android development
 
-For android development a file called `/android/noefinderlein_keystore.txt` is needed with the following variables:
+For android development a file called `/android/key.properties` is needed with the following variables:
 
 ```
-noefinderlein_keystore=PATH_TO_KEYSTORE
-noefinderlein_keystore_pw=KEYSTORE_PW
-noefinderlein_alias=noefinderlein
-noefinderlein_alias_pw=ALIAS_PW
+storeFile=PATH_TO_KEYSTORE
+storePassword=KEYSTORE_PW
+keyAlias=upload
+keyPassword=ALIAS_PW
 ```
 
 For more information, have a look at the [Android Keystore System Training](https://developer.android.com/training/articles/keystore)

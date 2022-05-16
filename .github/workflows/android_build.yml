@@ -12,10 +12,10 @@ jobs:
           echo "${{ secrets.ANDROID_RELEASE_KEYSTORE }}" > android/release.keystore.asc
           gpg -d --passphrase "${{secrets.ANDROID_RELEASE_KEYSTORE_ENCRYPTION_PASSPHRASE }}" --batch android/release.keystore.asc > android/release.keystore
       - run: |
-          echo "noefinderlein_keystore=release.keystore" >> android/noefinderlein_keystore.txt
-          echo "noefinderlein_keystore_pw=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/noefinderlein_keystore.txt
-          echo "noefinderlein_alias=upload" >> android/noefinderlein_keystore.txt
-          echo "noefinderlein_alias_pw=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/noefinderlein_keystore.txt
+          echo "storeFile=release.keystore" >> android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}" >> android/key.properties
+          echo "keyAlias=upload" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_ALIAS_PW }}"  >> android/key.properties
 
       - name: Setup secrets
         uses: ./.github/actions/add-secrets
@@ -38,7 +38,7 @@ jobs:
       - name: generate isar files
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test
-      # - run: flutter build apk --split-per-abi
+      - run: flutter build apk
       - run: flutter build appbundle
       - uses: actions/upload-artifact@v3
         with:

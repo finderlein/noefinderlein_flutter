@@ -6,7 +6,7 @@
   <summary>A companion app for the austrian Niederösterreich Card</summary>
   
   <metadata_license>MIT</metadata_license>
-  <project_license>GPL-3.0-only</project_license>
+  <project_license>GPL-3.0-or-later</project_license>
   
   <supports>
     <control>pointing</control>
@@ -26,13 +26,13 @@
   <launchable type="desktop-id">at.finderlein.noe.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen1.png</image>
+      <image>https://raw.githubusercontent.com/finderlein/noefinderlein_flutter/main/screenshots/screen1.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen3.png</image>
+      <image>https://raw.githubusercontent.com/finderlein/noefinderlein_flutter/main/screenshots/screen3.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/derqurps/noefinderlein_flutter/main/screenshots/screen4.png</image>
+      <image>https://raw.githubusercontent.com/finderlein/noefinderlein_flutter/main/screenshots/screen4.png</image>
     </screenshot>
   </screenshots>
 </component>
