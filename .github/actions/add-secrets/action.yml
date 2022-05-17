@@ -25,6 +25,3 @@ runs:
       shell: bash
       run: |
         echo "var mapAccessToken = \"${{ inputs.mapaccesstoken }}\";" >> lib/auth/secrets.dart
-        echo "var mapUrl = \"${{ inputs.mapurl }}\";" >> lib/auth/secrets.dart
-        echo "var mapUrlDark = \"${{ inputs.mapurldark }}\";" >> lib/auth/secrets.dart
-        echo "var dataApi = \"${{ inputs.dataapi }}\";" >> lib/auth/secrets.dart

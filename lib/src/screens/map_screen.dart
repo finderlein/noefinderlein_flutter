@@ -10,7 +10,7 @@ import 'package:noefinderlein_flutter/src/widgets/map_popup.dart';
 import '../database/database_helper.dart';
 import '../database/tables/location.dart';
 import 'dart:developer' as developer;
-import '../../auth/secrets.dart';
+import '../../auth/api.dart';
 
 import '../localization/app_localizations_context.dart';
 import '../model/model_marker_with_location.dart';
@@ -132,7 +132,7 @@ class _MapScreenState extends State<MapScreen> {
                         options: TileLayerOptions(
                       urlTemplate: isDarkMode ? mapUrlDark : mapUrl,
                       additionalOptions: {
-                        'accessToken': mapAccessToken,
+                        'accessToken': mapBoxAccessToken,
                         'id': 'mapbox.streets',
                       },
                     )),

@@ -22,10 +22,6 @@ A File called `/lib/auth/secrets.dart` is needed with the following declared var
 
 ```
 var mapAccessToken = "<mapbox api key>";
-var mapUrl = "https://api.mapbox.com/styles/v1/.....";
-var mapUrlDark = "https://api.mapbox.com/styles/v1/.....";
-
-var dataApi = "https://noe.finderlein.at/apiv2/";
 ```
 
 #### Android development
