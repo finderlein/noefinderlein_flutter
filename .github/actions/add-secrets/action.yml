@@ -20,7 +20,7 @@ runs:
   steps:
     - name: create lib/auth directory
       shell: bash
-      run: mkdir lib/auth
+      run: mkdir -p lib/auth
     - name: add secrets.dart file
       shell: bash
       run: |
