@@ -1,0 +1,17 @@
+name: get version
+description: gets the version from the tag
+
+outputs:
+  version: 
+    description: "version of the build"
+    value: ${{ steps.get_version.outputs.VERSION }}
+
+runs:
+  using: "composite"
+  steps:
+      id: get_version
+      run: |
+        BRANCH_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)
+        GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-10)
+        [[ "$VERSION" =~ ^v[0-9]{1}\.[0-9]{1}\.[0-9]{1}$ ]] && OUT=$VERSION || OUT=$GITHUB_SHA
+        echo ::set-output name=VERSION::${OUT}

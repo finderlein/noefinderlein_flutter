@@ -42,4 +42,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: appimage
-          path: ./*.AppImage
+          path: ./NOE.Finderlein-latest-x86_64.AppImage 

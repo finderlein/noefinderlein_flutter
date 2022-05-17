@@ -27,8 +27,8 @@ jobs:
       - run: flutter config --enable-windows-desktop
       - run: flutter build windows
       - name: Zip Folder
-        run: Compress-Archive -Path 'build\*' -DestinationPath 'windows.zip'
+        run: Compress-Archive -Path 'build\*' -DestinationPath 'noefinderlein-windows.zip'
       - uses: actions/upload-artifact@v3
         with:
           name: windows
-          path: ./windows.zip
+          path: ./noefinderlein-windows.zip

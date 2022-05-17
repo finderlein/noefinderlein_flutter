@@ -59,11 +59,12 @@ jobs:
     steps:
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        uses: ./.github/actions/build-version
       - uses: actions/download-artifact@v3
         with:
           name: android
           path: android
+      
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: android
@@ -92,29 +93,39 @@ jobs:
         with:
           name: appimage
           path: appimage
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: appimage
       - uses: actions/download-artifact@v3
         with:
           name: tgz
           path: tgz
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: appimage
+        working-directory: tgz
+      - name: rename with version
+        run: |
+          mv android/bundle/release/app-release.apk android/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
+          mv android/bundle/release/app-release.aab android/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
+          mv macos/noefinderlein_flutter.dmg macos/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+          mv windows/noefinderlein-windows.zip windows/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
+          mv appimage/NOE.Finderlein-latest-x86_64.AppImage appimage/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
+          mv tgz/noefinderlein-linux-portable.tar.gz tgz/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.get_version.outputs.VERSION }}"
+          automatic_release_tag: "${{ steps.get_version.outputs.version }}"
           prerelease: false
-          title: "NÖ Finderlein Release ${{ steps.get_version.outputs.VERSION }}"
+          title: "NÖ Finderlein Release ${{ steps.get_version.outputs.version }}"
           files: |
-            android/**/*.apk
-            android/**/*.aab
-            macos/**/*.dmg
-            macos/*.dmg
-            ios/**/*.app
-            ios/**/*.app.
-            ios/*.app
-            ios/*.app.
-            windows/**/*.zip
-            windows/*.zip
-            appimage/*.AppImage
-            tgz/*.tgz
+            android/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
+            android/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
+            macos/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+            windows/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
+            appimage/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
+            tgz/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+            # ios/**/*.app
+            # ios/**/*.app.
+            # ios/*.app
+            # ios/*.app.
