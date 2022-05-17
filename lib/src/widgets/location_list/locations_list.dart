@@ -4,6 +4,7 @@ import '../../model/model_location_with_open.dart';
 import 'locations_list_item.dart';
 // import '../../database/tables/location.dart';
 import '../../screens/location_detail_screen.dart';
+import '../../localization/app_localizations_context.dart';
 
 class LocationsList extends StatelessWidget {
   const LocationsList({Key? key, required this.locations}) : super(key: key);
@@ -20,16 +21,20 @@ class LocationsList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, position) {
           final item = locations[position];
-          return InkWell(
-              onTap: () {
-                var id = item.location.id;
-                Navigator.restorablePushNamed(
-                    context, LocationDetailsScreen.routeName,
-                    arguments: {'locationId': id, 'date': item.date});
-              },
-              child: LocationsListItem(
-                locationWo: item,
-              ));
+          return Semantics(
+              label: item.location.name,
+              button: true,
+              onTapHint: context.loc.locationListOnTapHint,
+              child: InkWell(
+                  onTap: () {
+                    var id = item.location.id;
+                    Navigator.restorablePushNamed(
+                        context, LocationDetailsScreen.routeName,
+                        arguments: {'locationId': id, 'date': item.date});
+                  },
+                  child: LocationsListItem(
+                    locationWo: item,
+                  )));
         });
   }
 }

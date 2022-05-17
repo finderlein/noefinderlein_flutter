@@ -99,6 +99,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
             !_search
                 ? IconButton(
                     icon: const Icon(MdiIcons.magnify),
+                    tooltip: context.loc.search,
                     onPressed: () {
                       setState(() {
                         //add
@@ -108,6 +109,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
                   )
                 : IconButton(
                     icon: const Icon(Icons.clear),
+                    tooltip: context.loc.closeSearch,
                     onPressed: () {
                       setState(() {
                         //add
@@ -119,6 +121,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
                   ),
             IconButton(
               icon: const Icon(MdiIcons.download),
+              tooltip: context.loc.ttDownloadData,
               onPressed: () {
                 Future.delayed(
                     Duration.zero,
@@ -140,6 +143,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
             ),
             IconButton(
               icon: const Icon(MdiIcons.sortAlphabeticalVariant),
+              tooltip: context.loc.ttChangeSorting,
               onPressed: () => showDialog(
                   context: context,
                   builder: (BuildContext context) =>
@@ -171,6 +175,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
             IconButton(
               icon:
                   Icon(filterActive ? MdiIcons.filter : MdiIcons.filterOutline),
+              tooltip: context.loc.ttFilterList,
               onPressed: () {
                 // showDialog(
                 //     context: context,
@@ -192,6 +197,7 @@ class _LocationListScreenState extends State<LocationListScreen> {
             ),
             IconButton(
               icon: const Icon(MdiIcons.map),
+              tooltip: context.loc.ttShowLocationsOnMap,
               onPressed: () {
                 Navigator.restorablePushNamed(context, MapScreen.routeName,
                     arguments: {'locations': currentIds});

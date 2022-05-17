@@ -26,17 +26,17 @@ class DisclaimerScreen extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  settingsController.updateDisclaimer(2);
-                  RestartWidget.restartApp(context);
-                },
-                child: Text(context.loc.disclaimerButtonAgree)),
-            ElevatedButton(
-                onPressed: () {
                   Future.delayed(const Duration(milliseconds: 1000), () {
                     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                   });
                 },
-                child: Text(context.loc.cancel))
+                child: Text(context.loc.cancel)),
+            ElevatedButton(
+                onPressed: () {
+                  settingsController.updateDisclaimer(2);
+                  RestartWidget.restartApp(context);
+                },
+                child: Text(context.loc.disclaimerButtonAgree)),
           ])),
         )
       ]),

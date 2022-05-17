@@ -148,10 +148,12 @@ Widget funktionsGraphik(BuildContext context) {
         child: Image.asset(
           'assets/images/finderlein_funktionsgraphik.png',
           fit: BoxFit.contain,
+          excludeFromSemantics: true,
         ));
   }
   return Image.asset(
     'assets/images/finderlein_funktionsgraphik.png',
     fit: BoxFit.contain,
+    excludeFromSemantics: true,
   );
 }

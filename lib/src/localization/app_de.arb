@@ -140,5 +140,11 @@
   "disclaimer": "Der Programmierer dieser App übernimmt keine Garantie auf die Richtigkeit der verwendeten Daten. Falls Sie fortfahren diese APP zu nutzen, bestätigen Sie, dass Ihnen das bewusst ist.",
   "drawerFinderleinWebsite": "finderlein.at",
   "drawerGithub": "Hilf auf Github mit",
-  "drawerLicenses": "Lizenzen"
+  "drawerLicenses": "Lizenzen",
+  "closeSearch": "Suche beenden",
+  "locationListOnTapHint": "Details",
+  "ttDownloadData": "Neue Daten holen",
+  "ttChangeSorting": "Sortierreihenfolge ändern",
+  "ttFilterList": "Die Liste filtern",
+  "ttShowLocationsOnMap": "Die Ziele auf einer Karte anzeigen"
 }

@@ -102,7 +102,7 @@ class _AboutScreenState extends State<AboutScreen> {
         item(
             title: 'SOURCE CODE',
             text:
-                'This projects source code is hostet on GitHub: https://github.com/finderlein/noefinderlein_flutter',
+                'This projects source code is hosted on GitHub: https://github.com/finderlein/noefinderlein_flutter',
             url: Uri(
                 scheme: 'https',
                 path: "github.com/finderlein/noefinderlein_flutter")),

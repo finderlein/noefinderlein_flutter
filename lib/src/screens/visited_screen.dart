@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../database/database_helper.dart';
 import '../model/model_visited_with_location.dart';
-import '../widgets/app_bar_main.dart';
 import '../widgets/drawer_main.dart';
 import 'dart:developer' as developer;
 
@@ -38,8 +37,10 @@ class VisitedScreenState extends State<VisitedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: DrawerMain(year: widget.year),
-        appBar: AppBarMain(
-          customTitle: context.loc.visitedScreenTitle,
+        appBar: AppBar(
+          title: Text(context.loc.visitedScreenTitle),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
         ),
         bottomSheet: FutureBuilder(
           future: _allVisitedLocations,

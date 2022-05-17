@@ -136,5 +136,11 @@
   "disclaimer": "The developer of this app does not guarantee the completeness and the correctness of the showed data. If you continue to use this app, you confirm that you are aware of this.",
   "drawerFinderleinWebsite": "finderlein.at",
   "drawerGithub": "Contribute on Github",
-  "drawerLicenses": "Licenses"
+  "drawerLicenses": "Licenses",
+  "closeSearch": "Close Search",
+  "locationListOnTapHint": "View Details",
+  "ttDownloadData": "Download new data",
+  "ttChangeSorting": "Change sort Order",
+  "ttFilterList": "Filter the list",
+  "ttShowLocationsOnMap": "Show locations on a map"
 }

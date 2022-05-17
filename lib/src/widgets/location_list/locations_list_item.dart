@@ -127,8 +127,10 @@ class _MiniItems extends StatelessWidget {
     return Row(
       children: <Widget>[
         location.badWeather
-            ? Icon(MdiIcons.weatherRainy,
-                color: Theme.of(context).colorScheme.onSurface)
+            ? Icon(
+                MdiIcons.weatherRainy,
+                color: Theme.of(context).colorScheme.onSurface,
+              )
             : const Center(),
         location.childFriendly
             ? Icon(MdiIcons.humanMaleChild,
@@ -159,8 +161,12 @@ class _MiniItems extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface)
             : const Center(),
         location.topLocation
-            ? Image.asset('assets/images/top_ausflugsziel.png',
-                height: 24, width: 24)
+            ? Image.asset(
+                'assets/images/top_ausflugsziel.png',
+                height: 24,
+                width: 24,
+                excludeFromSemantics: true,
+              )
             : const Center(),
         CategoryIcon(category: location.category)
       ],

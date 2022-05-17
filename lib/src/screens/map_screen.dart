@@ -5,7 +5,6 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:noefinderlein_flutter/src/settings/settings_controller.dart';
-import 'package:noefinderlein_flutter/src/widgets/app_bar_main.dart';
 import 'package:noefinderlein_flutter/src/widgets/map_popup.dart';
 
 import '../database/database_helper.dart';
@@ -55,8 +54,10 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarMain(
-          customTitle: context.loc.map,
+        appBar: AppBar(
+          title: Text(context.loc.map),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
         ),
         body: FutureBuilder(
           future: _allmapLocations,
