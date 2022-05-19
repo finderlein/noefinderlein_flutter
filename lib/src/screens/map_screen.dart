@@ -32,7 +32,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late Future<List<Location>> _allmapLocations;
   late CenterOnLocationUpdate _centerOnLocationUpdate;
-  late StreamController<double?> _centerCurrentLocationStreamController;
+  late StreamController<double>? _centerCurrentLocationStreamController;
 
   @override
   void initState() {
@@ -40,14 +40,14 @@ class _MapScreenState extends State<MapScreen> {
     _allmapLocations =
         DatabaseHelper.getLocationsToIds(locationIds: widget.locationIds);
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
-    _centerCurrentLocationStreamController = StreamController<double?>();
+    _centerCurrentLocationStreamController = StreamController<double>();
   }
 
   final PopupController _popupLayerController = PopupController();
 
   @override
   void dispose() {
-    _centerCurrentLocationStreamController.close();
+    _centerCurrentLocationStreamController?.close();
     super.dispose();
   }
 
@@ -118,7 +118,7 @@ class _MapScreenState extends State<MapScreen> {
                                 CenterOnLocationUpdate.always,
                           );
                           // Center the location marker on the map and zoom the map to level 18.
-                          _centerCurrentLocationStreamController.add(18);
+                          _centerCurrentLocationStreamController?.add(18);
                         },
                         child: const Icon(
                           Icons.my_location,
@@ -139,7 +139,7 @@ class _MapScreenState extends State<MapScreen> {
                     LocationMarkerLayerWidget(
                       plugin: LocationMarkerPlugin(
                         centerCurrentLocationStream:
-                            _centerCurrentLocationStreamController.stream,
+                            _centerCurrentLocationStreamController?.stream,
                         centerOnLocationUpdate: _centerOnLocationUpdate,
                       ),
                     ),
