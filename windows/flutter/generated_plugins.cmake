@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  geolocator_windows
   isar_flutter_libs
   maps_launcher
   url_launcher_windows
