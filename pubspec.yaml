@@ -29,7 +29,7 @@ dependencies:
   latlong2: ^0.8.1
   flutter_map_location_marker: any
   shared_preferences: 2.0.14
-  geolocator: 8.2.1
+  geolocator: ^7.0.3
   intl: 0.17.0
   package_info_plus: ^1.4.2
   # qr_flutter: ^4.0.0
@@ -53,3 +53,12 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+
+dependency_overrides:
+  geolocator_android:
+    git:
+      name: geolocator_android
+      url: https://gitlab.com/hanntech-gmbh/free2pass/flutter-geolocator-floss.git
+      ref: master
+      path: geolocator_android
+
