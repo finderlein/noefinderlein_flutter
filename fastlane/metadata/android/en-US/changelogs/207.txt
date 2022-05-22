@@ -1,0 +1,1 @@
+* move actions on main screen to overflow when search is active

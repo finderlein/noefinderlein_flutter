@@ -5,6 +5,7 @@ import 'package:noefinderlein_flutter/src/screens/map_screen.dart';
 import 'dart:developer' as developer;
 import '../database/database_helper.dart';
 // import '../database/tables/location.dart';
+import '../model/model_actionitem.dart';
 import '../model/model_filter.dart';
 import '../model/model_location_with_open.dart';
 import '../widgets/filter_modal.dart';
@@ -119,90 +120,8 @@ class _LocationListScreenState extends State<LocationListScreen> {
                       });
                     },
                   ),
-            IconButton(
-              icon: const Icon(MdiIcons.download),
-              tooltip: context.loc.ttDownloadData,
-              onPressed: () {
-                Future.delayed(
-                    Duration.zero,
-                    () => showDownloader(context).then(
-                          (_) {
-                            developer.log('downloadcallback:',
-                                name: 'locations_list_screen.dart',
-                                error: 'now');
-                            if (Navigator.canPop(context)) {
-                              Navigator.pop(context);
-                            }
-                            Navigator.pushReplacementNamed(
-                              context,
-                              LocationListScreen.routeName,
-                            );
-                          },
-                        ));
-              },
-            ),
-            IconButton(
-              icon: const Icon(MdiIcons.sortAlphabeticalVariant),
-              tooltip: context.loc.ttChangeSorting,
-              onPressed: () => showDialog(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      AlertDialog(title: Text(context.loc.sortby), actions: [
-                        TextButton(
-                            onPressed: () =>
-                                Navigator.pop(context, 'bookletId'),
-                            child: Text(
-                              context.loc.bookletId,
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
-                            )),
-                        TextButton(
-                            onPressed: () => Navigator.pop(context, 'name'),
-                            child: Text(context.loc.name,
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface))),
-                      ])).then((value) => setState(() {
-                    //add
-                    if (value != null) {
-                      sortBy = value;
-                      restartDBGet();
-                    }
-                  })),
-            ),
-            IconButton(
-              icon:
-                  Icon(filterActive ? MdiIcons.filter : MdiIcons.filterOutline),
-              tooltip: context.loc.ttFilterList,
-              onPressed: () {
-                // showDialog(
-                //     context: context,
-                //     builder: (context) => Filter(callback: () {}));
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Filter(
-                          filterE: filterE,
-                          callback: (FilterElements filterEC) {
-                            setState(() {
-                              filterE = filterEC;
-                              filterActive = filterE.filterActive();
-                              restartDBGet();
-                            });
-                          });
-                    });
-              },
-            ),
-            IconButton(
-              icon: const Icon(MdiIcons.map),
-              tooltip: context.loc.ttShowLocationsOnMap,
-              onPressed: () {
-                Navigator.restorablePushNamed(context, MapScreen.routeName,
-                    arguments: {'locations': currentIds});
-              },
-            ),
+            ...getAppbarActions(),
+            if (_search) actionsInPopup()
           ],
         ),
 
@@ -246,6 +165,125 @@ class _LocationListScreenState extends State<LocationListScreen> {
             }
           },
         ));
+  }
+
+  List<ActionItem> getActions() {
+    return [
+      ActionItem(
+        icon: const Icon(MdiIcons.download),
+        tooltip: context.loc.ttDownloadData,
+        onPressed: () {
+          Future.delayed(
+              Duration.zero,
+              () => showDownloader(context).then(
+                    (_) {
+                      developer.log('downloadcallback:',
+                          name: 'locations_list_screen.dart', error: 'now');
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);
+                      }
+                      Navigator.pushReplacementNamed(
+                        context,
+                        LocationListScreen.routeName,
+                      );
+                    },
+                  ));
+        },
+      ),
+      ActionItem(
+          icon: const Icon(MdiIcons.sortAlphabeticalVariant),
+          tooltip: context.loc.ttChangeSorting,
+          onPressed: () => showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  AlertDialog(title: Text(context.loc.sortby), actions: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context, 'bookletId'),
+                        child: Text(
+                          context.loc.bookletId,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSurface),
+                        )),
+                    TextButton(
+                        onPressed: () => Navigator.pop(context, 'name'),
+                        child: Text(context.loc.name,
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onSurface))),
+                  ])).then((value) => setState(() {
+                //add
+                if (value != null) {
+                  sortBy = value;
+                  restartDBGet();
+                }
+              }))),
+      ActionItem(
+        icon: Icon(filterActive ? MdiIcons.filter : MdiIcons.filterOutline),
+        tooltip: context.loc.ttFilterList,
+        onPressed: () {
+          // showDialog(
+          //     context: context,
+          //     builder: (context) => Filter(callback: () {}));
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Filter(
+                    filterE: filterE,
+                    callback: (FilterElements filterEC) {
+                      setState(() {
+                        filterE = filterEC;
+                        filterActive = filterE.filterActive();
+                        restartDBGet();
+                      });
+                    });
+              });
+        },
+      ),
+      ActionItem(
+        icon: const Icon(MdiIcons.map),
+        tooltip: context.loc.ttShowLocationsOnMap,
+        onPressed: () {
+          Navigator.restorablePushNamed(context, MapScreen.routeName,
+              arguments: {'locations': currentIds});
+        },
+      )
+    ];
+  }
+
+  PopupMenuButton actionsInPopup() {
+    List<ActionItem> alist = getActions();
+    return PopupMenuButton(
+      elevation: 40,
+      onSelected: (value) async {
+        if (alist[value].onPressed != null) {
+          alist[value].onPressed!();
+        }
+      },
+      itemBuilder: (BuildContext context) => alist
+          .asMap()
+          .keys
+          .toList()
+          .map((index) => PopupMenuItem(
+                value: index,
+                child: Text(alist[index].tooltip),
+              ))
+          .toList(),
+    );
+  }
+
+  List<Widget> getAppbarActions() {
+    if (_search) {
+      return [];
+    }
+    List<ActionItem> alist = getActions();
+    List<Widget> w = [];
+    for (var element in alist) {
+      w.add(IconButton(
+          icon: element.icon,
+          tooltip: element.tooltip,
+          onPressed: element.onPressed));
+    }
+    return w;
   }
 
   void restartDBGet() {
