@@ -1,0 +1,41 @@
+name: ⬆️ Android deploy
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Get the version
+        id: get_version
+        uses: ./.github/actions/build-version
+
+      - name: Create service_account.json
+        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: android
+          path: android
+      
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: android
+
+      - name: create whatsNew files
+        run: |
+          mkdir -p whatsNewDirectory/
+          cp fastlane/metadata/android/en-US/changelogs/${{steps.get_version.outputs.versionnum}}.txt whatsNewDirectory/whatsnew-en-GB
+          cp fastlane/metadata/android/de/changelogs/${{steps.get_version.outputs.versionnum}}.txt whatsNewDirectory/whatsnew-de-DE
+
+
+      - name: Deploy to Alpha
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service_account.json
+          packageName: at.finderlein.noe
+          releaseFile: android/bundle/release/app-release.aab
+          track: alpha
+          whatsNewDirectory: whatsNewDirectory/

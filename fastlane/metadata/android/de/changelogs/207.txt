@@ -1,0 +1,1 @@
+* verschiebe die Aktionen in der Hauptliste in ein Overflowmenü wenn die Suche aktiv ist

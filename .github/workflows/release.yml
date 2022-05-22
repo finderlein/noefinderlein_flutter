@@ -52,6 +52,11 @@ jobs:
     uses: finderlein/noefinderlein_flutter/.github/workflows/linux_build.yml@main
     secrets: inherit
 
+  deploy_android_build:
+    needs: [android]
+    uses: finderlein/noefinderlein_flutter/.github/workflows/deploy_android_build.yml@main
+    secrets: inherit
+
   deploy:
     needs: [android, macos, ios, windows, linux]
     runs-on: ubuntu-latest
@@ -62,7 +67,7 @@ jobs:
       repository-projects: write
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Get the version
         id: get_version
         uses: ./.github/actions/build-version
