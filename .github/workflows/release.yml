@@ -17,6 +17,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  
 
   android:
     uses: finderlein/noefinderlein_flutter/.github/workflows/android_build.yml@main
@@ -60,6 +61,8 @@ jobs:
       packages: write
       repository-projects: write
     steps:
+      - uses: actions/checkout@v2
+      
       - name: Get the version
         id: get_version
         uses: ./.github/actions/build-version

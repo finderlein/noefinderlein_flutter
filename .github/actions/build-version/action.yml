@@ -5,13 +5,20 @@ outputs:
   version: 
     description: "version of the build"
     value: ${{ steps.get_version.outputs.VERSION }}
+  versionnum: 
+    description: "version number of the build"
+    value: ${{ steps.get_version.outputs.VERSIONNUM }}
+
 
 runs:
   using: "composite"
   steps:
+    - name: Get the version
       id: get_version
       run: |
         BRANCH_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)
         GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-10)
-        [[ "$VERSION" =~ ^v[0-9]{1}\.[0-9]{1}\.[0-9]{1}$ ]] && OUT=$VERSION || OUT=$GITHUB_SHA
+        [[ "$BRANCH_NAME" =~ ^v[0-9]{1}\.[0-9]{1}\.[0-9]{1}$ ]] && OUT=$BRANCH_NAME || OUT=$GITHUB_SHA_SHORT
         echo ::set-output name=VERSION::${OUT}
+        VNUM=$(cat pubspec.yaml | grep -E "^version:\s.*\+(\d*)" | cut -d+ -f2)
+        echo ::set-output name=VERSIONNUM::${VNUM}
