@@ -33,10 +33,11 @@ jobs:
 
 
       - name: Deploy to Alpha
-        uses: r0adkll/upload-google-play@v1
+        uses: r0adkll/upload-google-play@v1.0.15
         with:
           serviceAccountJson: service_account.json
           packageName: at.finderlein.noe
           releaseFiles: android/bundle/release/app-release.aab
           track: alpha
           whatsNewDirectory: whatsNewDirectory/
+          status: completed
