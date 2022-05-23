@@ -11,7 +11,7 @@ jobs:
 
       - name: Get the version
         id: get_version
-        uses: finderlein/noefinderlein_flutter/.github/actions/build-version/action.yml@main
+        uses: ./.github/actions/build-version
 
       - name: Create service_account.json
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
