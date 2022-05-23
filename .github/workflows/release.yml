@@ -70,7 +70,7 @@ jobs:
 
       - name: Get the version
         id: get_version
-        uses: ./.github/actions/build-version
+        uses: finderlein/noefinderlein_flutter/.github/actions/build-version/action.yml@main
       - uses: actions/download-artifact@v3
         with:
           name: android
