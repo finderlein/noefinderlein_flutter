@@ -71,57 +71,64 @@ jobs:
       - name: Get the version
         id: get_version
         uses: ./.github/actions/build-version
+
       - uses: actions/download-artifact@v3
         with:
-          name: android
-          path: android
+          name: android-down
+          path: android-down
       
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: android
+        working-directory: android-down
+
       - uses: actions/download-artifact@v3
         with:
-          name: macos
-          path: macos
+          name: macos-down
+          path: macos-down
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: macos
+        working-directory: macos-down
+
       - uses: actions/download-artifact@v3
         with:
-          name: ios
-          path: ios
+          name: ios-down
+          path: ios-down
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: ios
+        working-directory: ios-down
+
       - uses: actions/download-artifact@v3
         with:
-          name: windows
-          path: windows
+          name: windows-down
+          path: windows-down
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: windows
+        working-directory: windows-down
+
       - uses: actions/download-artifact@v3
         with:
-          name: appimage
-          path: appimage
+          name: appimage-down
+          path: appimage-down
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: appimage
+        working-directory: appimage-down
+
       - uses: actions/download-artifact@v3
         with:
-          name: tgz
-          path: tgz
+          name: tgz-down
+          path: tgz-down
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: tgz
+        working-directory: tgz-down
+
       - name: rename with version
         run: |
-          mv android/bundle/release/app-release.apk android/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
-          mv android/bundle/release/app-release.aab android/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
-          mv macos/noefinderlein_flutter.dmg macos/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
-          mv windows/noefinderlein-windows.zip windows/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
-          mv appimage/NOE.Finderlein-latest-x86_64.AppImage appimage/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
-          mv tgz/noefinderlein-linux-portable.tar.gz tgz/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+          mv android-down/flutter-apk/app-release.apk android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
+          mv android-down/bundle/release/app-release.aab android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
+          mv macos-down/noefinderlein_flutter.dmg macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+          mv windows-down/noefinderlein-windows.zip windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
+          mv appimage-down/NOE.Finderlein-latest-x86_64.AppImage appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
+          mv tgz-down/noefinderlein-linux-portable.tar.gz tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -130,12 +137,12 @@ jobs:
           prerelease: false
           title: "NÖ Finderlein Release ${{ steps.get_version.outputs.version }}"
           files: |
-            android/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
-            android/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
-            macos/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
-            windows/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
-            appimage/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
-            tgz/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+            android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
+            android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
+            macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+            windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
+            appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
+            tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
             # ios/**/*.app
             # ios/**/*.app.
             # ios/*.app
