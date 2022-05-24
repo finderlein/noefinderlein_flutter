@@ -74,7 +74,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: android-down
+          name: android
           path: android-down
       
       - name: Display structure of downloaded files
@@ -83,7 +83,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: macos-down
+          name: macos
           path: macos-down
       - name: Display structure of downloaded files
         run: ls -R
@@ -91,7 +91,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: ios-down
+          name: ios
           path: ios-down
       - name: Display structure of downloaded files
         run: ls -R
@@ -99,7 +99,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: windows-down
+          name: windows
           path: windows-down
       - name: Display structure of downloaded files
         run: ls -R
@@ -107,7 +107,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: appimage-down
+          name: appimage
           path: appimage-down
       - name: Display structure of downloaded files
         run: ls -R
@@ -115,7 +115,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: tgz-down
+          name: tgz
           path: tgz-down
       - name: Display structure of downloaded files
         run: ls -R
