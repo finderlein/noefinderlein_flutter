@@ -74,15 +74,6 @@ android {
         }
     }
 
-    // flavorDimensions "deploy"
-
-    // productFlavors {
-    //     fdroid {
-    //         dimension "deploy"
-    //         signingConfig signingConfigs.debug
-    //     }
-    // }
-
     // android.applicationVariants.all { variant ->
     //     if (variant.flavorName == "fdroid") {
     //         variant.outputs.all { output ->
@@ -104,7 +95,16 @@ android {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
+            // ndk {
+            //     debugSymbolLevel = 'FULL'
+            // }
         }
+        // releaseAAB {
+        //     initWith release
+        //     ndk {
+        //         debugSymbolLevel = 'FULL'
+        //     }
+        // }
         debug {
             debuggable true
             signingConfig signingConfigs.debug
@@ -112,6 +112,19 @@ android {
             versionNameSuffix "-debug"
         }
     }
+
+    flavorDimensions 'app'
+
+    productFlavors {
+        aab {
+            dimension "app"
+
+            ndk {
+                debugSymbolLevel = 'FULL'
+            }
+        }
+    }
+
     namespace 'at.finderlein.noe'
 }
 
