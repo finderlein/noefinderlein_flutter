@@ -6,6 +6,10 @@ The NÖ Finderlein is a inofficial companion App for the Niederösterreich-Card 
 
 It additionaly provides an easy way to keep track of the visited locations and can show the destinations sorted by the distance from the current position.
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/at.finderlein.noe/)
+
 ### Development
 
 If you want to help, pull requests are welcome.
