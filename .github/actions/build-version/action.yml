@@ -22,7 +22,7 @@ runs:
         echo $BRANCH_NAME
         GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-10)
         echo $GITHUB_SHA_SHORT
-        [[ "$BRANCH_NAME" =~ ^v[0-9]{1}\.[0-9]{1}\.[0-9]{1}$ ]] && OUT=$BRANCH_NAME || OUT=$GITHUB_SHA_SHORT
+        [[ "$BRANCH_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] && OUT=$BRANCH_NAME || OUT=$GITHUB_SHA_SHORT
         echo $OUT
         echo ::set-output name=VERSION::${OUT}
         VNUM=$(cat pubspec.yaml | grep -E "^version:\s.*\+(\d*)" | cut -d+ -f2)
