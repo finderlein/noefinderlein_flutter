@@ -83,21 +83,21 @@ jobs:
         run: ls -R
         working-directory: android-down
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: macos
-          path: macos-down
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: macos-down
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: macos
+      #     path: macos-down
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: macos-down
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: ios
-          path: ios-down
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: ios-down
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: ios
+      #     path: ios-down
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: ios-down
 
       - uses: actions/download-artifact@v3
         with:
