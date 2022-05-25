@@ -95,16 +95,7 @@ android {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
-            // ndk {
-            //     debugSymbolLevel = 'FULL'
-            // }
         }
-        // releaseAAB {
-        //     initWith release
-        //     ndk {
-        //         debugSymbolLevel = 'FULL'
-        //     }
-        // }
         debug {
             debuggable true
             signingConfig signingConfigs.debug
