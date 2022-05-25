@@ -60,7 +60,7 @@ jobs:
     secrets: inherit
 
   deploy:
-    needs: [test, android, macos, ios, windows, linux]
+    needs: [test, android, macos, windows, linux]
     runs-on: ubuntu-latest
     permissions:
       contents: write
