@@ -104,17 +104,17 @@ android {
         }
     }
 
-    flavorDimensions 'app'
+    // flavorDimensions 'app'
 
-    productFlavors {
-        aab {
-            dimension "app"
+    // productFlavors {
+    //     aab {
+    //         dimension "app"
 
-            ndk {
-                debugSymbolLevel = 'FULL'
-            }
-        }
-    }
+    //         ndk {
+    //             debugSymbolLevel = 'FULL'
+    //         }
+    //     }
+    // }
 
     namespace 'at.finderlein.noe'
 }

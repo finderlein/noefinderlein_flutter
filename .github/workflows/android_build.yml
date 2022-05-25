@@ -26,11 +26,11 @@ jobs:
         with:
           distribution: "zulu"
           java-version: "11"
-      - uses: nttld/setup-ndk@v1.0.6
-        id: setup-ndk
-        with:
-          ndk-version: r21e
-          add-to-path: false
+      # - uses: nttld/setup-ndk@v1.0.6
+      #   id: setup-ndk
+      #   with:
+      #     ndk-version: r21e
+      #     add-to-path: false
 
       - name: Setup flutter
         uses: ./.github/actions/flutter-version
@@ -40,11 +40,11 @@ jobs:
       - name: generate isar files
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter build apk --verbose
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-      - run: flutter build appbundle --flavor aab
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        # env:
+        #   ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+      - run: flutter build appbundle #--flavor aab
+        # env:
+        #   ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - uses: actions/upload-artifact@v3
         with:
           name: android
