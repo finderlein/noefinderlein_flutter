@@ -54,11 +54,6 @@ jobs:
     uses: finderlein/noefinderlein_flutter/.github/workflows/linux_build.yml@main
     secrets: inherit
 
-  deploy_android_build:
-    needs: [test, android]
-    uses: finderlein/noefinderlein_flutter/.github/workflows/deploy_android_build.yml@main
-    secrets: inherit
-
   deploy:
     needs: [test, android, windows, linux]
     runs-on: ubuntu-latest
@@ -149,3 +144,8 @@ jobs:
             # ios/**/*.app.
             # ios/*.app
             # ios/*.app.
+
+  deploy_android_build:
+    needs: [deploy, test, android]
+    uses: finderlein/noefinderlein_flutter/.github/workflows/deploy_android_build.yml@main
+    secrets: inherit
