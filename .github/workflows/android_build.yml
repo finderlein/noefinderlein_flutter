@@ -1,6 +1,7 @@
 name: 🤖 Android Build
 on:
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   android_build:
@@ -39,10 +40,10 @@ jobs:
       - run: flutter pub get
       - name: generate isar files
         run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter build apk --verbose
+      - run: flutter build apk --release --verbose
         # env:
         #   ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-      - run: flutter build appbundle #--flavor aab
+      - run: flutter build appbundle --release #--flavor aab
         # env:
         #   ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - uses: actions/upload-artifact@v3

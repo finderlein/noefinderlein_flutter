@@ -26,9 +26,9 @@ jobs:
     uses: finderlein/noefinderlein_flutter/.github/workflows/android_build.yml@main
     secrets: inherit
 
-  macos:
-    uses: finderlein/noefinderlein_flutter/.github/workflows/macos_build.yml@main
-    secrets: inherit
+  # macos:
+  #   uses: finderlein/noefinderlein_flutter/.github/workflows/macos_build.yml@main
+  #   secrets: inherit
 
   # ios:
   #   uses: finderlein/noefinderlein_flutter/.github/workflows/ios_build.yml@main
@@ -60,7 +60,7 @@ jobs:
     secrets: inherit
 
   deploy:
-    needs: [test, android, macos, windows, linux]
+    needs: [test, android, windows, linux]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -127,7 +127,7 @@ jobs:
         run: |
           mv android-down/flutter-apk/app-release.apk android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
           mv android-down/bundle/release/app-release.aab android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
-          mv macos-down/noefinderlein_flutter.dmg macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+          # mv macos-down/noefinderlein_flutter.dmg macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
           mv windows-down/noefinderlein-windows.zip windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
           mv appimage-down/NOE.Finderlein-latest-x86_64.AppImage appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
           mv tgz-down/noefinderlein-linux-portable.tar.gz tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
@@ -141,7 +141,7 @@ jobs:
           files: |
             android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
             android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
-            macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+            # macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
             windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
             appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
             tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz

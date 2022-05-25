@@ -1,6 +1,7 @@
 name: 🐧 Windows Build
 on:
   workflow_call:
+  workflow_dispatch:
   
 jobs:
   appimage_build:
