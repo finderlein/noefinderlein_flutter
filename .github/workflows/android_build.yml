@@ -21,9 +21,6 @@ jobs:
         uses: ./.github/actions/add-secrets
         with:
           mapaccesstoken: ${{ secrets.MAPACCESSTOKEN }}
-          mapurl: ${{ secrets.MAPURL }}
-          mapurldark: ${{ secrets.MAPURLDARK }}
-          dataapi: ${{ secrets.DATAAPI }}
           
       - uses: actions/setup-java@v2
         with:
@@ -37,7 +34,6 @@ jobs:
       - run: flutter pub get
       - name: generate isar files
         run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter test
       - run: flutter build apk
       - run: flutter build appbundle --flavor aab
       - uses: actions/upload-artifact@v3

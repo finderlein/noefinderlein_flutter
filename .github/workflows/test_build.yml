@@ -1,0 +1,29 @@
+name: 🧪 Test Build
+on:
+  workflow_call:
+
+jobs:
+  android_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup secrets
+        uses: ./.github/actions/add-secrets
+        with:
+          mapaccesstoken: ${{ secrets.MAPACCESSTOKEN }}
+          
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: "11"
+
+      - name: Setup flutter
+        uses: ./.github/actions/flutter-version
+
+      - run: flutter upgrade
+      - run: flutter pub get
+      - name: generate isar files
+        run: flutter pub run build_runner build
+      - run: flutter test

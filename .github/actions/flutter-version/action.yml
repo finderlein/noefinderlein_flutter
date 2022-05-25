@@ -3,10 +3,10 @@ description: Install Specific Flutter version
 inputs:
   flutter-version:
     description: The flutter version.
-    default: "2.13.0-0.4.pre"
+    default: "3.0.1"
   flutter-sdk-channel:
     description: The flutter sdk chanel (stable/beta/master).
-    default: "beta"
+    default: "stable"
 runs:
   using: "composite"
   steps:

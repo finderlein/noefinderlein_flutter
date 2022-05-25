@@ -5,15 +5,6 @@ inputs:
   mapaccesstoken:
     description: 'A map access token'
     required: true
-  mapurl:
-    description: 'url to the map'
-    required: true
-  mapurldark:
-    description: 'url to the dark map'
-    required: true
-  dataapi:
-    description: 'Url to the data api'
-    required: true
 
 runs:
   using: 'composite'

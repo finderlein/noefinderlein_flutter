@@ -14,9 +14,6 @@ jobs:
         uses: ./.github/actions/add-secrets
         with:
           mapaccesstoken: ${{ secrets.MAPACCESSTOKEN }}
-          mapurl: ${{ secrets.MAPURL }}
-          mapurldark: ${{ secrets.MAPURLDARK }}
-          dataapi: ${{ secrets.DATAAPI }}
           
       - name: Setup flutter
         uses: ./.github/actions/flutter-version
