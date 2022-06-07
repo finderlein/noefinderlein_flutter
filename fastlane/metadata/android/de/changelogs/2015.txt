@@ -1,0 +1,1 @@
+* korrigiert einen Fehler beim Downloaden der Öffnungsdaten
