@@ -80,6 +80,8 @@ class DataDownloader {
     }
     developer.log('loadOpendata:',
         name: 'data_downloader.dart', error: loadOpenData);
+    developer.log('yearData:',
+        name: 'data_downloader.dart', error: yearData.daysChangeCount);
     developer.log('Day Update neeeded?:',
         name: 'data_downloader.dart',
         error:
@@ -93,7 +95,7 @@ class DataDownloader {
           name: 'data_downloader.dart',
           error: "$downloadChangeAnz $anzPackages");
       yield* downloadSegment(
-          year, yearData.daysChangeCount, anzPackages, 0, 0, downloadChangeAnz);
+          year, yearData.daysChngId, anzPackages, 0, 0, downloadChangeAnz);
     }
 
     if (dataget) {
