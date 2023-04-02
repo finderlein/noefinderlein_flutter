@@ -19,6 +19,7 @@ AppDir:
     allow_unauthenticated: true
     sources:
       - sourceline: deb http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
       - sourceline: deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse
       - sourceline: deb http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
       - sourceline: deb http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
@@ -28,6 +29,7 @@ AppDir:
       - libcanberra-gtk3-module
       - libpackagekit-glib2-18
       - dconf-gsettings-backend
+      - squashfs-tools
 
       # Full bundle requirements
       - libx11-6
