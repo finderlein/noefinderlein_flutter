@@ -23,7 +23,7 @@ jobs:
         with:
           mapaccesstoken: ${{ secrets.MAPACCESSTOKEN }}
           
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: "zulu"
           java-version: "11"
