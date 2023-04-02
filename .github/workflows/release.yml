@@ -26,9 +26,9 @@ jobs:
     uses: finderlein/noefinderlein_flutter/.github/workflows/android_build.yml@main
     secrets: inherit
 
-  macos:
-    uses: finderlein/noefinderlein_flutter/.github/workflows/macos_build.yml@main
-    secrets: inherit
+  # macos:
+  #   uses: finderlein/noefinderlein_flutter/.github/workflows/macos_build.yml@main
+  #   secrets: inherit
 
   # ios:
   #   uses: finderlein/noefinderlein_flutter/.github/workflows/ios_build.yml@main
