@@ -55,7 +55,7 @@ jobs:
     secrets: inherit
 
   deploy:
-    needs: [test, android, windows, linux, macos]
+    needs: [test, android, windows, linux]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -78,13 +78,13 @@ jobs:
         run: ls -R
         working-directory: android-down
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: macos
-          path: macos-down
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: macos-down
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: macos
+      #     path: macos-down
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: macos-down
 
       # - uses: actions/download-artifact@v3
       #   with:
