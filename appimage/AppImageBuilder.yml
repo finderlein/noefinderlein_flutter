@@ -1,6 +1,9 @@
 # appimage-builder recipe see https://appimage-builder.readthedocs.io for details
 version: 1
 script:
+  # Ensure that the mksquashfs tool is installed (workaround for the AppImageCrafters/build-appimage GHA)
+  - which mksquashfs || apt install squashfs-tools
+  # Remove any previous build
   - rm -rf AppDir | true
   - cp -r build/linux/x64/release/bundle AppDir
   - mkdir -p AppDir/usr/share/icons/hicolor/svg/apps/
@@ -29,7 +32,6 @@ AppDir:
       - libcanberra-gtk3-module
       - libpackagekit-glib2-18
       - dconf-gsettings-backend
-      - squashfs-tools
 
       # Full bundle requirements
       - libx11-6
