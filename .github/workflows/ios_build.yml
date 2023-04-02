@@ -9,7 +9,7 @@ jobs:
     env:
       MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup secrets
         uses: ./.github/actions/add-secrets
