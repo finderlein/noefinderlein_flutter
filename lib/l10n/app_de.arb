@@ -146,5 +146,11 @@
   "ttDownloadData": "Neue Daten holen",
   "ttChangeSorting": "Sortierreihenfolge ändern",
   "ttFilterList": "Die Liste filtern",
-  "ttShowLocationsOnMap": "Die Ziele auf einer Karte anzeigen"
+  "ttShowLocationsOnMap": "Die Ziele auf einer Karte anzeigen",
+  "checkInWhichDay": "Für welchen Tag abhaken?",
+
+  "addAdult": "Erwachsener",
+  "addChild": "Kind",
+  "saveCheckin": "Abhaken",
+  "checkinSetTo": "Auf € 0 setzen"
 }

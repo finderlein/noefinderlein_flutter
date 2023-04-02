@@ -37,17 +37,16 @@ class DatabaseHelper {
     if (db != null) {
       return db;
     }
-    final isar = Isar.openSync(
-        schemas: [
-          LocationSchema,
-          ChangeValSchema,
-          OpenDaySchema,
-          VisitedLocationSchema,
-          RegionSchema,
-          CategorySchema,
-          ProvinceSchema,
-          NoecardSchema
-        ],
+    final isar = Isar.openSync([
+      LocationSchema,
+      ChangeValSchema,
+      OpenDaySchema,
+      VisitedLocationSchema,
+      RegionSchema,
+      CategorySchema,
+      ProvinceSchema,
+      NoecardSchema
+    ],
         directory: glob.getDirectory(),
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
@@ -61,17 +60,16 @@ class DatabaseHelper {
       return db;
     }
 
-    final isar = await Isar.open(
-        schemas: [
-          LocationSchema,
-          ChangeValSchema,
-          OpenDaySchema,
-          VisitedLocationSchema,
-          RegionSchema,
-          CategorySchema,
-          ProvinceSchema,
-          NoecardSchema
-        ],
+    final isar = await Isar.open([
+      LocationSchema,
+      ChangeValSchema,
+      OpenDaySchema,
+      VisitedLocationSchema,
+      RegionSchema,
+      CategorySchema,
+      ProvinceSchema,
+      NoecardSchema
+    ],
         directory: glob.getDirectory(),
         inspector: true, // if you want to enable the inspector for debug builds
         name: _databaseName);
@@ -221,7 +219,7 @@ class DatabaseHelper {
     val.year = year;
     val.changeCount = changeid;
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.changeVals.put(val);
     });
   }
@@ -304,8 +302,8 @@ class DatabaseHelper {
 
   static Future<int> insertOpenDays(List<OpenDay> opendays) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
-      await db.openDays.putAll(opendays, replaceOnConflict: true);
+    await db.writeTxn(() async {
+      await db.openDays.putAll(opendays);
     });
     return opendays.length;
   }
@@ -329,8 +327,7 @@ class DatabaseHelper {
     Isar db = await DatabaseHelper.db();
     List<Location> locations = [];
     try {
-      locations =
-          await db.locations.filter().yearEqualTo(year).sortById().findAll();
+      locations = await db.locations.filter().yearEqualTo(year).findAll();
     } catch (error) {
       developer.log('getStringAktDates',
           name: 'database_helper.dart', error: 'catch');
@@ -353,12 +350,16 @@ class DatabaseHelper {
 
   static Future<List<Location>> getLocationsToIds(
       {required List<int> locationIds}) async {
+    developer.log('getLocationsToIds - input length',
+        name: 'database_helper.dart', error: locationIds.length);
     Isar db = await DatabaseHelper.db();
     final locations = await db.locations
         .filter()
-        .repeat(locationIds, (q, int locId) => q.idEqualTo(locId))
+        .anyOf(locationIds, (q, int locId) => q.idEqualTo(locId))
         .findAll();
     if (locations.isNotEmpty) {
+      developer.log('getLocationsToIds - output length',
+          name: 'database_helper.dart', error: locations.length);
       return locations;
     }
     return [];
@@ -402,14 +403,14 @@ class DatabaseHelper {
     vl.visitedSaved = amount;
     vl.visitedYear = location.year;
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.visitedLocations.put(vl);
     });
   }
 
   static Future<void> removeVisited({required int visitedId}) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.visitedLocations.delete(visitedId);
     });
   }
@@ -437,7 +438,7 @@ class DatabaseHelper {
 
   static Future<void> setFavUnfav(Location loc, bool fav) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       loc.favorit = fav;
       await db.locations.put(loc);
     });
@@ -445,21 +446,21 @@ class DatabaseHelper {
 
   static Future<void> insertOrReplaceRegions(List<Region> regions) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.regions.putAll(regions);
     });
   }
 
   static Future<void> insertOrReplaceProvinces(List<Province> province) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.provinces.putAll(province);
     });
   }
 
   static Future<void> insertOrReplaceCategories(List<Category> category) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.categorys.putAll(category);
     });
   }
@@ -494,10 +495,10 @@ class DatabaseHelper {
   static Future<void> _insOrRepl(
       List<Location> updateList, List<Location> insertList) async {
     Isar db = await DatabaseHelper.db();
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.locations.putAll(insertList);
     });
-    await db.writeTxn((isar) async {
+    await db.writeTxn(() async {
       await db.locations.putAll(updateList);
     });
   }

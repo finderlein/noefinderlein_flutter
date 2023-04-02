@@ -9,7 +9,7 @@ import '../widgets/drawer_main.dart';
 import 'dart:developer' as developer;
 
 import 'location_detail_screen.dart';
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class VisitedScreen extends StatefulWidget {
   const VisitedScreen({

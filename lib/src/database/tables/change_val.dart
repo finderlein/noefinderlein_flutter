@@ -5,8 +5,7 @@ part 'change_val.g.dart';
 @Collection()
 @Name("ChangeVal")
 class ChangeVal {
-  @Id()
-  late int year;
+  late Id year;
 
   int changeCount = 0;
 }

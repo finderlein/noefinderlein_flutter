@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../../database/tables/location.dart';
+import '../../../l10n/app_localizations_context.dart';
 
 class CheckInDialog extends StatefulWidget {
   const CheckInDialog(
@@ -51,7 +52,7 @@ class CheckInDialogState extends State<CheckInDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: const Text('Für welchen Tag abhaken?'),
+        title: Text(context.loc.checkInWhichDay),
         // actions: [],
         scrollable: true,
         content: ValueListenableBuilder(
@@ -133,7 +134,7 @@ class CheckInDialogState extends State<CheckInDialog> {
                         child: Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Text(
-                              'Add Adult\n€ ${widget.location.savingsAdult}',
+                              '${context.loc.addAdult}\n€ ${widget.location.savingsAdult}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Theme.of(context)
@@ -160,7 +161,7 @@ class CheckInDialogState extends State<CheckInDialog> {
                         child: Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: Text(
-                              'Add Child\n€ ${widget.location.savingsChild}',
+                              '${context.loc.addChild}\n€ ${widget.location.savingsChild}',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Theme.of(context)
@@ -174,7 +175,7 @@ class CheckInDialogState extends State<CheckInDialog> {
                     child: Row(
                       children: [
                         TextButton(
-                          child: Text('Set to € 0',
+                          child: Text(context.loc.checkinSetTo,
                               style: TextStyle(
                                   color:
                                       Theme.of(context).colorScheme.onSurface)),
@@ -209,7 +210,7 @@ class CheckInDialogState extends State<CheckInDialog> {
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Text(
-                                'Save',
+                                context.loc.saveCheckin,
                                 style: TextStyle(
                                   color: _errorText != null
                                       ? null

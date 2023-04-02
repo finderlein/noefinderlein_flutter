@@ -5,7 +5,7 @@ import 'package:noefinderlein_flutter/src/screens/location_detail_screen.dart';
 // import '../database/tables/location.dart';
 import '../model/model_marker_with_location.dart';
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 // import '../screens/map_screen.dart';
 
 class MapPopup extends StatefulWidget {
@@ -74,6 +74,20 @@ class _MapPopupState extends State<MapPopup> {
                       ],
                     )
                   ]),
+              Text(
+                widget.marker.location.latitude.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onSecondary),
+              ),
+              Text(
+                widget.marker.location.longitude.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onSecondary),
+              )
             ],
           ),
         ));

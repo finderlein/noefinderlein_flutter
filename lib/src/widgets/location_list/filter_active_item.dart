@@ -5,7 +5,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:noefinderlein_flutter/src/utilities/category_icon.dart';
 import '../../model/model_filter.dart';
 import 'package:intl/intl.dart';
-import '../../localization/app_localizations_context.dart';
+import '../../../l10n/app_localizations_context.dart';
 
 class FilterActiveItem extends StatelessWidget {
   const FilterActiveItem({Key? key, required this.filterE}) : super(key: key);

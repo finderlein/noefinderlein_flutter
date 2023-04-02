@@ -6,8 +6,8 @@ part 'visited_location.g.dart';
 @Collection()
 @Name("VisitedLocation")
 class VisitedLocation {
-  @Id()
-  int visitedId = Isar.autoIncrement;
+  @Name("id")
+  Id visitedId = Isar.autoIncrement;
 
   int visitedLocationId = 0;
   int visitedYear = 0;

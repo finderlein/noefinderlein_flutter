@@ -16,7 +16,7 @@ import '../widgets/downloader_modal.dart';
 import '../widgets/search_text_field.dart';
 import '../utilities/noefinderlein.dart';
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class LocationListScreen extends StatefulWidget {
   const LocationListScreen(

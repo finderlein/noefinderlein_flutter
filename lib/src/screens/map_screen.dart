@@ -12,7 +12,7 @@ import '../database/tables/location.dart';
 import 'dart:developer' as developer;
 import '../../auth/api.dart';
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 import '../model/model_marker_with_location.dart';
 
 class MapScreen extends StatefulWidget {
@@ -27,6 +27,16 @@ class MapScreen extends StatefulWidget {
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
+
+/*
+
+from https://github.com/lpongetti/flutter_map_marker_cluster/issues/115#issuecomment-1134860210
+setState((){
+  _markers.addAll(yourNewMarkers);
+  _markers = List.from(_markers);
+});
+
+*/
 
 /// Displays a list of SampleItems.
 class _MapScreenState extends State<MapScreen> {

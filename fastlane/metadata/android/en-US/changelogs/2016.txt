@@ -1,0 +1,1 @@
+* Fixed an error when opening a location in the "Near" view

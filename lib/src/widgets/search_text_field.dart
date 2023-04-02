@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({Key? key, required this.onChanged}) : super(key: key);

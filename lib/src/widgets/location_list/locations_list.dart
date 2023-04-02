@@ -4,7 +4,7 @@ import '../../model/model_location_with_open.dart';
 import 'locations_list_item.dart';
 // import '../../database/tables/location.dart';
 import '../../screens/location_detail_screen.dart';
-import '../../localization/app_localizations_context.dart';
+import '../../../l10n/app_localizations_context.dart';
 
 class LocationsList extends StatelessWidget {
   const LocationsList({Key? key, required this.locations}) : super(key: key);

@@ -3,7 +3,7 @@ import '../database/tables/region.dart';
 import '../database/database_helper.dart';
 import '../widgets/drawer_main.dart';
 import '../screens/locations_list_screen.dart';
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class RegionsListScreen extends StatefulWidget {
   const RegionsListScreen({Key? key, required this.year}) : super(key: key);

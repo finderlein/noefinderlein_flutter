@@ -5,8 +5,7 @@ part 'location.g.dart';
 @Collection()
 @Name("Location")
 class Location {
-  @Id()
-  late int id;
+  late Id id;
 
   @Index()
   late int year;

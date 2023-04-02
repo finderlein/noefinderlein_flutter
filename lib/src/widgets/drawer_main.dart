@@ -11,7 +11,7 @@ import '../screens/settings_screen.dart';
 
 import '../utilities/noefinderlein.dart';
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class DrawerMain extends StatelessWidget {
   const DrawerMain({Key? key, required this.year}) : super(key: key);

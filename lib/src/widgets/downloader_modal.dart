@@ -6,7 +6,7 @@ import '../utilities/data_downloader.dart';
 import '../model/model_downloader_progress.dart';
 import 'dart:developer' as developer;
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class Downloader extends StatefulWidget {
   const Downloader({Key? key, required this.year}) : super(key: key);

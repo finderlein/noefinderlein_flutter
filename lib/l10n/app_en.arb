@@ -142,5 +142,11 @@
   "ttDownloadData": "Download new data",
   "ttChangeSorting": "Change sort Order",
   "ttFilterList": "Filter the list",
-  "ttShowLocationsOnMap": "Show locations on a map"
+  "ttShowLocationsOnMap": "Show locations on a map",
+  "checkInWhichDay": "CheckIn for which day?",
+
+  "addAdult": "Add adult",
+  "addChild": "Add child",
+  "saveCheckin": "Save",
+  "checkinSetTo": "Set to € 0"
 }

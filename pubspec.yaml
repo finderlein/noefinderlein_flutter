@@ -4,33 +4,35 @@ description: Noe Finderlein in Flutter
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 2.0.15+2015
+version: 2.0.16+2016
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.19.6 <3.0.0"
+
+isar_version: &isar_version 3.0.5
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  isar: 2.5.0
-  isar_flutter_libs: 2.5.0 # contains the binaries
+  isar: *isar_version
+  isar_flutter_libs: *isar_version # contains the binaries
   path_provider: 2.0.10
-  path: ^1.8.0
+  path: ^1.8.2
   http:
   # sqflite:
   # flutter_animation_progress_bar:
-  material_design_icons_flutter: 5.0.6595
-  url_launcher: 6.1.1
+  material_design_icons_flutter: 6.0.7096
+  url_launcher: 6.1.10
   maps_launcher: ^2.0.1
   flutter_map: ^0.14.0
   flutter_map_marker_cluster: any
   latlong2: ^0.8.1
   flutter_map_location_marker: any
-  shared_preferences: 2.0.14
+  shared_preferences: 2.1.0
   geolocator: ^7.0.3
-  intl: 0.17.0
+  intl: any
   package_info_plus: ^1.4.2
   # qr_flutter: ^4.0.0
   # mobile_scanner: ^1.0.0
@@ -40,9 +42,9 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: 2.0.1
-  isar_generator: 2.5.0
-  build_runner: ^2.1.8
-  analyzer: ^3.0.0
+  isar_generator: *isar_version
+  build_runner: any
+  analyzer: any
 
 flutter:
   uses-material-design: true
@@ -53,6 +55,10 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+
+flutter_intl:
+  enabled: true
+  main_locale: de
 
 dependency_overrides:
   geolocator_android:

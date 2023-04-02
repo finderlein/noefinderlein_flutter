@@ -25,7 +25,7 @@ class LocationsNearList extends StatelessWidget {
                 var id = item.location.id;
                 Navigator.restorablePushNamed(
                     context, LocationDetailsScreen.routeName,
-                    arguments: id);
+                    arguments: {'locationId': id});
               },
               child: LocationsNearListItem(
                 location: item,

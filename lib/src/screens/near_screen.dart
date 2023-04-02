@@ -11,7 +11,7 @@ import '../model/model_location_with_position.dart';
 import '../model/model_position_item.dart';
 import '../utilities/get_position.dart';
 import '../widgets/drawer_main.dart';
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class NearScreen extends StatefulWidget {
   const NearScreen({

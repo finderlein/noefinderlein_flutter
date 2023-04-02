@@ -21,7 +21,7 @@ import 'screens/regions_list_screen.dart';
 import 'themes/noefinderlein.dart';
 import 'utilities/noefinderlein.dart';
 
-import './localization/app_localizations_context.dart';
+// import './localization/app_localizations_context.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -71,8 +71,8 @@ class MyApp extends StatelessWidget {
           // ],
           supportedLocales: AppLocalizations.supportedLocales,
           // supportedLocales: const [
-          //   Locale('en', null), // English, no country code
-          //   // Locale('de', null), // German
+          //   Locale('en'), // English, no country code
+          //   Locale('de'), // German
           // ],
 
           // Use AppLocalizations to configure the correct application title
@@ -80,7 +80,8 @@ class MyApp extends StatelessWidget {
           //
           // The appTitle is defined in .arb files found in the localization
           // directory.
-          onGenerateTitle: (BuildContext context) => context.loc.appTitle,
+          onGenerateTitle: (BuildContext context) =>
+              AppLocalizations.of(context).appTitle,
 
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the

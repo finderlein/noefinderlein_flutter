@@ -23,8 +23,8 @@ class NavigationSection extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               )),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('${location.addressZip}, ${location.addressCity}'),
             Text(location.addressStreet),
+            Text('${location.addressZip}, ${location.addressCity}'),
             Text('Lat: ${location.latitude}'),
             Text('Lon: ${location.longitude}')
           ])

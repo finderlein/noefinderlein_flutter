@@ -5,8 +5,7 @@ part 'open_day.g.dart';
 @Collection()
 @Name("OpenDay")
 class OpenDay {
-  @Id()
-  int id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   @Index()
   int year = 0;

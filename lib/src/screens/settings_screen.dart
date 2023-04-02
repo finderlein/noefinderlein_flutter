@@ -5,7 +5,7 @@ import 'package:noefinderlein_flutter/src/utilities/noefinderlein.dart';
 import '../../main.dart';
 import '../settings/settings_controller.dart';
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 /// Displays the various settings that can be customized by the user.
 ///

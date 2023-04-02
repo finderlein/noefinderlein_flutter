@@ -1,0 +1,1 @@
+* Fehler beim Aufrufen von Zielen in der "Nahe" Ansicht gefixed

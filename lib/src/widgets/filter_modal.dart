@@ -5,7 +5,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../model/model_filter.dart';
 import '../utilities/category_icon.dart';
 import 'package:intl/intl.dart';
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class Filter extends StatefulWidget {
   const Filter({Key? key, required this.callback, required this.filterE})

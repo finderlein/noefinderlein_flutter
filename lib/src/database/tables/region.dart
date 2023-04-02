@@ -5,8 +5,7 @@ part 'region.g.dart';
 @Collection()
 @Name("Region")
 class Region {
-  @Id()
-  late int id;
+  late Id id;
 
   late String name;
 }

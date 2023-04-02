@@ -19,7 +19,7 @@ import '../widgets/location_detail_page/checkin_dialog.dart';
 import '../widgets/location_detail_page/properties_section.dart';
 import 'dart:math' as math;
 
-import '../localization/app_localizations_context.dart';
+import '../../l10n/app_localizations_context.dart';
 
 class LocationDetailsScreen extends StatefulWidget {
   const LocationDetailsScreen({Key? key, required this.id, this.date})
