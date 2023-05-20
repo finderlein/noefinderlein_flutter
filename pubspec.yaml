@@ -4,7 +4,7 @@ description: Noe Finderlein in Flutter
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 2.0.17+2017
+version: 2.0.18+2018
 
 environment:
   sdk: ">=2.19.6 <3.0.0"

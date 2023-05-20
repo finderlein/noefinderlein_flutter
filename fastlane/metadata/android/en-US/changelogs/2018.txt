@@ -1,0 +1,2 @@
+* Fixed an error when opening the webpage of a location
+* Update dependencies and change cluster plugin

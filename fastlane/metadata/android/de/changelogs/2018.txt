@@ -1,0 +1,2 @@
+* Fehler beim Öffnen der Webseite von Zielen gefixed
+* Plugins upgedated und das Map-Cluster-Plugin getauscht
