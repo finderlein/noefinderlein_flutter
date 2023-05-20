@@ -549,5 +549,5 @@ class ActionButton extends StatelessWidget {
 }
 
 void _launchURL(url) async => await canLaunchUrl(url)
-    ? await launchUrl(url)
+    ? await launchUrl(url, mode: LaunchMode.externalApplication)
     : throw 'Could not launch $url';
