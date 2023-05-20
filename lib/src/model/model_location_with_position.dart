@@ -1,7 +1,7 @@
-import '../database/tables/location.dart';
+import 'model_location_with_open.dart';
 
 class LocationWithPosition {
-  late Location location;
+  late LocationWithOpen lwo;
   late int distance;
   late int bearing;
   late String distanceWithUnit;

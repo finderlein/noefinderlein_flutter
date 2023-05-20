@@ -22,7 +22,7 @@ class LocationsNearList extends StatelessWidget {
           final item = locations[position];
           return InkWell(
               onTap: () {
-                var id = item.location.id;
+                var id = item.lwo.location.id;
                 Navigator.restorablePushNamed(
                     context, LocationDetailsScreen.routeName,
                     arguments: {'locationId': id});

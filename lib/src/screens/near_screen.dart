@@ -7,11 +7,15 @@ import 'dart:developer' as developer;
 import 'dart:async';
 
 import '../database/database_helper.dart';
+import '../model/model_actionitem.dart';
 import '../model/model_location_with_position.dart';
 import '../model/model_position_item.dart';
+import '../model/model_filter.dart';
 import '../utilities/get_position.dart';
 import '../widgets/drawer_main.dart';
 import '../../l10n/app_localizations_context.dart';
+import '../widgets/filter_modal.dart';
+import '../widgets/location_list/filter_active_item.dart';
 
 class NearScreen extends StatefulWidget {
   const NearScreen({
@@ -29,6 +33,9 @@ class _NearScreenState extends State<NearScreen> {
   late Future<List<LocationWithPosition>> _allNearLocations;
   late GetPosition gp = GetPosition(callback: callback);
 
+  FilterElements filterE = FilterElements();
+  bool filterActive = false;
+
   // StreamSubscription<Position>? _positionStreamSubscription;
   // StreamSubscription<ServiceStatus>? _serviceStatusStreamSubscription;
   // bool positionStreamStarted = false;
@@ -38,8 +45,7 @@ class _NearScreenState extends State<NearScreen> {
     super.initState();
     // _toggleServiceStatusStream();
     gp.getLastKnownPosition();
-    _allNearLocations = DatabaseHelper.getAllNearLocations(
-        year: widget.year, positions: gp.positionList);
+    restartDBGet();
   }
 
   PopupMenuButton _createActions() {
@@ -115,7 +121,8 @@ class _NearScreenState extends State<NearScreen> {
             //     await _getCurrentPosition();
             //   },
             // ),
-            _createActions()
+            ...getAppbarActions(),
+            _createActions(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -153,7 +160,13 @@ class _NearScreenState extends State<NearScreen> {
                   List<LocationWithPosition> locations =
                       snapshot.data as List<LocationWithPosition>;
                   if (locations.isNotEmpty) {
-                    return LocationsNearList(locations: locations);
+                    return Column(children: [
+                      if (filterActive)
+                        FilterActiveItem(
+                          filterE: filterE,
+                        ),
+                      Expanded(child: LocationsNearList(locations: locations))
+                    ]);
                   } else {
                     String log = '';
                     for (PositionItem pi in gp.positionItems) {
@@ -175,6 +188,52 @@ class _NearScreenState extends State<NearScreen> {
     setState(() {
       _allNearLocations = DatabaseHelper.getAllNearLocations(
           year: widget.year, positions: gp.positionList);
+    });
+  }
+
+  List<Widget> getAppbarActions() {
+    List<ActionItem> alist = getActions();
+    List<Widget> w = [];
+    for (var element in alist) {
+      w.add(IconButton(
+          icon: element.icon,
+          tooltip: element.tooltip,
+          onPressed: element.onPressed));
+    }
+    return w;
+  }
+
+  List<ActionItem> getActions() {
+    return [
+      ActionItem(
+        icon: Icon(filterActive ? MdiIcons.filter : MdiIcons.filterOutline),
+        tooltip: context.loc.ttFilterList,
+        onPressed: () {
+          // showDialog(
+          //     context: context,
+          //     builder: (context) => Filter(callback: () {}));
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Filter(
+                    filterE: filterE,
+                    callback: (FilterElements filterEC) {
+                      setState(() {
+                        filterE = filterEC;
+                        filterActive = filterE.filterActive();
+                        restartDBGet();
+                      });
+                    });
+              });
+        },
+      ),
+    ];
+  }
+
+  void restartDBGet() {
+    setState(() {
+      _allNearLocations = DatabaseHelper.getAllNearLocations(
+          year: widget.year, positions: gp.positionList, filterE: filterE);
     });
   }
 }

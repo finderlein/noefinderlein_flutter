@@ -99,40 +99,21 @@ class DatabaseHelper {
             searchString != '', (q) => q.searchStringContains(searchString));
     List<Location> locations;
 
-    if (filterE != null && filterE.filterActive()) {
-      if (filterE.badWeather) {
-        locationsb = locationsb.badWeatherEqualTo(true);
-      }
-      if (filterE.childFriendly) {
-        locationsb = locationsb.childFriendlyEqualTo(true);
-      }
-      if (filterE.strollerFriendly) {
-        locationsb = locationsb.strollerFriendlyEqualTo(true);
-      }
-      if (filterE.dogAllowed) {
-        locationsb = locationsb.dogAllowedEqualTo(true);
-      }
-      if (filterE.tavernNear) {
-        locationsb = locationsb.tavernNearEqualTo(true);
-      }
-      if (filterE.wheelchairFriendly) {
-        locationsb = locationsb.wheelchairFriendlyEqualTo(true);
-      }
-      if (filterE.groupsAccepted) {
-        locationsb = locationsb.groupsAcceptedEqualTo(true);
-      }
-      if (filterE.topLocation) {
-        locationsb = locationsb.topLocationEqualTo(true);
-      }
-      if (filterE.openInWinter) {
-        locationsb = locationsb.openInWinterEqualTo(true);
-      }
-    }
+    locationsb = getFiltered(locationsb, filterE);
     if (sortBy == 'name') {
       locations = await locationsb.sortByName().thenByBookletNumber().findAll();
     } else {
       locations = await locationsb.sortByBookletNumber().thenByName().findAll();
     }
+
+    List<LocationWithOpen> lwo =
+        await getFilteredListWithOpen(locations, year, filterE);
+    return lwo;
+  }
+
+  static Future<List<LocationWithOpen>> getFilteredListWithOpen(
+      List<Location> locations, int year, FilterElements? filterE) async {
+    Isar db = await DatabaseHelper.db();
     List<OpenDay> od = <OpenDay>[];
     if (filterE != null && filterE.filterActive()) {
       List<int> catPos = <int>[];
@@ -174,7 +155,6 @@ class DatabaseHelper {
       }
     }
 
-    List<LocationWithOpen> lwo = <LocationWithOpen>[];
     if (od.isEmpty) {
       od = await db.openDays
           .filter()
@@ -183,6 +163,7 @@ class DatabaseHelper {
           .dayEqualTo(DateFormat('yyyy-MM-dd').format(DateTime.now()))
           .findAll();
     }
+    List<LocationWithOpen> lwo = <LocationWithOpen>[];
     // developer.log('od',
     //     name: 'database_helper.dart',
     //     error: od.map((e) => e.locationId).toList().join(','));
@@ -214,6 +195,41 @@ class DatabaseHelper {
     return lwo;
   }
 
+  static QueryBuilder<Location, Location, QAfterFilterCondition> getFiltered(
+      QueryBuilder<Location, Location, QAfterFilterCondition> qb,
+      FilterElements? filterE) {
+    if (filterE != null && filterE.filterActive()) {
+      if (filterE.badWeather) {
+        qb = qb.badWeatherEqualTo(true);
+      }
+      if (filterE.childFriendly) {
+        qb = qb.childFriendlyEqualTo(true);
+      }
+      if (filterE.strollerFriendly) {
+        qb = qb.strollerFriendlyEqualTo(true);
+      }
+      if (filterE.dogAllowed) {
+        qb = qb.dogAllowedEqualTo(true);
+      }
+      if (filterE.tavernNear) {
+        qb = qb.tavernNearEqualTo(true);
+      }
+      if (filterE.wheelchairFriendly) {
+        qb = qb.wheelchairFriendlyEqualTo(true);
+      }
+      if (filterE.groupsAccepted) {
+        qb = qb.groupsAcceptedEqualTo(true);
+      }
+      if (filterE.topLocation) {
+        qb = qb.topLocationEqualTo(true);
+      }
+      if (filterE.openInWinter) {
+        qb = qb.openInWinterEqualTo(true);
+      }
+    }
+    return qb;
+  }
+
   static Future<void> updateChangeId(int year, int changeid) async {
     ChangeVal val = ChangeVal();
     val.year = year;
@@ -241,23 +257,39 @@ class DatabaseHelper {
   }
 
   static Future<List<LocationWithPosition>> getAllNearLocations(
-      {required int year, required List<Position> positions}) async {
+      {required int year,
+      required List<Position> positions,
+      FilterElements? filterE}) async {
     Isar db = await DatabaseHelper.db();
     List<Location> locs =
         await db.locations.filter().yearEqualTo(year).sortByName().findAll();
+
+    QueryBuilder<Location, Location, QAfterFilterCondition> locationsb =
+        db.locations.filter().yearEqualTo(year);
+    locationsb = getFiltered(locationsb, filterE);
+
+    List<Location> locations;
+    locations = await locationsb.sortByName().thenByBookletNumber().findAll();
+
+    List<LocationWithOpen> lwo =
+        await getFilteredListWithOpen(locations, year, filterE);
+
     List<LocationWithPosition> returnArr = <LocationWithPosition>[];
     if (positions.isNotEmpty) {
       developer.log('position',
           name: 'database_helper.dart',
           error: '${positions.last.latitude} ${positions.last.longitude}');
     }
-    for (Location l in locs) {
+    for (LocationWithOpen l in lwo) {
       LocationWithPosition newlp = LocationWithPosition();
-      newlp.location = l;
+      newlp.lwo = l;
 
       if (positions.isNotEmpty) {
-        newlp.distance = Geolocator.distanceBetween(positions.last.latitude,
-                positions.last.longitude, l.latitude, l.longitude)
+        newlp.distance = Geolocator.distanceBetween(
+                positions.last.latitude,
+                positions.last.longitude,
+                l.location.latitude,
+                l.location.longitude)
             .toInt();
         if (newlp.distance > 3000) {
           newlp.distanceWithUnit =
@@ -265,8 +297,11 @@ class DatabaseHelper {
         } else {
           newlp.distanceWithUnit = '${newlp.distance} m';
         }
-        newlp.bearing = Geolocator.bearingBetween(positions.last.latitude,
-                positions.last.longitude, l.latitude, l.longitude)
+        newlp.bearing = Geolocator.bearingBetween(
+                positions.last.latitude,
+                positions.last.longitude,
+                l.location.latitude,
+                l.location.longitude)
             .toInt();
         returnArr.add(newlp);
       }

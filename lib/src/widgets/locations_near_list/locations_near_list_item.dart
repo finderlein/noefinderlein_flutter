@@ -16,12 +16,12 @@ class LocationsNearListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(location.location.name),
+        title: Text(location.lwo.location.name),
         subtitle: Row(children: [
-          CategoryIcon(category: location.location.category),
+          CategoryIcon(category: location.lwo.location.category),
           Padding(
               padding: const EdgeInsets.only(left: 8),
-              child: Text(location.location.addressCity))
+              child: Text(location.lwo.location.addressCity))
         ]),
         trailing: Padding(
             padding: const EdgeInsets.only(top: 8),
