@@ -23,7 +23,7 @@ jobs:
       - name: Setup flutter
         uses: ./.github/actions/flutter-version
 
-      - run: flutter upgrade
+      # - run: flutter upgrade
       - run: flutter pub get
       - name: generate isar files
         run: flutter pub run build_runner build
