@@ -1,0 +1,1 @@
+* add the filter also on the near page
