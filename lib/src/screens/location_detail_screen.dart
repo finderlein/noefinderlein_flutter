@@ -324,10 +324,7 @@ void _launchWeb(String http) async {
   if (http.startsWith('http')) {
     webLaunchUri = Uri.parse(http);
   } else {
-    webLaunchUri = Uri(
-      scheme: 'https',
-      path: http,
-    );
+    webLaunchUri = Uri.parse('http://$http');
   }
   _launchURL(webLaunchUri);
 }
