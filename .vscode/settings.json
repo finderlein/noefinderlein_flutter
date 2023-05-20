@@ -4,5 +4,6 @@
   "cmake.configureOnOpen": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "automatic"
 }
