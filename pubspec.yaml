@@ -9,7 +9,7 @@ version: 2.0.17+2017
 environment:
   sdk: ">=2.19.6 <3.0.0"
 
-isar_version: &isar_version 3.0.5
+isar_version: &isar_version 3.1.0+1
 
 dependencies:
   flutter:
@@ -18,22 +18,23 @@ dependencies:
     sdk: flutter
   isar: *isar_version
   isar_flutter_libs: *isar_version # contains the binaries
-  path_provider: 2.0.10
+  path_provider: 2.0.15
   path: ^1.8.2
   http:
   # sqflite:
   # flutter_animation_progress_bar:
   material_design_icons_flutter: 6.0.7096
-  url_launcher: 6.1.10
+  url_launcher: 6.1.11
   maps_launcher: ^2.0.1
-  flutter_map: ^0.14.0
-  flutter_map_marker_cluster: any
+  flutter_map: ^4.0.0
+  # flutter_map_marker_cluster: any
+  flutter_map_supercluster: any
   latlong2: ^0.8.1
   flutter_map_location_marker: any
-  shared_preferences: 2.1.0
-  geolocator: ^7.0.3
+  shared_preferences: 2.1.1
+  geolocator: ^9.0.2
   intl: any
-  package_info_plus: ^1.4.2
+  package_info_plus: ^4.0.1
   # qr_flutter: ^4.0.0
   # mobile_scanner: ^1.0.0
 
@@ -64,7 +65,7 @@ dependency_overrides:
   geolocator_android:
     git:
       name: geolocator_android
-      url: https://gitlab.com/hanntech-gmbh/free2pass/flutter-geolocator-floss.git
-      ref: master
+      url: https://github.com/Zverik/flutter-geolocator.git
+      ref: floss
       path: geolocator_android
 

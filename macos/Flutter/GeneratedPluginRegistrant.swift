@@ -8,8 +8,8 @@ import Foundation
 import geolocator_apple
 import isar_flutter_libs
 import maps_launcher
-import package_info_plus_macos
-import path_provider_macos
+import package_info_plus
+import path_provider_foundation
 import shared_preferences_foundation
 import url_launcher_macos
 

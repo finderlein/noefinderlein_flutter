@@ -121,15 +121,17 @@ class LocationDetailView extends StatelessWidget {
                                   amount: amount,
                                   date: date,
                                   location: location);
-                              final snackBar = SnackBar(
-                                content: Text(context.loc.saveVisitedMessage(
-                                    amount.toString(), date)),
-                              );
+                              if (context.mounted) {
+                                final snackBar = SnackBar(
+                                  content: Text(context.loc.saveVisitedMessage(
+                                      amount.toString(), date)),
+                                );
 
-                              // Find the ScaffoldMessenger in the widget tree
-                              // and use it to show a SnackBar.
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                // Find the ScaffoldMessenger in the widget tree
+                                // and use it to show a SnackBar.
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             },
                           ));
                 }),
