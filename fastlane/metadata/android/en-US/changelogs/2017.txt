@@ -1,0 +1,1 @@
+* Fixed an error when opening the webpage of a location
