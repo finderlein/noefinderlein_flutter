@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
-import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:flutter_map_supercluster/flutter_map_supercluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:noefinderlein_flutter/src/settings/settings_controller.dart';
 import 'package:noefinderlein_flutter/src/widgets/map_popup.dart';
@@ -41,23 +41,25 @@ setState((){
 /// Displays a list of SampleItems.
 class _MapScreenState extends State<MapScreen> {
   late Future<List<Location>> _allmapLocations;
-  late CenterOnLocationUpdate _centerOnLocationUpdate;
-  late StreamController<double>? _centerCurrentLocationStreamController;
+  late FollowOnLocationUpdate _followOnLocationUpdate;
+  late StreamController<double?> _followCurrentLocationStreamController;
+  late final SuperclusterImmutableController _superclusterController;
 
   @override
   void initState() {
     super.initState();
+    _superclusterController = SuperclusterImmutableController();
     _allmapLocations =
         DatabaseHelper.getLocationsToIds(locationIds: widget.locationIds);
-    _centerOnLocationUpdate = CenterOnLocationUpdate.always;
-    _centerCurrentLocationStreamController = StreamController<double>();
+    _followOnLocationUpdate = FollowOnLocationUpdate.always;
+    _followCurrentLocationStreamController = StreamController<double?>();
   }
 
   final PopupController _popupLayerController = PopupController();
 
   @override
   void dispose() {
-    _centerCurrentLocationStreamController?.close();
+    _followCurrentLocationStreamController.close();
     super.dispose();
   }
 
@@ -102,17 +104,19 @@ class _MapScreenState extends State<MapScreen> {
                   options: MapOptions(
                       center: LatLng(48.193557, 15.646935),
                       zoom: 12.0,
-                      plugins: [MarkerClusterPlugin()],
+                      // plugins: [SuperClusterPlugin()],
                       interactiveFlags:
                           InteractiveFlag.all & ~InteractiveFlag.rotate,
                       // Stop centering the location marker on the map if user interacted with the map.
                       onTap: (_, __) => _popupLayerController.hideAllPopups(),
                       onPositionChanged:
                           (MapPosition position, bool hasGesture) {
-                        if (hasGesture) {
+                        if (hasGesture &&
+                            _followOnLocationUpdate !=
+                                FollowOnLocationUpdate.never) {
                           setState(
-                            () => _centerOnLocationUpdate =
-                                CenterOnLocationUpdate.never,
+                            () => _followOnLocationUpdate =
+                                FollowOnLocationUpdate.never,
                           );
                         }
                       }),
@@ -124,11 +128,11 @@ class _MapScreenState extends State<MapScreen> {
                         onPressed: () {
                           // Automatically center the location marker on the map when location updated until user interact with the map.
                           setState(
-                            () => _centerOnLocationUpdate =
-                                CenterOnLocationUpdate.always,
+                            () => _followOnLocationUpdate =
+                                FollowOnLocationUpdate.always,
                           );
-                          // Center the location marker on the map and zoom the map to level 18.
-                          _centerCurrentLocationStreamController?.add(18);
+                          // Follow the location marker on the map and zoom the map to level 18.
+                          _followCurrentLocationStreamController.add(13);
                         },
                         child: const Icon(
                           Icons.my_location,
@@ -138,49 +142,39 @@ class _MapScreenState extends State<MapScreen> {
                     )
                   ],
                   children: [
-                    TileLayerWidget(
-                        options: TileLayerOptions(
+                    TileLayer(
+                      userAgentPackageName: 'at.finderlein.noe',
                       urlTemplate: isDarkMode ? mapUrlDark : mapUrl,
                       additionalOptions: {
                         'accessToken': mapBoxAccessToken,
                         'id': 'mapbox.streets',
                       },
-                    )),
-                    LocationMarkerLayerWidget(
-                      plugin: LocationMarkerPlugin(
-                        centerCurrentLocationStream:
-                            _centerCurrentLocationStreamController?.stream,
-                        centerOnLocationUpdate: _centerOnLocationUpdate,
-                      ),
                     ),
-                    MarkerClusterLayerWidget(
-                        options: MarkerClusterLayerOptions(
-                            maxClusterRadius: 120,
-                            size: const Size(50, 50),
-                            fitBoundsOptions: const FitBoundsOptions(
-                              padding: EdgeInsets.all(50),
-                            ),
-                            markers: markers,
-                            polygonOptions: PolygonOptions(
-                                borderColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                color: Colors.black12,
-                                borderStrokeWidth: 3),
-                            popupOptions: PopupOptions(
-                                popupSnap: PopupSnap.markerTop,
-                                popupController: _popupLayerController,
-                                popupBuilder: (_, marker) {
-                                  if (marker is MarkerLocation) {
-                                    return MapPopup(marker);
-                                  }
-                                  return const Card(
-                                      child: Text('Location not found'));
-                                }),
-                            builder:
-                                (BuildContext context, List<Marker> markers) {
-                              return Image.asset(
-                                  'assets/images/noe_multimarker_active.png');
-                            })),
+                    CurrentLocationLayer(
+                      followCurrentLocationStream:
+                          _followCurrentLocationStreamController.stream,
+                      followOnLocationUpdate: _followOnLocationUpdate,
+                    ),
+                    SuperclusterLayer.immutable(
+                        controller: _superclusterController,
+                        initialMarkers: markers, // Provide your own
+                        clusterWidgetSize: const Size(50, 50),
+                        maxClusterRadius: 200,
+                        popupOptions: PopupOptions(
+                            popupSnap: PopupSnap.markerTop,
+                            popupController: _popupLayerController,
+                            popupBuilder: (_, marker) {
+                              if (marker is MarkerLocation) {
+                                return MapPopup(marker);
+                              }
+                              return const Card(
+                                  child: Text('Location not found'));
+                            }),
+                        builder:
+                            (context, position, markerCount, extraClusterData) {
+                          return Image.asset(
+                              'assets/images/noe_multimarker_active.png');
+                        }),
                   ],
                 );
             }

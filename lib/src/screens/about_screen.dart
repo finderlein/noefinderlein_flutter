@@ -160,7 +160,7 @@ class _AboutScreenState extends State<AboutScreen> {
         'url_launcher',
         'maps_launcher',
         'flutter_map',
-        'flutter_map_marker_cluster',
+        'flutter_map_supercluster',
         'flutter_map_location_marker',
         'latlong2',
         'shared_preferences',
