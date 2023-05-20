@@ -95,6 +95,9 @@ android {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
+            // ndk {
+            //     debugSymbolLevel = 'FULL'
+            // }
         }
         debug {
             debuggable true
