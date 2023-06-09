@@ -1,0 +1,41 @@
+name: 'Setup app build'
+description: 'Runs pre-processing scripts shared by all app build jobs.'
+inputs:
+  path:
+    description: 'working directory'
+    required: false
+    default: '.'
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Install yq
+      shell: bash
+      run: pip3 install yq
+
+    - name: Read Flutter version from pubspec.yaml
+      id: flutterVersion
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: |
+        echo "result=$(yq -r .environment.flutter pubspec.yaml)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutterVersion.outputs.result }}
+        channel: 'stable'
+        
+    - name: Check Flutter version
+      shell: bash
+      run: flutter --version
+
+    - name: Download pub dependencies
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: flutter pub get
+
+    - name: Run build_runner
+      shell: bash
+      working-directory: ${{ inputs.path }}
+      run: flutter pub run build_runner build --delete-conflicting-outputs
