@@ -28,15 +28,16 @@ dependencies:
   maps_launcher: ^2.0.1
   flutter_map: ^4.0.0
   # flutter_map_marker_cluster: any
-  flutter_map_supercluster: any
+  flutter_map_supercluster: 3.0.0+1
   latlong2: ^0.8.1
-  flutter_map_location_marker: any
+  flutter_map_location_marker: 6.0.0
   shared_preferences: 2.1.1
   geolocator: ^9.0.2
   intl: any
   package_info_plus: ^4.0.1
   # qr_flutter: ^4.0.0
   # mobile_scanner: ^1.0.0
+  permission_handler: ^10.3.0
 
 dev_dependencies:
   flutter_test:
@@ -61,11 +62,11 @@ flutter_intl:
   enabled: true
   main_locale: de
 
-dependency_overrides:
-  geolocator_android:
-    git:
-      name: geolocator_android
-      url: https://github.com/Zverik/flutter-geolocator.git
-      ref: floss
-      path: geolocator_android
+# dependency_overrides:
+#   geolocator_android:
+#     git:
+#       name: geolocator_android
+#       url: https://github.com/Zverik/flutter-geolocator.git
+#       ref: floss
+#       path: geolocator_android
 
