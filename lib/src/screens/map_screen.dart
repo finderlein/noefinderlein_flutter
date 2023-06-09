@@ -61,8 +61,6 @@ class _MapScreenState extends State<MapScreen> {
     _followCurrentLocationStreamController = StreamController<double?>();
   }
 
-  final PopupController _popupLayerController = PopupController();
-
   @override
   void dispose() {
     _followCurrentLocationStreamController.close();
@@ -112,11 +110,12 @@ class _MapScreenState extends State<MapScreen> {
                       // swPanBoundary: LatLng(45.7823, 17.1608),
                       center: LatLng(48.193557, 15.646935),
                       zoom: 12.0,
+                      maxZoom: 18,
                       // plugins: [SuperClusterPlugin()],
                       interactiveFlags:
                           InteractiveFlag.all & ~InteractiveFlag.rotate,
                       // Stop centering the location marker on the map if user interacted with the map.
-                      onTap: (_, __) => _popupLayerController.hideAllPopups(),
+                      onTap: (_, __) => _superclusterController.hideAllPopups(),
                       onPositionChanged:
                           (MapPosition position, bool hasGesture) {
                         if (hasGesture &&
@@ -197,16 +196,21 @@ class _MapScreenState extends State<MapScreen> {
                         initialMarkers: markers, // Provide your own
                         clusterWidgetSize: const Size(50, 50),
                         maxClusterRadius: 200,
+                        indexBuilder: IndexBuilders.rootIsolate,
                         popupOptions: PopupOptions(
-                            popupSnap: PopupSnap.markerTop,
-                            popupController: _popupLayerController,
-                            popupBuilder: (_, marker) {
-                              if (marker is MarkerLocation) {
-                                return MapPopup(marker);
-                              }
-                              return const Card(
-                                  child: Text('Location not found'));
-                            }),
+                          popupDisplayOptions: PopupDisplayOptions(
+                              snap: PopupSnap.markerTop,
+                              builder: (_, marker) {
+                                if (marker is MarkerLocation) {
+                                  return MapPopup(marker);
+                                }
+                                return const Card(
+                                    child: Text('Location not found'));
+                              }),
+                          // popupSnap: PopupSnap.markerTop,
+                          // popupController: _popupLayerController,
+                          // selectedMarkerBuilder: ,
+                        ),
                         builder:
                             (context, position, markerCount, extraClusterData) {
                           return Image.asset(
