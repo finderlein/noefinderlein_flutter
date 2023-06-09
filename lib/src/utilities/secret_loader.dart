@@ -15,14 +15,14 @@ class SecretLoader {
 }
 
 class Secret {
-  final String mapAccessToken;
+  // final String mapAccessToken;
   final String mapUrl;
   final String mapUrlDark;
 
-  Secret({this.mapAccessToken = "", this.mapUrl = "", this.mapUrlDark = ""});
+  Secret({this.mapUrl = "", this.mapUrlDark = ""});
   factory Secret.fromJson(Map<String, dynamic> jsonMap) {
     return Secret(
-        mapAccessToken: jsonMap["mapAccessToken"],
+        // mapAccessToken: jsonMap["mapAccessToken"],
         mapUrl: jsonMap["mapUrl"],
         mapUrlDark: jsonMap["mapUrlDark"]);
   }

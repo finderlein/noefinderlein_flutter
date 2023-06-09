@@ -36,13 +36,11 @@ jobs:
       - name: Build App Bundle
         run: >-
           flutter build appbundle
-          --dart-define=THUNDERFOREST_API_KEY=${{ secrets.THUNDERFOREST_API_KEY }}
           --dart-define=IS_RELEASE=true
 
       - name: Build APK
         run: >-
           flutter build apk
-          --dart-define=THUNDERFOREST_API_KEY=${{ secrets.THUNDERFOREST_API_KEY }}
           --dart-define=IS_RELEASE=true
 
       - name: Upload AAB artifact
@@ -70,7 +68,6 @@ jobs:
       - name: Build F-Droid APK
         run: >-
           flutter build apk
-          --dart-define=THUNDERFOREST_API_KEY=${{ secrets.THUNDERFOREST_API_KEY }}
           --dart-define=IS_RELEASE=true
 
       # Required because F-Droid signs its apk with apksigner which produces a slightly different output than gradle signingConfig

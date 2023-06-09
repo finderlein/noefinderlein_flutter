@@ -23,11 +23,6 @@ For help getting started with NÖ Finderlein development, view the
 [Flutter online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-A File called `/lib/auth/secrets.dart` is needed with the following declared variables:
-
-```
-var mapAccessToken = "<mapbox api key>";
-```
 
 #### Android development
 
