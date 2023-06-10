@@ -157,7 +157,7 @@ jobs:
       #     # mv tgz-down/noefinderlein-linux-portable.tar.gz tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
 
       - name: Generate release
-        uses: softprops/action-gh-release@latest
+        uses: softprops/action-gh-release@v0.1.15
         with:
           tag_name: ${{ github.ref }}
           name: NÖ Finderlein Release ${{ github.ref_name }}
