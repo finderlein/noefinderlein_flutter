@@ -55,7 +55,7 @@ jobs:
   #   secrets: inherit
 
   deploy:
-    needs: [test, android, windows, linux]
+    needs: [android]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -63,11 +63,16 @@ jobs:
       packages: write
       repository-projects: write
     steps:
-      - uses: actions/checkout@v3
 
-      - name: Get the version
-        id: get_version
-        uses: ./.github/actions/build-version
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read app version from pubspec.yaml
+        id: appVersion
+        shell: bash
+        working-directory: ${{ inputs.path }}
+        run: |
+          echo "result=$(yq -r .version pubspec.yaml | cut -d'+' -f2)" >> $GITHUB_OUTPUT
 
       - uses: actions/download-artifact@v3
         with:
@@ -77,6 +82,15 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: android-down
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: apk-fdroid
+          path: apk-fdroid-down
+      
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: apk-fdroid-down
 
       # - uses: actions/download-artifact@v3
       #   with:
@@ -94,58 +108,94 @@ jobs:
       #   run: ls -R
       #   working-directory: ios-down
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: windows
-          path: windows-down
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: windows-down
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: windows
+      #     path: windows-down
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: windows-down
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: appimage
-          path: appimage-down
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: appimage-down
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: appimage
+      #     path: appimage-down
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: appimage-down
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: tgz
-          path: tgz-down
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: tgz-down
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: tgz
+      #     path: tgz-down
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: tgz-down
 
-      - name: rename with version
-        run: |
-          mv android-down/flutter-apk/app-release.apk android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
-          mv android-down/bundle/release/app-release.aab android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
-          # mv macos-down/noefinderlein_flutter.dmg macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
-          mv windows-down/noefinderlein-windows.zip windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
-          mv appimage-down/NOE.Finderlein-latest-x86_64.AppImage appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
-          mv tgz-down/noefinderlein-linux-portable.tar.gz tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+      - name: Rename Android Standard APK
+        run: >-
+          mv android-down/flutter-apk/app-release.apk
+          android-down/noefinderlein-android-${{ github.ref_name }}.apk
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Rename Android F-Droid APK
+        run: >-
+          mv apk-fdroid/apk-fdroid/app-release.apk
+          apk-fdroid/noefinderlein-fdroid-${{ github.ref_name }}.apk
+
+      - name: Rename App Bundle
+        run: >-
+          mv android-down/bundle/release/app-release.aab
+          android-down/noefinderlein-android-${{ github.ref_name }}.aab
+
+      # - name: rename with version
+      #   run: |
+      #     mv android-down/flutter-apk/app-release.apk android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
+      #     mv android-down/bundle/release/app-release.aab android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
+      #     # mv macos-down/noefinderlein_flutter.dmg macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
+      #     # mv windows-down/noefinderlein-windows.zip windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
+      #     # mv appimage-down/NOE.Finderlein-latest-x86_64.AppImage appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
+      #     # mv tgz-down/noefinderlein-linux-portable.tar.gz tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+
+      - name: Generate release
+        uses: softprops/action-gh-release@latest
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.get_version.outputs.version }}"
-          prerelease: false
-          title: "NÖ Finderlein Release ${{ steps.get_version.outputs.version }}"
+          tag_name: ${{ github.ref }}
+          name: NÖ Finderlein Release ${{ github.ref_name }}
+          body_path: fastlane/metadata/android/en-US/changelogs/${{ steps.appVersion.outputs.result }}.txt
+          generate_release_notes: true
           files: |
-            android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.apk
-            android-down/noefinderlein-android-${{ steps.get_version.outputs.version }}.aab
-            # macos-down/noefinderlein-macos-${{ steps.get_version.outputs.version }}.dmg
-            windows-down/noefinderlein-windows-${{ steps.get_version.outputs.version }}.zip
-            appimage-down/noefinderlein-linux-${{ steps.get_version.outputs.version }}.AppImage
-            tgz-down/noefinderlein-linux-portable-${{ steps.get_version.outputs.version }}.tar.gz
+            android-down/noefinderlein-android-${{ github.ref_name }}.apk
+            apk-fdroid/noefinderlein-fdroid-${{ github.ref_name }}.apk
+            android-down/noefinderlein-android-${{ github.ref_name }}.aab
+            # macos-down/noefinderlein-macos-${{ github.ref_name }}.dmg
+            # windows-down/noefinderlein-windows-${{ github.ref_name }}.zip
+            # appimage-down/noefinderlein-linux-${{ github.ref_name }}.AppImage
+            # tgz-down/noefinderlein-linux-portable-${{ github.ref_name }}.tar.gz
             # ios/**/*.app
             # ios/**/*.app.
             # ios/*.app
             # ios/*.app.
 
+      # - uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     automatic_release_tag: "${{ github.ref_name }}"
+      #     prerelease: false
+      #     title: "NÖ Finderlein Release ${{ github.ref_name }}"
+      #     files: |
+      #       android-down/noefinderlein-android-${{ github.ref_name }}.apk
+      #       apk-fdroid/noefinderlein-fdroid-${{ github.ref_name }}.apk
+      #       android-down/noefinderlein-android-${{ github.ref_name }}.aab
+      #       # macos-down/noefinderlein-macos-${{ github.ref_name }}.dmg
+      #       # windows-down/noefinderlein-windows-${{ github.ref_name }}.zip
+      #       # appimage-down/noefinderlein-linux-${{ github.ref_name }}.AppImage
+      #       # tgz-down/noefinderlein-linux-portable-${{ github.ref_name }}.tar.gz
+      #       # ios/**/*.app
+      #       # ios/**/*.app.
+      #       # ios/*.app
+      #       # ios/*.app.
+
   deploy_android_build:
-    needs: [deploy, test, android]
+    needs: [deploy, android]
     uses: finderlein/noefinderlein_flutter/.github/workflows/deploy_android_build.yml@main
     secrets: inherit
