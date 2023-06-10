@@ -77,7 +77,7 @@ jobs:
           $(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1) sign
           --ks-key-alias ${{ secrets.ANDROID_KEY_ALIAS }}
           --ks-pass pass:"${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSPHRASE }}"
-          --ks key.jks
+          --ks android/release.keystore
           build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload F-Droid APK artifact
