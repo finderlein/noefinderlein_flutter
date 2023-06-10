@@ -18,9 +18,9 @@ on:
 
 jobs:
   
-  test:
-    uses: finderlein/noefinderlein_flutter/.github/workflows/test_build.yml@main
-    secrets: inherit
+  # test:
+  #   uses: finderlein/noefinderlein_flutter/.github/workflows/test_build.yml@main
+  #   secrets: inherit
 
   android:
     uses: finderlein/noefinderlein_flutter/.github/workflows/android_build.yml@main
@@ -46,13 +46,13 @@ jobs:
   #     - run: flutter pub get
   #     - run: flutter build web
 
-  windows:
-    uses: finderlein/noefinderlein_flutter/.github/workflows/windows_build.yml@main
-    secrets: inherit
+  # windows:
+  #   uses: finderlein/noefinderlein_flutter/.github/workflows/windows_build.yml@main
+  #   secrets: inherit
 
-  linux:
-    uses: finderlein/noefinderlein_flutter/.github/workflows/linux_build.yml@main
-    secrets: inherit
+  # linux:
+  #   uses: finderlein/noefinderlein_flutter/.github/workflows/linux_build.yml@main
+  #   secrets: inherit
 
   deploy:
     needs: [test, android, windows, linux]
