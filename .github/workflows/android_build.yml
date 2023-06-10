@@ -43,18 +43,25 @@ jobs:
           flutter build apk
           --dart-define=IS_RELEASE=true
 
-      - name: Upload AAB artifact
+#      - name: Upload AAB artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: aab
+#          path: build/app/outputs/bundle/release/app-release.aab
+#
+#      - name: Upload APK artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: apk
+#          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload AAB and APK
         uses: actions/upload-artifact@v3
         with:
-          name: aab
-          path: build/app/outputs/bundle/release/app-release.aab
-
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-
+          name: android
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
 
       # F-Droid Build
 
