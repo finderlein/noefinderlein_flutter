@@ -139,8 +139,8 @@ jobs:
 
       - name: Rename Android F-Droid APK
         run: >-
-          mv app-release.apk
-          noefinderlein-fdroid-${{ github.ref_name }}.apk
+          mv apk-fdroid-down/app-release.apk
+          apk-fdroid-down/noefinderlein-fdroid-${{ github.ref_name }}.apk
 
       - name: Rename App Bundle
         run: >-
@@ -165,7 +165,7 @@ jobs:
           generate_release_notes: true
           files: |
             android-down/noefinderlein-android-${{ github.ref_name }}.apk
-            noefinderlein-fdroid-${{ github.ref_name }}.apk
+            apk-fdroid-down/noefinderlein-fdroid-${{ github.ref_name }}.apk
             android-down/noefinderlein-android-${{ github.ref_name }}.aab
             # macos-down/noefinderlein-macos-${{ github.ref_name }}.dmg
             # windows-down/noefinderlein-windows-${{ github.ref_name }}.zip
