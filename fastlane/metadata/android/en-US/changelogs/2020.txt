@@ -1,0 +1,2 @@
+* change map Service to Openstreetmap
+* update some plugins
